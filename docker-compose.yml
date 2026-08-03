@@ -1,7 +1,8 @@
 services:
   immocockpit:
     container_name: immocockpit
-    build: .
+    image: ghcr.io/satty008/immocockpit:latest
+    pull_policy: always
     ports:
       - "8090:80"
     restart: unless-stopped
