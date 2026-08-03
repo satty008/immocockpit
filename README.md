@@ -28,10 +28,15 @@ Runs on the `productivity` host, reverse-proxied at
 `https://immocockpit.bhavibhavan.duckdns.org` via the Nginx Proxy Manager instance on
 `velocitail`. No auth in front of it — same as this box's other personal tools.
 
+## PWA
+
+Installable as a home-screen app (manifest + service worker, `web/manifest.json` /
+`web/sw.js`). The service worker precaches the app shell and serves it network-first
+(falling back to cache when offline); bump `CACHE_NAME` in `sw.js` when shipping a
+change so clients pick it up promptly.
+
 ## Notes
 
 - No persistence beyond browser session state. Adding saved scenarios across
   devices/sessions would need real persistence (localStorage at minimum, or a
   backend + DB).
-- No PWA manifest/service worker yet — the UI is mobile-responsive but not
-  installable as a PWA today.
