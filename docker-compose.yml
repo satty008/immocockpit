@@ -1,0 +1,13 @@
+services:
+  immocockpit:
+    container_name: immocockpit
+    build: .
+    ports:
+      - "8090:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://localhost/"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
