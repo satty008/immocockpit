@@ -30,29 +30,6 @@
   input, select { font-family: 'IBM Plex Mono', monospace; }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-thumb { background: #2a2e37; border-radius: 4px; }
-
-  /* The Claude Design pass fixed the grid/flex layout and tab bar responsively
-     (flex-wrap + flex-basis/min-width, repeat(auto-fit,minmax(...)) grids) - these
-     rules only cover what that pass didn't touch: page padding, header text
-     alignment, and the projection chart's fixed height. Targets inline styles via
-     attribute selectors + !important since that's the only way plain author CSS
-     overrides an inline style attribute. (Wide comparison tables get their own
-     overflow-x:auto wrapper div in the markup instead of a CSS override here -
-     forcing display:block directly on a <table> misaligned its columns on some
-     mobile browsers; wrapping mirrors the pattern the original design already
-     used for the year-by-year detail table.) */
-  @media (max-width: 700px) {
-    [style*="padding:28px 32px 80px"] {
-      padding: 16px 14px 60px !important;
-    }
-    [style*="max-width:420px"] {
-      max-width: 100% !important;
-      text-align: left !important;
-    }
-    [style*="width:100%; height:220px"] {
-      height: 140px !important;
-    }
-  }
 </style>
 </helmet>
 
@@ -607,12 +584,12 @@
   <sc-if value="{{ isScenarios }}" hint-placeholder-val="{{ false }}">
   <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
     <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Scenario comparison</div>
-    <div style="display:flex; gap:10px; margin-bottom:16px;">
-      <input type="text" placeholder="Scenario name (optional)" value="{{ scenarioName }}" onChange="{{ setScenarioName }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
-      <button onClick="{{ saveScenario }}" style="background:#7dd3a8; border:none; color:#08120c; font-weight:700; border-radius:8px; padding:8px 18px; font-size:13px; cursor:pointer;">Save current inputs as scenario</button>
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+      <input type="text" placeholder="Scenario name (optional)" value="{{ scenarioName }}" onChange="{{ setScenarioName }}" style="flex:1; min-width:200px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+      <button onClick="{{ saveScenario }}" style="background:#7dd3a8; border:none; color:#08120c; font-weight:700; border-radius:8px; padding:8px 18px; font-size:13px; cursor:pointer; white-space:nowrap;">Save current inputs as scenario</button>
     </div>
     <div style="overflow-x:auto;">
-    <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace;">
+    <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
       <thead>
         <tr style="color:#8b909c; text-align:right;">
           <th style="text-align:left; padding:6px 10px;">Scenario</th>
@@ -653,7 +630,7 @@
     <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833;">
       <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">Ranked — best cash-on-cash return first</div>
       <div style="overflow-x:auto;">
-      <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace;">
+      <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
         <tbody>
           <sc-for list="{{ rankedRows }}" as="rrow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
@@ -666,21 +643,20 @@
           </sc-for>
         </tbody>
       </table>
-      </div>
     </div>
     </sc-if>
 
     <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833;">
       <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">Side-by-side compare</div>
-      <div style="display:flex; gap:12px; margin-bottom:14px; align-items:center;">
-        <select value="{{ compareA }}" onChange="{{ setCompareA }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px; align-items:center;">
+        <select value="{{ compareA }}" onChange="{{ setCompareA }}" style="flex:1; min-width:160px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
           <option value="-1">Select scenario A…</option>
           <sc-for list="{{ compareOptions }}" as="opt" hint-placeholder-count="2">
             <option value="{{ opt.idx }}">{{ opt.name }}</option>
           </sc-for>
         </select>
         <span style="color:#6b7280; font-size:12px;">vs.</span>
-        <select value="{{ compareB }}" onChange="{{ setCompareB }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
+        <select value="{{ compareB }}" onChange="{{ setCompareB }}" style="flex:1; min-width:160px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
           <option value="-1">Select scenario B…</option>
           <sc-for list="{{ compareOptions }}" as="opt2" hint-placeholder-count="2">
             <option value="{{ opt2.idx }}">{{ opt2.name }}</option>
@@ -689,7 +665,7 @@
       </div>
       <sc-if value="{{ showCompare }}" hint-placeholder-val="{{ false }}">
         <div style="overflow-x:auto;">
-        <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace;">
+        <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
           <thead>
             <tr style="color:#8b909c; text-align:right;">
               <th style="text-align:left; padding:6px 10px;"></th>
