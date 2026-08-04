@@ -48,6 +48,19 @@ Installable as a home-screen app (manifest + service worker, `web/manifest.json`
 (falling back to cache when offline); bump `CACHE_NAME` in `sw.js` when shipping a
 change so clients pick it up promptly.
 
+## Mobile layout
+
+The original build had a viewport meta tag and PWA install support but no actual responsive
+breakpoints — the whole app used a fixed CSS-grid desktop layout (12/4/3-column grids, a
+non-scrollable tab bar, un-scrollable comparison tables), which produced unreadably narrow
+columns on a phone. `web/index.html`'s `<style>` block now has an `@media (max-width: 700px)`
+section that overrides this via attribute selectors (`[style*="..."]` + `!important`, since
+plain author CSS can override an inline `style` attribute that way) rather than by editing
+every inline style by hand: grids collapse to 1 column (2 for the four KPI tiles), tables and
+the tab bar become horizontally scrollable, and the outer page padding/chart height shrink.
+If further per-section layout tuning is needed later, do it the same way — target the inline
+style's distinguishing substring, don't hand-edit the markup itself.
+
 ## Notes
 
 - No persistence beyond browser session state. Adding saved scenarios across
