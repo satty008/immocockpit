@@ -850,6 +850,17 @@ const eur2 = (n) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'curr
 const pct = (n, d) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'percent', minimumFractionDigits: d ?? 1, maximumFractionDigits: d ?? 1 });
 
 class Component extends DCLogic {
+  componentDidMount() {
+    this._focusSelectHandler = (e) => {
+      if (e.target && (e.target.tagName === 'INPUT') && (e.target.type === 'number' || e.target.type === 'text')) {
+        e.target.select();
+      }
+    };
+    document.addEventListener('focusin', this._focusSelectHandler);
+  }
+  componentWillUnmount() {
+    if (this._focusSelectHandler) document.removeEventListener('focusin', this._focusSelectHandler);
+  }
   state = {
     address: '11 Sample Street, 12345 Sample City',
     purchaseYear: 2026,
