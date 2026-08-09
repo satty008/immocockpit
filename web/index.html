@@ -943,13 +943,17 @@ class Component extends DCLogic {
       const area = parseFloat(params.get('area')) || st.area;
       const stateCode = params.get('state');
       const validState = GER_STATES.some(g => g.code === stateCode) ? stateCode : st.state;
-      // loan1Mode: 'pct' keeps the primary loan at its existing loan1Pct (80% default) of
-      // *this* purchase price, instead of leaving loans[0].amount pinned at whatever the
-      // previous property's absolute EUR figure was - without this, cashflow looks artificially
-      // healthy for anything pricier than the sample listing, since debt service barely grows.
+      // loan1Mode: 'pct' keeps the primary loan scaled to *this* purchase price instead of
+      // leaving loans[0].amount pinned at whatever the previous property's absolute EUR figure
+      // was - without this, cashflow looks artificially healthy for anything pricier than the
+      // sample listing, since debt service barely grows. Full (100%) financing at 4.2% / 2%
+      // amortization is the worst-case screening assumption for a listing we know nothing else
+      // about; any secondary loans are disabled so the primary loan is the only financing.
+      const loans = st.loans.map((l, i) => (i === 0 ? { ...l, rate: 4.2, amortization: 2 } : { ...l, enabled: false }));
       const baseOverrides = {
         address, area, purchasePrice: price, state: validState,
-        rentMode: 'standard', rentInputMode: 'flat', loan1Mode: 'pct',
+        rentMode: 'standard', rentInputMode: 'flat',
+        loan1Mode: 'pct', loan1Pct: 100, loans,
       };
 
       const buildSnapshot = (rentFlatAmount, rentType) => {
