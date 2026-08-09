@@ -880,6 +880,28 @@ const GER_STATES = [
   { code: 'TH', label: 'Thuringia', rate: 5.0 },
 ];
 
+const STORAGE_KEY = 'immocockpit:v1';
+const PERSISTED_KEYS = ['scenarios', 'householdIncome', 'livingExpenses', 'otherDebt', 'savingsGoal', 'otherAssets', 'otherLiabilities'];
+
+function loadPersisted() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return (parsed && typeof parsed === 'object') ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function persistState(state) {
+  try {
+    const out = {};
+    for (const key of PERSISTED_KEYS) out[key] = state[key];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(out));
+  } catch {
+    // localStorage unavailable (private browsing, quota) - nothing to fall back to, skip silently.
+  }
+}
+
 const eur = (n) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 const eur2 = (n) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
 const pct = (n, d) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'percent', minimumFractionDigits: d ?? 1, maximumFractionDigits: d ?? 1 });
@@ -892,9 +914,70 @@ class Component extends DCLogic {
       }
     };
     document.addEventListener('focusin', this._focusSelectHandler);
+    this.applyFredyHandoff();
   }
   componentWillUnmount() {
     if (this._focusSelectHandler) document.removeEventListener('focusin', this._focusSelectHandler);
+  }
+  componentDidUpdate() {
+    persistState(this.state);
+  }
+
+  // Reads a Fredy "Analyze" deep-link (?src=fredy&listingId=&address=&price=&area=&state=
+  // &targetRent=&actualRent=) and turns it into one or two saved scenarios - target rent and,
+  // when known, actual/in-place rent - so the comparison is ready the moment the Scenarios tab
+  // is opened. Re-visiting the same listing's link updates its existing scenarios in place
+  // (matched by listingId + rent type) instead of piling up duplicates on every re-click.
+  applyFredyHandoff() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('src') !== 'fredy') return;
+    const price = parseFloat(params.get('price'));
+    if (!isFinite(price) || price <= 0) return;
+
+    const listingId = params.get('listingId') || '';
+    const targetRent = parseFloat(params.get('targetRent'));
+    const actualRent = parseFloat(params.get('actualRent'));
+
+    this.setState(st => {
+      const address = params.get('address') || st.address;
+      const area = parseFloat(params.get('area')) || st.area;
+      const stateCode = params.get('state');
+      const validState = GER_STATES.some(g => g.code === stateCode) ? stateCode : st.state;
+      const baseOverrides = { address, area, purchasePrice: price, state: validState, rentMode: 'standard', rentInputMode: 'flat' };
+
+      const buildSnapshot = (rentFlatAmount, rentType) => {
+        const snapshot = JSON.parse(JSON.stringify({ ...st, ...baseOverrides, rentFlatAmount }));
+        delete snapshot.scenarios; delete snapshot.activeTab; delete snapshot.scenarioName; delete snapshot.compareA; delete snapshot.compareB;
+        snapshot._source = { listingId, rentType };
+        return snapshot;
+      };
+
+      const scenarios = [...st.scenarios];
+      const upsert = (name, rentAmount, rentType) => {
+        const snapshot = buildSnapshot(rentAmount, rentType);
+        const idx = scenarios.findIndex(sc => sc.data?._source?.listingId === listingId && sc.data?._source?.rentType === rentType);
+        const entry = { name, data: snapshot };
+        if (idx >= 0) scenarios[idx] = entry; else scenarios.push(entry);
+        return snapshot;
+      };
+
+      let liveOverride = null;
+      if (isFinite(targetRent) && targetRent > 0) {
+        liveOverride = upsert(`${address} — target rent`, targetRent, 'target');
+      }
+      if (isFinite(actualRent) && actualRent > 0) {
+        const actualSnapshot = upsert(`${address} — actual rent`, actualRent, 'actual');
+        if (!liveOverride) liveOverride = actualSnapshot;
+      }
+      if (!liveOverride) return null;
+
+      const { _source, ...liveState } = liveOverride;
+      return { ...liveState, scenarios };
+    }, () => {
+      const url = new URL(window.location.href);
+      url.search = '';
+      window.history.replaceState(null, '', url.toString());
+    });
   }
   state = {
     address: '11 Sample Street, 12345 Sample City',
@@ -995,6 +1078,8 @@ class Component extends DCLogic {
     scenarios: [],
     scenarioName: '',
     compareA: -1, compareB: -1,
+
+    ...loadPersisted(),
   };
 
   setField(key) { return (e) => this.setState({ [key]: e.target.type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value }); }
