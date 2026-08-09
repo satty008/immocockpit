@@ -943,7 +943,14 @@ class Component extends DCLogic {
       const area = parseFloat(params.get('area')) || st.area;
       const stateCode = params.get('state');
       const validState = GER_STATES.some(g => g.code === stateCode) ? stateCode : st.state;
-      const baseOverrides = { address, area, purchasePrice: price, state: validState, rentMode: 'standard', rentInputMode: 'flat' };
+      // loan1Mode: 'pct' keeps the primary loan at its existing loan1Pct (80% default) of
+      // *this* purchase price, instead of leaving loans[0].amount pinned at whatever the
+      // previous property's absolute EUR figure was - without this, cashflow looks artificially
+      // healthy for anything pricier than the sample listing, since debt service barely grows.
+      const baseOverrides = {
+        address, area, purchasePrice: price, state: validState,
+        rentMode: 'standard', rentInputMode: 'flat', loan1Mode: 'pct',
+      };
 
       const buildSnapshot = (rentFlatAmount, rentType) => {
         const snapshot = JSON.parse(JSON.stringify({ ...st, ...baseOverrides, rentFlatAmount }));
