@@ -11,11 +11,47 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Immo Cockpit" />
+<meta name="mobile-web-app-capable" content="yes" />
 <script src="./support.js"></script>
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
   }
+
+  let deferredInstallPrompt = null;
+  const showInstallButton = () => {
+    const btn = document.getElementById("pwa-install-btn");
+    if (btn) btn.style.display = "flex";
+  };
+  const hideInstallButton = () => {
+    const btn = document.getElementById("pwa-install-btn");
+    if (btn) btn.style.display = "none";
+  };
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    showInstallButton();
+  });
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    hideInstallButton();
+  });
+  window.addEventListener("DOMContentLoaded", () => {
+    const btn = document.createElement("button");
+    btn.id = "pwa-install-btn";
+    btn.type = "button";
+    btn.textContent = "Install app";
+    btn.style.cssText = "display:none; position:fixed; right:20px; bottom:20px; z-index:9999; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; border:1px solid #2f6b4f; background:#183625; color:#7dd3a8; font-family:'Inter',system-ui,sans-serif; font-size:13px; font-weight:600; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,.35);";
+    btn.addEventListener("click", async () => {
+      if (!deferredInstallPrompt) return;
+      hideInstallButton();
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+    });
+    document.body.appendChild(btn);
+  });
 </script>
 </head>
 <body>
@@ -627,8 +663,7 @@
     </sc-if>
 
     <sc-if value="{{ hasRanked }}" hint-placeholder-val="{{ false }}">
-    <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">Ranked — best cash-on-cash return first</div>
+      <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833; font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">Ranked — best cash-on-cash return first</div>
       <div style="overflow-x:auto;">
       <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
         <tbody>

@@ -2,6 +2,7 @@
   "name": "Property Investment Cockpit",
   "short_name": "Immo Cockpit",
   "description": "Buy-to-let property investment calculator - purchase costs, financing, cashflow, depreciation and multi-year projections.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
