@@ -1,4 +1,4 @@
-const CACHE_NAME = "immocockpit-v1";
+const CACHE_NAME = "immocockpit-v2";
 const APP_SHELL = [
   "/",
   "/index.html",

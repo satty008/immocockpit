@@ -956,8 +956,12 @@ class Component extends DCLogic {
         loan1Mode: 'pct', loan1Pct: 100, loans,
       };
 
+      // rentPerSqm only drives the math in 'perSqm' mode (we force 'flat' above), but it's
+      // still shown on screen next to the total - left at its old default it reads as a
+      // mismatch (e.g. "11 €/m²" beside a 562€ total) even though the total is what's used.
       const buildSnapshot = (rentFlatAmount, rentType) => {
-        const snapshot = JSON.parse(JSON.stringify({ ...st, ...baseOverrides, rentFlatAmount }));
+        const rentPerSqm = area > 0 ? Math.round((rentFlatAmount / area) * 100) / 100 : st.rentPerSqm;
+        const snapshot = JSON.parse(JSON.stringify({ ...st, ...baseOverrides, rentFlatAmount, rentPerSqm }));
         delete snapshot.scenarios; delete snapshot.activeTab; delete snapshot.scenarioName; delete snapshot.compareA; delete snapshot.compareB;
         snapshot._source = { listingId, rentType };
         return snapshot;
