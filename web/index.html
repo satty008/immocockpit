@@ -950,10 +950,18 @@ class Component extends DCLogic {
       // amortization is the worst-case screening assumption for a listing we know nothing else
       // about; any secondary loans are disabled so the primary loan is the only financing.
       const loans = st.loans.map((l, i) => (i === 0 ? { ...l, rate: 4.2, amortization: 2 } : { ...l, enabled: false }));
+      // Same screening-default logic as the loan assumptions above: a household earning
+      // €100k taxable income and filing jointly (married, splitting) is the baseline buyer
+      // profile, and its marginal rate is derived the same way the "Use this rate" button
+      // does rather than copy-pasted, so it can't drift out of sync with estimateTax().
+      const taxableIncome = 100000;
+      const filingStatus = 'married';
+      const marginalTaxPct = Math.round(this.marginalRateAt(taxableIncome / 2) * 10) / 10;
       const baseOverrides = {
         address, area, purchasePrice: price, state: validState,
         rentMode: 'standard', rentInputMode: 'flat',
         loan1Mode: 'pct', loan1Pct: 100, loans,
+        taxableIncome, filingStatus, marginalTaxPct,
       };
 
       // rentPerSqm only drives the math in 'perSqm' mode (we force 'flat' above), but it's
