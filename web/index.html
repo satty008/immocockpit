@@ -629,6 +629,7 @@
       <thead>
         <tr style="color:#8b909c; text-align:right;">
           <th style="text-align:left; padding:6px 10px;">Scenario</th>
+          <th style="text-align:left; padding:6px 10px;">Location</th>
           <th style="padding:6px 10px;">Purchase price</th>
           <th style="padding:6px 10px;">Equity</th>
           <th style="padding:6px 10px;">Gross yield</th>
@@ -644,6 +645,7 @@
         <sc-for list="{{ scenarioRows }}" as="srow" hint-placeholder-count="2">
           <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
             <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ srow.name }}</td>
+            <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ srow.location }}</td>
             <td style="padding:6px 10px;">{{ srow.price }}</td>
             <td style="padding:6px 10px;">{{ srow.equity }}</td>
             <td style="padding:6px 10px;">{{ srow.grossYield }}</td>
@@ -663,7 +665,18 @@
     </sc-if>
 
     <sc-if value="{{ hasRanked }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833; font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">Ranked — best cash-on-cash return first</div>
+      <div style="margin-top:24px; padding-top:18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #232833; margin-bottom:10px;">
+        <div style="font-size:13px; font-weight:700; color:#7dd3a8; text-transform:uppercase; letter-spacing:.06em;">Ranked</div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <label style="font-size:11px; color:#8b909c;">Sort by</label>
+          <select value="{{ scenarioSortBy }}" onChange="{{ setScenarioSortBy }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
+            <option value="netYield">Net yield</option>
+            <option value="grossYield">Gross yield</option>
+            <option value="equityReturn">Cash-on-cash return</option>
+            <option value="cfAfterTax">Cashflow after tax</option>
+          </select>
+        </div>
+      </div>
       <div style="overflow-x:auto;">
       <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
         <tbody>
@@ -671,9 +684,12 @@
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
               <td style="text-align:left; padding:6px 10px; color:#6b7280; width:24px;">{{ rrow.rank }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ rrow.name }}</td>
+              <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ rrow.location }}</td>
               <td style="padding:6px 10px; color:#8b909c;">net yield {{ rrow.netYield }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">gross {{ rrow.grossYield }}</td>
               <td style="padding:6px 10px; color:#8b909c;">CF {{ rrow.cfAfterTax }}/mo</td>
-              <td style="padding:6px 10px; color:{{ rrow.color }}; font-weight:700;">CoC {{ rrow.equityReturn }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">CoC {{ rrow.equityReturn }}</td>
+              <td style="padding:6px 10px; color:{{ rrow.ratingColor }}; font-weight:700;">{{ rrow.rating }}</td>
             </tr>
           </sc-for>
         </tbody>
@@ -1007,7 +1023,7 @@ class Component extends DCLogic {
     purchaseYear: 2026,
     area: 31,
     purchasePrice: 55000,
-    state: 'BE',
+    state: 'BW',
     brokerPct: 3.57,
     notaryPct: 1.5,
     landRegistryPct: 0.5,
@@ -1015,9 +1031,9 @@ class Component extends DCLogic {
     otherCostsNote: '',
 
     investments: [
-      { label: 'Kitchen', cost: 2500, capitalize: true },
-      { label: '', cost: 0, capitalize: true },
-      { label: '', cost: 0, capitalize: true },
+      { label: 'Kitchen', cost: 0, capitalize: false },
+      { label: '', cost: 0, capitalize: false },
+      { label: '', cost: 0, capitalize: false },
     ],
 
     renovations: [
@@ -1042,11 +1058,11 @@ class Component extends DCLogic {
     ownReservePerSqm: 10,
     vacancyPct: 3,
 
-    loan1Mode: 'amount',
-    loan1Pct: 80,
+    loan1Mode: 'pct',
+    loan1Pct: 100,
     loans: [
-      { amount: 44000, rate: 3.8, amortization: 2.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
-      { amount: 5000, rate: 3.8, amortization: 8.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
+      { amount: 44000, rate: 4.15, amortization: 15.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
+      { amount: 5000, rate: 3.8, amortization: 8.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
       { amount: 5000, rate: 4.2, amortization: 5.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
       { amount: 0, rate: 4.0, amortization: 4.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
     ],
@@ -1055,8 +1071,8 @@ class Component extends DCLogic {
     bodenrichtwert: 0,
     plotArea: 0,
     buildingSharePct: 75,
-    afaPreset: '3',
-    afaRate: 3,
+    afaPreset: '2',
+    afaRate: 2,
 
     rentContractType: 'flat',
     staffelStepAmount: 20,
@@ -1071,24 +1087,14 @@ class Component extends DCLogic {
     filingStatus: 'married',
     churchTaxPct: 0,
 
-    otherAssets: [
-      { label: 'Cash / savings', value: 15000 },
-      { label: 'Stocks / ETFs', value: 20000 },
-      { label: 'Other property (net equity)', value: 0 },
-    ],
-    otherLiabilities: [
-      { label: 'Car loan', value: 0 },
-      { label: 'Personal loan', value: 0 },
-    ],
-
     householdIncome: 5500,
-    livingExpenses: 2200,
-    otherDebt: 300,
-    savingsGoal: 300,
+    livingExpenses: 3000,
+    otherDebt: 0,
+    savingsGoal: 600,
 
     otherAssets: [
-      { label: 'Cash / savings accounts', value: 15000 },
-      { label: 'Brokerage / stocks & ETFs', value: 20000 },
+      { label: 'Cash / savings accounts', value: 60000 },
+      { label: 'Brokerage / stocks & ETFs', value: 15000 },
       { label: 'Own home (if any)', value: 0 },
       { label: '', value: 0 },
     ],
@@ -1102,6 +1108,7 @@ class Component extends DCLogic {
     activeTab: 'overview',
     scenarios: [],
     scenarioName: '',
+    scenarioSortBy: 'netYield',
     compareA: -1, compareB: -1,
 
     ...loadPersisted(),
@@ -1113,6 +1120,16 @@ class Component extends DCLogic {
     const v = e.target.value;
     const rateMap = { '2': 2, '3': 3, '5deg': 5, 'denkmal': 9 };
     this.setState({ afaPreset: v, afaRate: rateMap[v] ?? this.state.afaRate });
+  }
+
+  setBuildingMode(e) {
+    const v = e.target.value;
+    this.setState(st => {
+      if (v === 'multi' && (!st.units || st.units.length === 0)) {
+        return { buildingMode: v, units: [{ label: 'Unit 1', area: st.area || 50, coldRentPerSqm: st.rentPerSqm || 11 }] };
+      }
+      return { buildingMode: v };
+    });
   }
 
   setTab(tab) { this.setState({ activeTab: tab }); }
@@ -1406,7 +1423,7 @@ class Component extends DCLogic {
     const scenarioRows = s.scenarios.map((sc, i) => {
       const es = this.computeEngine(sc.data);
       return {
-        name: sc.name, price: eur(sc.data.purchasePrice), equity: eur(es.equity),
+        name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), equity: eur(es.equity),
         grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
         cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
         breakEven: es.breakEvenCfYear ?? '—',
@@ -1415,9 +1432,22 @@ class Component extends DCLogic {
       };
     });
 
+    const sortKeyMap = { netYield: 'netYield', grossYield: 'grossYield', equityReturn: 'equityReturn', cfAfterTax: 'cfAfterTax' };
+    const activeSortKey = sortKeyMap[s.scenarioSortBy] || 'netYield';
     const rankedRows = s.scenarios
-      .map((sc) => { const es = this.computeEngine(sc.data); return { name: sc.name, netYield: pct(es.netYield, 2), cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1), sortVal: es.equityReturn, color: es.equityReturn >= 0.08 ? '#7dd3a8' : es.equityReturn >= 0.03 ? '#e8b73f' : '#e2685f' }; })
-      .sort((a, b) => b.sortVal - a.sortVal)
+      .map((sc) => {
+        const es = this.computeEngine(sc.data);
+        const rating = es.netYield >= 0.04 ? 'Good' : es.netYield >= 0.03 ? 'Maybe' : 'Bad';
+        const ratingColor = es.netYield >= 0.04 ? '#7dd3a8' : es.netYield >= 0.03 ? '#e8b73f' : '#e2685f';
+        return {
+          name: sc.name, location: sc.data.address || '—',
+          netYield: pct(es.netYield, 2), grossYield: pct(es.grossYield, 2),
+          cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
+          rating, ratingColor,
+          netYieldVal: es.netYield, grossYieldVal: es.grossYield, equityReturnVal: es.equityReturn, cfAfterTaxVal: es.cfAfterTax,
+        };
+      })
+      .sort((a, b) => b[activeSortKey + 'Val'] - a[activeSortKey + 'Val'])
       .map((r, i) => ({ ...r, rank: i + 1 }));
 
     const compareOptions = s.scenarios.map((sc, i) => ({ idx: i, name: sc.name }));
@@ -1469,7 +1499,7 @@ class Component extends DCLogic {
       setFurnishedOpexPct: this.setField('furnishedOpexPct'), setFurnishedVacancyPct: this.setField('furnishedVacancyPct'),
       isFurnished: s.rentMode === 'furnished', isStandard: s.rentMode !== 'furnished',
       isMultiUnit: s.buildingMode === 'multi', isSingleUnit: s.buildingMode !== 'multi',
-      setBuildingMode: this.setField('buildingMode'),
+      setBuildingMode: this.setBuildingMode.bind(this),
       unitRows: (s.units || []).map((u, i) => ({
         label: u.label, area: u.area, coldRentPerSqm: u.coldRentPerSqm,
         rentFmt: eur(Math.round((u.area || 0) * (u.coldRentPerSqm || 0))),
@@ -1551,6 +1581,7 @@ class Component extends DCLogic {
       tabNetWorthColor: tabColor('networth'), tabNetWorthBorder: tabBorder('networth'),
 
       setScenarioName: this.setField('scenarioName'), saveScenario: this.saveScenario.bind(this),
+      setScenarioSortBy: this.setField('scenarioSortBy'),
       scenarioRows, noScenarios: s.scenarios.length === 0,
       compareOptions, compareA: s.compareA, compareB: s.compareB,
       setCompareA: (ev) => this.setCompareA(parseInt(ev.target.value)),
