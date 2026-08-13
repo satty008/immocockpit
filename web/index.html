@@ -628,6 +628,7 @@
     <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
       <thead>
         <tr style="color:#8b909c; text-align:right;">
+          <th style="padding:6px 10px;"></th>
           <th style="text-align:left; padding:6px 10px;">Scenario</th>
           <th style="text-align:left; padding:6px 10px;">Location</th>
           <th style="padding:6px 10px;">Purchase price</th>
@@ -644,6 +645,7 @@
       <tbody>
         <sc-for list="{{ scenarioRows }}" as="srow" hint-placeholder-count="2">
           <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
+            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.toggleFavorite }}" style="cursor:pointer; color:{{ srow.favoriteColor }}; font-size:14px;">{{ srow.favoriteIcon }}</span></td>
             <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ srow.name }}</td>
             <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ srow.location }}</td>
             <td style="padding:6px 10px;">{{ srow.price }}</td>
@@ -664,6 +666,46 @@
       <div style="font-size:12px; color:#6b7280; padding:16px 0;">No saved scenarios yet — adjust the inputs on the Overview tab, then come back here and save a snapshot to compare it against alternatives (e.g. different price, financing, or rent-growth assumptions).</div>
     </sc-if>
 
+    <sc-if value="{{ hasFavorites }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833; font-size:13px; font-weight:700; color:#e8b73f; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">★ Favourites</div>
+      <div style="overflow-x:auto;">
+      <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
+        <thead>
+          <tr style="color:#8b909c; text-align:right;">
+            <th style="text-align:left; padding:6px 10px;">Scenario</th>
+            <th style="text-align:left; padding:6px 10px;">Location</th>
+            <th style="padding:6px 10px;">Purchase price</th>
+            <th style="padding:6px 10px;">Equity</th>
+            <th style="padding:6px 10px;">Gross yield</th>
+            <th style="padding:6px 10px;">Net yield</th>
+            <th style="padding:6px 10px;">CF after tax/mo</th>
+            <th style="padding:6px 10px;">Cash-on-cash</th>
+            <th style="padding:6px 10px;">Break-even (CF)</th>
+            <th style="padding:6px 10px;"></th>
+            <th style="padding:6px 10px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{ favoriteRows }}" as="frow" hint-placeholder-count="2">
+            <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
+              <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ frow.name }}</td>
+              <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ frow.location }}</td>
+              <td style="padding:6px 10px;">{{ frow.price }}</td>
+              <td style="padding:6px 10px;">{{ frow.equity }}</td>
+              <td style="padding:6px 10px;">{{ frow.grossYield }}</td>
+              <td style="padding:6px 10px;">{{ frow.netYield }}</td>
+              <td style="padding:6px 10px;">{{ frow.cfAfterTax }}</td>
+              <td style="padding:6px 10px;">{{ frow.equityReturn }}</td>
+              <td style="padding:6px 10px;">{{ frow.breakEven }}</td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.toggleFavorite }}" style="cursor:pointer; color:#e8b73f; font-size:13px;" title="Remove from favourites">★</span></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+      </div>
+    </sc-if>
+
     <sc-if value="{{ hasRanked }}" hint-placeholder-val="{{ false }}">
       <div style="margin-top:24px; padding-top:18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #232833; margin-bottom:10px;">
         <div style="font-size:13px; font-weight:700; color:#7dd3a8; text-transform:uppercase; letter-spacing:.06em;">Ranked</div>
@@ -674,6 +716,10 @@
             <option value="grossYield">Gross yield</option>
             <option value="equityReturn">Cash-on-cash return</option>
             <option value="cfAfterTax">Cashflow after tax</option>
+          </select>
+          <select value="{{ scenarioSortDir }}" onChange="{{ setScenarioSortDir }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
+            <option value="desc">Descending (best first)</option>
+            <option value="asc">Ascending (worst first)</option>
           </select>
         </div>
       </div>
@@ -690,6 +736,7 @@
               <td style="padding:6px 10px; color:#8b909c;">CF {{ rrow.cfAfterTax }}/mo</td>
               <td style="padding:6px 10px; color:#8b909c;">CoC {{ rrow.equityReturn }}</td>
               <td style="padding:6px 10px; color:{{ rrow.ratingColor }}; font-weight:700;">{{ rrow.rating }}</td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
             </tr>
           </sc-for>
         </tbody>
@@ -1053,8 +1100,8 @@ class Component extends DCLogic {
     rentPerSqm: 11,
     otherRent: 45,
     costEstimateMode: false,
-    recoverableCosts: 99,
-    nonRecoverableCosts: 58,
+    recoverableCosts: 120,
+    nonRecoverableCosts: 100,
     ownReservePerSqm: 10,
     vacancyPct: 3,
 
@@ -1109,6 +1156,7 @@ class Component extends DCLogic {
     scenarios: [],
     scenarioName: '',
     scenarioSortBy: 'netYield',
+    scenarioSortDir: 'desc',
     compareA: -1, compareB: -1,
 
     ...loadPersisted(),
@@ -1139,10 +1187,18 @@ class Component extends DCLogic {
     const name = (this.state.scenarioName || `Scenario ${this.state.scenarios.length + 1}`).trim();
     const snapshot = JSON.parse(JSON.stringify(this.state));
     delete snapshot.scenarios; delete snapshot.activeTab; delete snapshot.scenarioName; delete snapshot.compareA; delete snapshot.compareB;
-    this.setState(st => ({ scenarios: [...st.scenarios, { name, data: snapshot }], scenarioName: '' }));
+    this.setState(st => ({ scenarios: [...st.scenarios, { name, data: snapshot, favorite: false }], scenarioName: '' }));
   }
 
   deleteScenario(idx) { this.setState(st => ({ scenarios: st.scenarios.filter((_, i) => i !== idx) })); }
+
+  toggleFavorite(idx) {
+    this.setState(st => {
+      const scenarios = [...st.scenarios];
+      scenarios[idx] = { ...scenarios[idx], favorite: !scenarios[idx].favorite };
+      return { scenarios };
+    });
+  }
 
   loadScenario(idx) {
     this.setState(st => {
@@ -1427,15 +1483,36 @@ class Component extends DCLogic {
         grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
         cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
         breakEven: es.breakEvenCfYear ?? '—',
+        favorite: !!sc.favorite,
+        favoriteIcon: sc.favorite ? '★' : '☆',
+        favoriteColor: sc.favorite ? '#e8b73f' : '#6b7280',
+        toggleFavorite: () => this.toggleFavorite(i),
         remove: () => this.deleteScenario(i),
         load: () => this.loadScenario(i),
       };
     });
 
+    const favoriteRows = s.scenarios
+      .map((sc, i) => ({ sc, i }))
+      .filter(({ sc }) => sc.favorite)
+      .map(({ sc, i }) => {
+        const es = this.computeEngine(sc.data);
+        return {
+          name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), equity: eur(es.equity),
+          grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
+          cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
+          breakEven: es.breakEvenCfYear ?? '—',
+          toggleFavorite: () => this.toggleFavorite(i),
+          remove: () => this.deleteScenario(i),
+          load: () => this.loadScenario(i),
+        };
+      });
+
     const sortKeyMap = { netYield: 'netYield', grossYield: 'grossYield', equityReturn: 'equityReturn', cfAfterTax: 'cfAfterTax' };
     const activeSortKey = sortKeyMap[s.scenarioSortBy] || 'netYield';
+    const sortDir = s.scenarioSortDir === 'asc' ? 1 : -1;
     const rankedRows = s.scenarios
-      .map((sc) => {
+      .map((sc, i) => {
         const es = this.computeEngine(sc.data);
         const rating = es.netYield >= 0.04 ? 'Good' : es.netYield >= 0.03 ? 'Maybe' : 'Bad';
         const ratingColor = es.netYield >= 0.04 ? '#7dd3a8' : es.netYield >= 0.03 ? '#e8b73f' : '#e2685f';
@@ -1445,9 +1522,10 @@ class Component extends DCLogic {
           cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
           rating, ratingColor,
           netYieldVal: es.netYield, grossYieldVal: es.grossYield, equityReturnVal: es.equityReturn, cfAfterTaxVal: es.cfAfterTax,
+          remove: () => this.deleteScenario(i),
         };
       })
-      .sort((a, b) => b[activeSortKey + 'Val'] - a[activeSortKey + 'Val'])
+      .sort((a, b) => sortDir * (a[activeSortKey + 'Val'] - b[activeSortKey + 'Val']))
       .map((r, i) => ({ ...r, rank: i + 1 }));
 
     const compareOptions = s.scenarios.map((sc, i) => ({ idx: i, name: sc.name }));
@@ -1582,6 +1660,7 @@ class Component extends DCLogic {
 
       setScenarioName: this.setField('scenarioName'), saveScenario: this.saveScenario.bind(this),
       setScenarioSortBy: this.setField('scenarioSortBy'),
+      setScenarioSortDir: this.setField('scenarioSortDir'),
       scenarioRows, noScenarios: s.scenarios.length === 0,
       compareOptions, compareA: s.compareA, compareB: s.compareB,
       setCompareA: (ev) => this.setCompareA(parseInt(ev.target.value)),
@@ -1590,6 +1669,7 @@ class Component extends DCLogic {
       compareAName: compA ? compA.name : '', compareBName: compB ? compB.name : '',
       needTwoScenarios: s.scenarios.length < 2,
       rankedRows, hasRanked: s.scenarios.length >= 2,
+      favoriteRows, hasFavorites: favoriteRows.length > 0,
 
       bankPrice: eur(s.purchasePrice), bankTotalInvestment: eur(e.totalInvestment),
       bankLoan: eur(e.totalLoan), bankEquity: eur(e.equity),
