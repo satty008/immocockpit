@@ -632,6 +632,7 @@
           <th style="text-align:left; padding:6px 10px;">Scenario</th>
           <th style="text-align:left; padding:6px 10px;">Location</th>
           <th style="padding:6px 10px;">Purchase price</th>
+          <th style="padding:6px 10px;">Factor</th>
           <th style="padding:6px 10px;">Equity</th>
           <th style="padding:6px 10px;">Gross yield</th>
           <th style="padding:6px 10px;">Net yield</th>
@@ -649,6 +650,7 @@
             <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ srow.name }}</td>
             <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ srow.location }}</td>
             <td style="padding:6px 10px;">{{ srow.price }}</td>
+            <td style="padding:6px 10px;">{{ srow.factor }}</td>
             <td style="padding:6px 10px;">{{ srow.equity }}</td>
             <td style="padding:6px 10px;">{{ srow.grossYield }}</td>
             <td style="padding:6px 10px;">{{ srow.netYield }}</td>
@@ -675,6 +677,7 @@
             <th style="text-align:left; padding:6px 10px;">Scenario</th>
             <th style="text-align:left; padding:6px 10px;">Location</th>
             <th style="padding:6px 10px;">Purchase price</th>
+            <th style="padding:6px 10px;">Factor</th>
             <th style="padding:6px 10px;">Equity</th>
             <th style="padding:6px 10px;">Gross yield</th>
             <th style="padding:6px 10px;">Net yield</th>
@@ -691,6 +694,7 @@
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ frow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ frow.location }}</td>
               <td style="padding:6px 10px;">{{ frow.price }}</td>
+              <td style="padding:6px 10px;">{{ frow.factor }}</td>
               <td style="padding:6px 10px;">{{ frow.equity }}</td>
               <td style="padding:6px 10px;">{{ frow.grossYield }}</td>
               <td style="padding:6px 10px;">{{ frow.netYield }}</td>
@@ -731,6 +735,7 @@
               <td style="text-align:left; padding:6px 10px; color:#6b7280; width:24px;">{{ rrow.rank }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ rrow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ rrow.location }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">factor {{ rrow.factor }}</td>
               <td style="padding:6px 10px; color:#8b909c;">net yield {{ rrow.netYield }}</td>
               <td style="padding:6px 10px; color:#8b909c;">gross {{ rrow.grossYield }}</td>
               <td style="padding:6px 10px; color:#8b909c;">CF {{ rrow.cfAfterTax }}/mo</td>
@@ -1108,7 +1113,7 @@ class Component extends DCLogic {
     loan1Mode: 'pct',
     loan1Pct: 100,
     loans: [
-      { amount: 44000, rate: 4.15, amortization: 15.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
+      { amount: 44000, rate: 4.15, amortization: 2.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
       { amount: 5000, rate: 3.8, amortization: 8.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
       { amount: 5000, rate: 4.2, amortization: 5.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
       { amount: 0, rate: 4.0, amortization: 4.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
@@ -1479,7 +1484,7 @@ class Component extends DCLogic {
     const scenarioRows = s.scenarios.map((sc, i) => {
       const es = this.computeEngine(sc.data);
       return {
-        name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), equity: eur(es.equity),
+        name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), factor: es.factor.toFixed(1) + '×', equity: eur(es.equity),
         grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
         cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
         breakEven: es.breakEvenCfYear ?? '—',
@@ -1498,7 +1503,7 @@ class Component extends DCLogic {
       .map(({ sc, i }) => {
         const es = this.computeEngine(sc.data);
         return {
-          name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), equity: eur(es.equity),
+          name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), factor: es.factor.toFixed(1) + '×', equity: eur(es.equity),
           grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
           cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
           breakEven: es.breakEvenCfYear ?? '—',
@@ -1517,7 +1522,7 @@ class Component extends DCLogic {
         const rating = es.netYield >= 0.04 ? 'Good' : es.netYield >= 0.03 ? 'Maybe' : 'Bad';
         const ratingColor = es.netYield >= 0.04 ? '#7dd3a8' : es.netYield >= 0.03 ? '#e8b73f' : '#e2685f';
         return {
-          name: sc.name, location: sc.data.address || '—',
+          name: sc.name, location: sc.data.address || '—', factor: es.factor.toFixed(1) + '×',
           netYield: pct(es.netYield, 2), grossYield: pct(es.grossYield, 2),
           cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
           rating, ratingColor,
