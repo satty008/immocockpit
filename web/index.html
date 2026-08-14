@@ -76,54 +76,60 @@
       <div style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,#7dd3a8,#3fae7a); display:flex; align-items:center; justify-content:center; font-weight:800; color:#08120c; font-size:18px;">fv</div>
       <div>
         <div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#8b909c; font-weight:600;">fitness.in.verbs</div>
-        <div style="font-size:19px; font-weight:700; color:#f4f6f8;">Property Investment Cockpit</div>
+        <div style="font-size:19px; font-weight:700; color:#f4f6f8;">{{ t.appTitle }}</div>
       </div>
     </div>
-    <div style="font-size:12px; color:#6b7280; text-align:right; max-width:420px; line-height:1.5;">
-      Buy-to-let analysis for a single property — purchase costs, financing, cashflow, depreciation and a {{ years }}-year projection. All figures in EUR.
+    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px; max-width:420px;">
+      <div style="display:flex; gap:2px; background:#161923; border:1px solid #262b38; border-radius:8px; padding:3px;">
+        <button onClick="{{ setLangEn }}" style="background:{{ langEnBg }}; color:{{ langEnColor }}; border:none; border-radius:6px; padding:4px 10px; font-size:11px; font-weight:700; cursor:pointer;">EN</button>
+        <button onClick="{{ setLangDe }}" style="background:{{ langDeBg }}; color:{{ langDeColor }}; border:none; border-radius:6px; padding:4px 10px; font-size:11px; font-weight:700; cursor:pointer;">DE</button>
+      </div>
+      <div style="font-size:12px; color:#6b7280; text-align:right; line-height:1.5;">
+        {{ t.headerDescPre }}{{ years }}{{ t.headerDescPost }}
+      </div>
     </div>
   </div>
 
   <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; border-bottom:1px solid #232833;">
-    <div onClick="{{ goOverview }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabOverviewColor }}; border-bottom:2px solid {{ tabOverviewBorder }};">Overview</div>
-    <div onClick="{{ goScenarios }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabScenariosColor }}; border-bottom:2px solid {{ tabScenariosBorder }};">Scenarios</div>
-    <div onClick="{{ goBank }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabBankColor }}; border-bottom:2px solid {{ tabBankBorder }};">Bank meeting</div>
-    <div onClick="{{ goBudget }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabBudgetColor }}; border-bottom:2px solid {{ tabBudgetBorder }};">Household budget</div>
-    <div onClick="{{ goNetWorth }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabNetWorthColor }}; border-bottom:2px solid {{ tabNetWorthBorder }};">Net worth</div>
+    <div onClick="{{ goOverview }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabOverviewColor }}; border-bottom:2px solid {{ tabOverviewBorder }};">{{ t.tabOverview }}</div>
+    <div onClick="{{ goScenarios }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabScenariosColor }}; border-bottom:2px solid {{ tabScenariosBorder }};">{{ t.tabScenarios }}</div>
+    <div onClick="{{ goBank }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabBankColor }}; border-bottom:2px solid {{ tabBankBorder }};">{{ t.tabBank }}</div>
+    <div onClick="{{ goBudget }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabBudgetColor }}; border-bottom:2px solid {{ tabBudgetBorder }};">{{ t.tabBudget }}</div>
+    <div onClick="{{ goNetWorth }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabNetWorthColor }}; border-bottom:2px solid {{ tabNetWorthBorder }};">{{ t.tabNetWorth }}</div>
     <div onClick="{{ toggleTips }}" style="cursor:pointer; padding:10px 4px; font-size:12px; font-weight:600; color:#8b909c; align-self:center; margin-left:auto;">{{ tipsToggleLabel }}</div>
   </div>
 
   <sc-if value="{{ showTips }}" hint-placeholder-val="{{ false }}">
     <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px; margin-bottom:20px;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">New to buy-to-let? Start here</div>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.tipsTitle }}</div>
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px; font-size:12px; color:#a7acb8; line-height:1.6;">
         <div>
-          <div style="font-weight:700; color:#f4f6f8; margin-bottom:6px;">Before you make an offer</div>
+          <div style="font-weight:700; color:#f4f6f8; margin-bottom:6px;">{{ t.tipsBeforeOfferTitle }}</div>
           <ul style="margin:0; padding-left:16px;">
-            <li>Get a financing pre-approval (Finanzierungsbestätigung) — sellers and agents expect one.</li>
-            <li>Budget 10–15% on top of the price for purchase costs (agent, notary, transfer tax) — you'll usually need this in cash, banks rarely finance it.</li>
-            <li>Keep a cash buffer beyond the deposit: at least 3–6 months of mortgage + costs, for vacancy or repairs.</li>
-            <li>For condos (Eigentumswohnung): request the last 3 years of Hausgeldabrechnung, the Teilungserklärung, and minutes of owner meetings (Eigentümerversammlung) — this reveals hidden maintenance backlogs.</li>
-            <li>Order or review the Energieausweis (energy certificate) — affects future retrofit obligations and tenant appeal.</li>
+            <li>{{ t.tipsBeforeOffer1 }}</li>
+            <li>{{ t.tipsBeforeOffer2 }}</li>
+            <li>{{ t.tipsBeforeOffer3 }}</li>
+            <li>{{ t.tipsBeforeOffer4 }}</li>
+            <li>{{ t.tipsBeforeOffer5 }}</li>
           </ul>
         </div>
         <div>
-          <div style="font-weight:700; color:#f4f6f8; margin-bottom:6px;">Common first-time mistakes</div>
+          <div style="font-weight:700; color:#f4f6f8; margin-bottom:6px;">{{ t.tipsMistakesTitle }}</div>
           <ul style="margin:0; padding-left:16px;">
-            <li>Chasing high gross yield in a weak/shrinking location — vacancy risk usually costs more than the extra yield is worth.</li>
-            <li>Underestimating the maintenance reserve (Instandhaltungsrücklage) — old buildings need it more than the Hausgeld statement suggests.</li>
-            <li>Ignoring the WEG's reserve fund (Rücklage) balance — a low one means a special assessment (Sonderumlage) could hit you soon after buying.</li>
-            <li>Not stress-testing the mortgage rate — check the "Bank meeting" tab's rate-sensitivity line before you sign a rate lock.</li>
-            <li>Treating projected rent growth as guaranteed — model a flat-rent scenario too (this tool defaults to flat for that reason).</li>
+            <li>{{ t.tipsMistakes1 }}</li>
+            <li>{{ t.tipsMistakes2 }}</li>
+            <li>{{ t.tipsMistakes3 }}</li>
+            <li>{{ t.tipsMistakes4 }}</li>
+            <li>{{ t.tipsMistakes5 }}</li>
           </ul>
         </div>
         <div>
-          <div style="font-weight:700; color:#f4f6f8; margin-bottom:6px;">Reading this tool</div>
+          <div style="font-weight:700; color:#f4f6f8; margin-bottom:6px;">{{ t.tipsReadingTitle }}</div>
           <ul style="margin:0; padding-left:16px;">
-            <li>Green/yellow/red KPI colors are rough guides, not pass/fail — a "red" cashflow can still be fine if you have income to cover it and expect rent/value growth.</li>
-            <li>The 30-year projection is a scenario, not a forecast — rerun it with flat rent, higher rates and no appreciation to see your downside case.</li>
-            <li>Use the Scenarios tab to save 2–3 versions of the same deal (e.g. different financing) before deciding.</li>
-            <li>This tool does not replace a tax advisor, especially for the depreciation and capex-capitalization rules — those decisions have real audit consequences.</li>
+            <li>{{ t.tipsReading1 }}</li>
+            <li>{{ t.tipsReading2 }}</li>
+            <li>{{ t.tipsReading3 }}</li>
+            <li>{{ t.tipsReading4 }}</li>
           </ul>
         </div>
       </div>
@@ -135,50 +141,50 @@
 
     <div style="flex:1 1 100%; width:100%; display:flex; flex-wrap:wrap; gap:10px;">
       <div style="flex:1 1 140px; min-width:120px; background:#161923; border:1px solid {{ verdictColor }}; border-radius:10px; padding:10px 12px;">
-        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Verdict</div>
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">{{ t.miniVerdict }}</div>
         <div style="font-size:14px; font-weight:800; color:{{ verdictColor }}; line-height:1.25;">{{ verdict }}</div>
       </div>
       <div style="flex:1 1 110px; min-width:100px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
-        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Gross yield</div>
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">{{ t.miniGrossYield }}</div>
         <div style="font-size:16px; font-weight:700; color:{{ grossYieldColor }};">{{ grossYieldFmt }}</div>
       </div>
       <div style="flex:1 1 110px; min-width:100px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
-        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Net yield</div>
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">{{ t.miniNetYield }}</div>
         <div style="font-size:16px; font-weight:700; color:{{ netYieldColor }};">{{ netYieldFmt }}</div>
       </div>
       <div style="flex:1 1 130px; min-width:110px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
-        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">CF after tax/mo</div>
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">{{ t.miniCfAfterTax }}</div>
         <div style="font-size:16px; font-weight:700; color:{{ cfAfterTaxColor }};">{{ cfAfterTaxFmt }}</div>
       </div>
       <div style="flex:1 1 130px; min-width:110px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
-        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Cash-on-cash/yr</div>
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">{{ t.miniCashOnCash }}</div>
         <div style="font-size:16px; font-weight:700; color:#f4f6f8;">{{ equityReturnFmt }}</div>
       </div>
     </div>
 
     <div style="flex:1 1 360px; min-width:300px; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Property &amp; purchase</div>
-      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Address</label>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.cardPropertyPurchase }}</div>
+      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldAddress }}</label>
       <input type="text" value="{{ address }}" onChange="{{ setAddress }}" style="width:100%; margin-bottom:10px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Purchase year</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldPurchaseYear }}</label>
           <input type="number" value="{{ purchaseYear }}" onChange="{{ setPurchaseYear }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Living area (m²)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldLivingArea }}</label>
           <input type="number" value="{{ area }}" onChange="{{ setArea }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Purchase price (€)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldPurchasePrice }}</label>
           <input type="number" value="{{ purchasePrice }}" onChange="{{ setPurchasePrice }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Price / m²</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldPricePerSqm }}</label>
           <div style="padding:8px 10px; font-size:13px; color:#a7acb8;">{{ pricePerSqmFmt }}</div>
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Federal state</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldFederalState }}</label>
           <select value="{{ state }}" onChange="{{ setState }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
             <sc-for list="{{ stateOptions }}" as="s" hint-placeholder-count="16">
               <option value="{{ s.code }}">{{ s.label }}</option>
@@ -186,193 +192,193 @@
           </select>
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Transfer tax (2026)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldTransferTax }}</label>
           <div style="padding:8px 10px; font-size:13px; color:#a7acb8;">{{ transferTaxPctFmt }}</div>
         </div>
       </div>
 
       <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Purchase costs (% of price)</div>
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">{{ t.purchaseCostsPctTitle }}</div>
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
           <div>
-            <label style="display:block; font-size:10px; color:#6b7280;">Agent</label>
+            <label style="display:block; font-size:10px; color:#6b7280;">{{ t.feeAgent }}</label>
             <input type="number" step="0.1" value="{{ brokerPct }}" onChange="{{ setBrokerPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
           </div>
           <div>
-            <label style="display:block; font-size:10px; color:#6b7280;">Notary</label>
+            <label style="display:block; font-size:10px; color:#6b7280;">{{ t.feeNotary }}</label>
             <input type="number" step="0.1" value="{{ notaryPct }}" onChange="{{ setNotaryPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
           </div>
           <div>
-            <label style="display:block; font-size:10px; color:#6b7280;">Land registry</label>
+            <label style="display:block; font-size:10px; color:#6b7280;">{{ t.feeLandRegistry }}</label>
             <input type="number" step="0.1" value="{{ landRegistryPct }}" onChange="{{ setLandRegistryPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
           </div>
         </div>
         <div style="margin-top:8px;">
-          <label style="display:block; font-size:10px; color:#6b7280;">Other / Sonstige (€) — e.g. financing broker fee</label>
+          <label style="display:block; font-size:10px; color:#6b7280;">{{ t.feeOther }}</label>
           <input type="number" value="{{ otherCosts }}" onChange="{{ setOtherCosts }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
         </div>
         <div style="margin-top:10px; display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;">
-          <span>Total purchase costs</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ purchaseCostsFmt }}</span>
+          <span>{{ t.totalPurchaseCosts }}</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ purchaseCostsFmt }}</span>
         </div>
         <div style="margin-top:4px; display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;">
-          <span>Total investment</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ totalInvestmentFmt }}</span>
+          <span>{{ t.totalInvestment }}</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ totalInvestmentFmt }}</span>
         </div>
       </div>
 
       <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Initial capex (kitchen, repairs…) — capitalize into AfA basis, or deduct immediately</div>
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">{{ t.capexSectionTitle }}</div>
         <sc-for list="{{ investmentRows }}" as="inv" hint-placeholder-count="3">
           <div style="display:grid; grid-template-columns:1.3fr 0.8fr 90px; gap:8px; margin-bottom:6px; align-items:center;">
-            <input type="text" placeholder="e.g. Kitchen" value="{{ inv.label }}" onChange="{{ inv.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
+            <input type="text" placeholder="{{ t.capexPlaceholderLabel }}" value="{{ inv.label }}" onChange="{{ inv.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
             <input type="number" placeholder="€" value="{{ inv.cost }}" onChange="{{ inv.setCost }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
-            <label style="display:flex; align-items:center; gap:4px; font-size:10px; color:#8b909c; white-space:nowrap;"><input type="checkbox" checked="{{ inv.capitalize }}" disabled="{{ inv.locked }}" onChange="{{ inv.toggleCapitalize }}" style="flex-shrink:0;" />capitalize</label>
+            <label style="display:flex; align-items:center; gap:4px; font-size:10px; color:#8b909c; white-space:nowrap;"><input type="checkbox" checked="{{ inv.capitalize }}" disabled="{{ inv.locked }}" onChange="{{ inv.toggleCapitalize }}" style="flex-shrink:0;" />{{ t.capitalizeLabel }}</label>
           </div>
         </sc-for>
         <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:6px;">
-          German tax rule (anschaffungsnahe Herstellungskosten): if capex within 3 years of purchase exceeds 15% of the building value, it must be capitalized rather than deducted immediately — no exceptions for routine repairs. Assumes a VAT-exempt existing-property purchase (§4 Nr. 9a UStG); a VAT-liable new-build purchase would push this threshold higher. Current capex: {{ investmentsTotalFmt }} vs. threshold {{ capexThresholdFmt }}.
+          {{ t.capexRuleText }} {{ investmentsTotalFmt }} {{ t.capexRuleVs }} {{ capexThresholdFmt }}.
           <sc-if value="{{ capexForcedCapitalize }}" hint-placeholder-val="{{ false }}">
-            <span style="color:#e8b73f;"> Over threshold — all items above are locked to "capitalize".</span>
+            <span style="color:#e8b73f;"> {{ t.capexOverThreshold }}</span>
           </sc-if>
         </div>
       </div>
 
       <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Future renovation planner — bigger works down the line (roof, heating, facade…)</div>
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">{{ t.renovationSectionTitle }}</div>
         <sc-for list="{{ renovationRows }}" as="reno" hint-placeholder-count="3">
           <div style="display:grid; grid-template-columns:1.3fr 0.8fr 70px; gap:8px; margin-bottom:6px; align-items:center;">
-            <input type="text" placeholder="e.g. New heating" value="{{ reno.label }}" onChange="{{ reno.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
+            <input type="text" placeholder="{{ t.renovationPlaceholderLabel }}" value="{{ reno.label }}" onChange="{{ reno.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
             <input type="number" placeholder="€" value="{{ reno.cost }}" onChange="{{ reno.setCost }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
-            <input type="number" placeholder="yr #" value="{{ reno.year }}" onChange="{{ reno.setYear }}" title="Years after purchase" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
+            <input type="number" placeholder="{{ t.renovationYearPlaceholder }}" value="{{ reno.year }}" onChange="{{ reno.setYear }}" title="{{ t.renovationYearTitle }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
           </div>
         </sc-for>
-        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:6px;">Third column = years after purchase (e.g. 10). Each cost is spread over that one year and reduces cashflow and taxable income that year — it does not change the AfA basis. Treat this as a planning estimate, not a tax position.</div>
+        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:6px;">{{ t.renovationHelpText }}</div>
       </div>
     </div>
 
     <div style="flex:1 1 360px; min-width:300px; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Rent &amp; costs today</div>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.cardRentCosts }}</div>
       <div style="margin-bottom:10px;">
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Building type</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldBuildingType }}</label>
         <select value="{{ buildingMode }}" onChange="{{ setBuildingMode }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
-          <option value="single">Single unit (apartment/house)</option>
-          <option value="multi">Multi-family building (MFH) — several units</option>
+          <option value="single">{{ t.buildingTypeSingle }}</option>
+          <option value="multi">{{ t.buildingTypeMulti }}</option>
         </select>
       </div>
       <sc-if value="{{ isMultiUnit }}" hint-placeholder-val="{{ false }}">
         <sc-for list="{{ unitRows }}" as="unit" hint-placeholder-count="3">
           <div style="display:grid; grid-template-columns:1.1fr 0.7fr 0.7fr 0.8fr 24px; gap:6px; margin-bottom:6px; align-items:center;">
-            <input type="text" placeholder="Unit" value="{{ unit.label }}" onChange="{{ unit.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
+            <input type="text" placeholder="{{ t.unitPlaceholder }}" value="{{ unit.label }}" onChange="{{ unit.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
             <input type="number" placeholder="m²" value="{{ unit.area }}" onChange="{{ unit.setArea }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
             <input type="number" placeholder="€/m²" step="0.1" value="{{ unit.coldRentPerSqm }}" onChange="{{ unit.setRentPerSqm }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px; width:100%;" />
             <div style="font-size:11px; color:#a7acb8; font-family:'IBM Plex Mono',monospace; text-align:right;">{{ unit.rentFmt }}</div>
             <span onClick="{{ unit.remove }}" style="cursor:pointer; color:#e2685f; text-align:center; font-size:12px;">✕</span>
           </div>
         </sc-for>
-        <button onClick="{{ addUnit }}" style="background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 10px; font-size:11px; cursor:pointer; margin-top:2px;">+ Add unit</button>
+        <button onClick="{{ addUnit }}" style="background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 10px; font-size:11px; cursor:pointer; margin-top:2px;">{{ t.addUnit }}</button>
         <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8; margin-top:10px; padding-top:10px; border-top:1px solid #232833;">
-          <span>Total area</span><span style="font-family:'IBM Plex Mono',monospace;">{{ unitsTotalAreaFmt }}</span>
+          <span>{{ t.totalArea }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ unitsTotalAreaFmt }}</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;">
-          <span>Total cold rent (building)</span><span style="font-family:'IBM Plex Mono',monospace;">{{ unitsColdRentFmt }}</span>
+          <span>{{ t.totalColdRentBuilding }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ unitsColdRentFmt }}</span>
         </div>
-        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:8px;">Vacancy in an MFH is per-unit, not all-or-nothing — losing one unit out of five is a 20% rent hit for that period, not total vacancy. The vacancy reserve % below still applies to the building total as a simplification.</div>
+        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:8px;">{{ t.mfhVacancyNote }}</div>
       </sc-if>
       <sc-if value="{{ isSingleUnit }}" hint-placeholder-val="{{ true }}">
       <div style="margin-bottom:10px;">
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Rental model</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldRentalModel }}</label>
         <select value="{{ rentMode }}" onChange="{{ setRentMode }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
-          <option value="standard">Standard long-term let</option>
-          <option value="furnished">Furnished / short-let (Sondervermietung)</option>
+          <option value="standard">{{ t.rentalModelStandard }}</option>
+          <option value="furnished">{{ t.rentalModelFurnished }}</option>
         </select>
       </div>
       <sc-if value="{{ isFurnished }}" hint-placeholder-val="{{ false }}">
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
           <div>
-            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">All-in rent (€/mo)</label>
+            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldAllInRent }}</label>
             <input type="number" value="{{ furnishedRent }}" onChange="{{ setFurnishedRent }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
           </div>
           <div>
-            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Vacancy / turnover (%)</label>
+            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldVacancyTurnover }}</label>
             <input type="number" step="0.5" value="{{ furnishedVacancyPct }}" onChange="{{ setFurnishedVacancyPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
           </div>
           <div>
-            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Extra opex — cleaning/mgmt/furniture wear (% of rent)</label>
+            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldExtraOpex }}</label>
             <input type="number" step="0.5" value="{{ furnishedOpexPct }}" onChange="{{ setFurnishedOpexPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
           </div>
         </div>
-        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:6px;">Furnished/short-let rent is usually quoted all-inclusive (utilities, cleaning, management already in the rent) but carries higher turnover and management cost, and in most areas isn't subject to Mietpreisbremse rent caps — check local rules before relying on that.</div>
+        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:6px;">{{ t.furnishedNote }}</div>
       </sc-if>
       <sc-if value="{{ isStandard }}" hint-placeholder-val="{{ true }}">
       <div style="margin-bottom:10px;">
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Rent input</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldRentInput }}</label>
         <select value="{{ rentInputMode }}" onChange="{{ setRentInputMode }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
-          <option value="perSqm">Per m² + parking/other</option>
-          <option value="flat">Flat total cold rent (€/mo)</option>
+          <option value="perSqm">{{ t.rentInputPerSqm }}</option>
+          <option value="flat">{{ t.rentInputFlat }}</option>
         </select>
       </div>
       <sc-if value="{{ isFlatRent }}" hint-placeholder-val="{{ false }}">
         <div style="margin-bottom:10px;">
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Cold rent, total (€/mo)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldColdRentTotal }}</label>
           <input type="number" value="{{ rentFlatAmount }}" onChange="{{ setRentFlatAmount }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
       </sc-if>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Cold rent / m² / mo (€)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldColdRentPerSqm }}</label>
           <input type="number" step="0.1" value="{{ rentPerSqm }}" onChange="{{ setRentPerSqm }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Parking + other (€/mo)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldParkingOther }}</label>
           <input type="number" value="{{ otherRent }}" onChange="{{ setOtherRent }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Recoverable costs (€/mo)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldRecoverableCosts }}</label>
           <input type="number" value="{{ recoverableCosts }}" onChange="{{ setRecoverableCosts }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Non-recoverable (€/mo)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldNonRecoverableCosts }}</label>
           <input type="number" value="{{ nonRecoverableCosts }}" onChange="{{ setNonRecoverableCosts }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Own reserve (€/m²/yr)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldOwnReserve }}</label>
           <input type="number" step="0.5" value="{{ ownReservePerSqm }}" onChange="{{ setOwnReservePerSqm }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Vacancy reserve (%)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldVacancyReserve }}</label>
           <input type="number" step="0.5" value="{{ vacancyPct }}" onChange="{{ setVacancyPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
       </div>
       <label style="display:flex; align-items:center; gap:6px; font-size:11px; color:#8b909c; margin-top:10px;">
         <input type="checkbox" checked="{{ costEstimateMode }}" onChange="{{ setCostEstimateMode }}" />
-        No exact figures — estimate recoverable/non-recoverable costs from typical % of cold rent
+        {{ t.costEstimateModeLabel }}
       </label>
-      <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:4px;">Rule of thumb: recoverable (utility) costs ≈ 25–30% of cold rent; non-recoverable (management, WEG admin) ≈ 5–8%. When enabled, this overrides the € fields above with 28% / 7%.</div>
+      <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:4px;">{{ t.costEstimateNote }}</div>
       </sc-if>
       </sc-if>
       <div style="margin-top:12px; padding-top:12px; border-top:1px solid #232833; display:flex; flex-direction:column; gap:4px;">
-        <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;"><span>Cold rent (net)</span><span style="font-family:'IBM Plex Mono',monospace;">{{ coldRentFmt }}</span></div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;"><span>Warm rent</span><span style="font-family:'IBM Plex Mono',monospace;">{{ warmRentFmt }}</span></div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;"><span>Operating costs, incl. own reserves</span><span style="font-family:'IBM Plex Mono',monospace;">{{ totalOperatingCostsFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;"><span>{{ t.coldRentNet }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ coldRentFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;"><span>{{ t.warmRent }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ warmRentFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;"><span>{{ t.operatingCostsInclReserves }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ totalOperatingCostsFmt }}</span></div>
       </div>
     </div>
 
     <div style="flex:1 1 360px; min-width:300px; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Financing</div>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.cardFinancing }}</div>
       <sc-for list="{{ loanRowsFull }}" as="loan" hint-placeholder-count="2">
         <div style="margin-bottom:10px; padding:10px; background:#0f1115; border:1px solid #232833; border-radius:10px;">
           <div style="font-size:11px; color:#8b909c; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-            <span>Loan {{ loan.n }}</span>
+            <span>{{ t.loanLabel }} {{ loan.n }}</span>
             <sc-if value="{{ loan.isExtra }}" hint-placeholder-val="{{ false }}">
               <label style="display:flex; align-items:center; gap:4px; font-size:10px; color:#8b909c; cursor:pointer;">
-                <input type="checkbox" checked="{{ loan.enabled }}" onChange="{{ loan.toggleEnabled }}" />used
+                <input type="checkbox" checked="{{ loan.enabled }}" onChange="{{ loan.toggleEnabled }}" />{{ t.usedLabel }}
               </label>
             </sc-if>
           </div>
           <sc-if value="{{ loan.isFirst }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex; gap:6px; margin-bottom:8px;">
               <select value="{{ loan1Mode }}" onChange="{{ setLoan1Mode }}" style="flex:1; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px;">
-                <option value="amount">Fixed amount (€)</option>
-                <option value="pct">% of purchase price (LTV)</option>
+                <option value="amount">{{ t.loanModeAmount }}</option>
+                <option value="pct">{{ t.loanModePct }}</option>
               </select>
               <sc-if value="{{ isLoan1Pct }}" hint-placeholder-val="{{ false }}">
                 <input type="number" value="{{ loan1Pct }}" onChange="{{ setLoan1Pct }}" style="width:70px; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px;" />
@@ -387,188 +393,188 @@
           <sc-if value="{{ !loan.collapsed }}" hint-placeholder-val="{{ true }}">
           <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; opacity:{{ loan.fieldsOpacity }}; pointer-events:{{ loan.fieldsPointerEvents }};">
             <div>
-              <label style="display:block; font-size:10px; color:#6b7280;">Amount (€)</label>
+              <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldAmount }}</label>
               <input type="number" disabled="{{ loan.amountLocked }}" value="{{ loan.amount }}" onChange="{{ loan.setAmount }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
             <div>
-              <label style="display:block; font-size:10px; color:#6b7280;">Rate (%)</label>
+              <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldRate }}</label>
               <input type="number" step="0.05" value="{{ loan.rate }}" onChange="{{ loan.setRate }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
             <div>
-              <label style="display:block; font-size:10px; color:#6b7280;">Amort. (%)</label>
+              <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldAmort }}</label>
               <input type="number" step="0.1" value="{{ loan.amortization }}" onChange="{{ loan.setAmortization }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
             <div>
-              <label style="display:block; font-size:10px; color:#6b7280;">Fixed-rate term (yrs)</label>
+              <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldFixedTerm }}</label>
               <input type="number" value="{{ loan.fixedYears }}" onChange="{{ loan.setFixedYears }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
             <div style="grid-column: span 2;">
-              <label style="display:block; font-size:10px; color:#6b7280;">Rate after fixed term (%)</label>
+              <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldFollowRate }}</label>
               <input type="number" step="0.05" value="{{ loan.followRate }}" onChange="{{ loan.setFollowRate }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
             <div>
-              <label style="display:block; font-size:10px; color:#6b7280;">Special repayment, years after purchase</label>
+              <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldExtraYear }}</label>
               <input type="number" value="{{ loan.extraYear }}" onChange="{{ loan.setExtraYear }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
             <div style="grid-column: span 2;">
-              <label style="display:block; font-size:10px; color:#6b7280;">Special repayment amount (€, one-time)</label>
+              <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldExtraAmount }}</label>
               <input type="number" value="{{ loan.extraAmount }}" onChange="{{ loan.setExtraAmount }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
           </div>
           <div style="display:flex; gap:4px; margin-top:8px; opacity:{{ loan.fieldsOpacity }}; pointer-events:{{ loan.fieldsPointerEvents }};">
-            <span style="font-size:10px; color:#6b7280; align-self:center; margin-right:2px;">Tilgung:</span>
+            <span style="font-size:10px; color:#6b7280; align-self:center; margin-right:2px;">{{ t.amortShort }}:</span>
             <button onClick="{{ loan.setAmort1_5 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">1.5%</button>
             <button onClick="{{ loan.setAmort2 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">2%</button>
             <button onClick="{{ loan.setAmort3 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">3%</button>
             <button onClick="{{ loan.setAmort3_5 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">3.5%</button>
             <button onClick="{{ loan.setAmort4 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">4%</button>
           </div>
-          <div style="font-size:10px; color:#6b7280; margin-top:6px; opacity:{{ loan.fieldsOpacity }};">Debt-free: {{ loan.payoff.termYears }} yrs ({{ loan.payoff.payoffYear }})</div>
+          <div style="font-size:10px; color:#6b7280; margin-top:6px; opacity:{{ loan.fieldsOpacity }};">{{ t.debtFree }}: {{ loan.payoff.termYears }} {{ t.yrsShort }} ({{ loan.payoff.payoffYear }})</div>
           </sc-if>
         </div>
       </sc-for>
       <div style="margin-top:8px; display:flex; flex-direction:column; gap:4px; font-size:12px; color:#a7acb8;">
-        <div style="display:flex; justify-content:space-between;"><span>Total loan amount</span><span style="font-family:'IBM Plex Mono',monospace;">{{ totalLoanFmt }}</span></div>
-        <div style="display:flex; justify-content:space-between;"><span>Equity required</span><span style="font-family:'IBM Plex Mono',monospace;">{{ equityFmt }}</span></div>
-        <div style="display:flex; justify-content:space-between;"><span>Weighted rate</span><span style="font-family:'IBM Plex Mono',monospace;">{{ weightedRateFmt }}</span></div>
-        <div style="display:flex; justify-content:space-between;"><span>Monthly debt service</span><span style="font-family:'IBM Plex Mono',monospace;">{{ debtServiceFmt }}</span></div>
-        <div style="display:flex; justify-content:space-between;"><span>Fully debt-free by</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ payoffYear }}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>{{ t.totalLoanAmount }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ totalLoanFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>{{ t.equityRequired }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ equityFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>{{ t.weightedRate }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ weightedRateFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>{{ t.monthlyDebtService }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ debtServiceFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>{{ t.fullyDebtFreeBy }}</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ payoffYear }}</span></div>
       </div>
     </div>
 
     <div style="flex:1 1 280px; min-width:260px; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Depreciation (AfA)</div>
-      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Depreciation type</label>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.cardDepreciation }}</div>
+      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldDepreciationType }}</label>
       <select value="{{ afaPreset }}" onChange="{{ setAfaPreset }}" style="width:100%; margin-bottom:8px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
-        <option value="3">Standard — built/acquired 2023 or later (3%/yr)</option>
-        <option value="2">Standard — built before 2023 (2%/yr)</option>
-        <option value="5deg">Degressive new-build, 2023–2029 window (5% of book value)</option>
-        <option value="denkmal">Listed heritage (Denkmal) — 9% for 8 yrs, then 7% for 4 yrs</option>
-        <option value="custom">Custom rate</option>
+        <option value="3">{{ t.afaOpt3 }}</option>
+        <option value="2">{{ t.afaOpt2 }}</option>
+        <option value="5deg">{{ t.afaOpt5deg }}</option>
+        <option value="denkmal">{{ t.afaOptDenkmal }}</option>
+        <option value="custom">{{ t.afaOptCustom }}</option>
       </select>
-      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Effective linear rate used below (%/yr)</label>
+      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldEffectiveRate }}</label>
       <input type="number" step="0.5" value="{{ afaRate }}" onChange="{{ setAfaRate }}" style="width:100%; margin-bottom:6px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-bottom:10px;">
-        Rule of thumb: 3% is the current default for any building completed 2023+; 2% for older stock. The 5% degressive and Denkmal options run on a declining balance / staggered schedule in reality — this field approximates them as a flat linear rate for this projection. Ask a tax advisor before relying on the degressive or Denkmal path.
+        {{ t.afaRuleOfThumb }}
       </div>
-      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Building share of price (%) — used if no land value set</label>
+      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldBuildingShare }}</label>
       <div style="display:flex; gap:6px; margin-bottom:6px;">
-        <button onClick="{{ setBuildingShareLow }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">Low fittings (65%)</button>
-        <button onClick="{{ setBuildingShareNormal }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">Normal (75%)</button>
-        <button onClick="{{ setBuildingShareHigh }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">High-end (85%)</button>
+        <button onClick="{{ setBuildingShareLow }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">{{ t.buildingShareLow }}</button>
+        <button onClick="{{ setBuildingShareNormal }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">{{ t.buildingShareNormal }}</button>
+        <button onClick="{{ setBuildingShareHigh }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">{{ t.buildingShareHigh }}</button>
       </div>
       <input type="number" step="1" value="{{ buildingSharePct }}" onChange="{{ setBuildingSharePct }}" style="width:100%; margin-bottom:10px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
 
       <div onClick="{{ toggleLandValueDetail }}" style="cursor:pointer; font-size:11px; color:#7dd3a8; margin-bottom:8px; display:flex; align-items:center; gap:4px;">
-        <span>{{ landValueDetailArrow }}</span> Advanced: land value override (Bodenrichtwert)
+        <span>{{ landValueDetailArrow }}</span> {{ t.advancedLandValue }}
       </div>
       <sc-if value="{{ showLandValueDetail }}" hint-placeholder-val="{{ false }}">
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Bodenrichtwert (€/m²) × your plot share (m²)</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldBodenrichtwert }}</label>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:6px;">
           <input type="number" placeholder="€/m²" value="{{ bodenrichtwert }}" onChange="{{ setBodenrichtwert }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
           <input type="number" placeholder="m²" value="{{ plotArea }}" onChange="{{ setPlotArea }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
-        <div style="font-size:11px; color:#a7acb8; margin-bottom:8px;">= computed land value: <b style="color:#f4f6f8;">{{ bodenwertComputedFmt }}</b></div>
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Or override land value directly (€)</label>
+        <div style="font-size:11px; color:#a7acb8; margin-bottom:8px;">{{ t.computedLandValue }} <b style="color:#f4f6f8;">{{ bodenwertComputedFmt }}</b></div>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldLandValueOverride }}</label>
         <input type="number" value="{{ landValue }}" onChange="{{ setLandValue }}" style="width:100%; margin-bottom:6px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
-        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-bottom:10px;">Look up the official Bodenrichtwert (BORIS-D / your state's Gutachterausschuss portal) for the plot. If a manual override or a computed land value is set (currently {{ effectiveLandValueFmt }}), it replaces the flat building-share % above (currently {{ effectiveBuildingSharePctFmt }}). This mirrors the BMF's approach at a simplified level — it does not apply the full multi-factor worksheet (index adjustments, outbuildings, condition discounts) the BMF PDF tool uses; for a contested valuation, use that or a valuer.</div>
+        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-bottom:10px;">{{ t.bodenrichtwertNotePre }} {{ effectiveLandValueFmt }}{{ t.bodenrichtwertNoteMid }} {{ effectiveBuildingSharePctFmt }}{{ t.bodenrichtwertNotePost }}</div>
       </sc-if>
 
       <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8; padding-top:8px; border-top:1px solid #232833;">
-        <span>AfA basis</span><span style="font-family:'IBM Plex Mono',monospace;">{{ afaBasisFmt }}</span>
+        <span>{{ t.afaBasis }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ afaBasisFmt }}</span>
       </div>
       <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8;">
-        <span>Depreciation / month</span><span style="font-family:'IBM Plex Mono',monospace;">{{ afaMonthlyFmt }}</span>
+        <span>{{ t.depreciationPerMonth }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ afaMonthlyFmt }}</span>
       </div>
     </div>
 
     <div style="flex:1 1 400px; min-width:320px; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Assumptions &amp; tax</div>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.cardAssumptionsTax }}</div>
       <div style="margin-bottom:10px;">
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Rent contract type</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldRentContractType }}</label>
         <select value="{{ rentContractType }}" onChange="{{ setRentContractType }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
-          <option value="annual">Annual increase (market adjustment, compounding %)</option>
-          <option value="flat">Flat — no rent increase</option>
-          <option value="staffel">Staffelmiete — fixed € step every N years</option>
+          <option value="annual">{{ t.rentContractAnnual }}</option>
+          <option value="flat">{{ t.rentContractFlat }}</option>
+          <option value="staffel">{{ t.rentContractStaffel }}</option>
         </select>
       </div>
       <sc-if value="{{ isAnnual }}" hint-placeholder-val="{{ true }}">
         <div style="margin-bottom:10px;">
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Rent growth (%/yr)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldRentGrowth }}</label>
           <input type="number" step="0.1" value="{{ rentGrowthPct }}" onChange="{{ setRentGrowthPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
       </sc-if>
       <sc-if value="{{ isStaffel }}" hint-placeholder-val="{{ false }}">
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
           <div>
-            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Step (€ on cold rent)</label>
+            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldStaffelStep }}</label>
             <input type="number" value="{{ staffelStepAmount }}" onChange="{{ setStaffelStepAmount }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
           </div>
           <div>
-            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Every N years</label>
+            <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldStaffelInterval }}</label>
             <input type="number" value="{{ staffelIntervalYears }}" onChange="{{ setStaffelIntervalYears }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
           </div>
         </div>
       </sc-if>
       <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Cost growth (%/yr)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldCostGrowth }}</label>
           <input type="number" step="0.1" value="{{ costGrowthPct }}" onChange="{{ setCostGrowthPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Value growth (%/yr)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldValueGrowth }}</label>
           <input type="number" step="0.1" value="{{ valueGrowthPct }}" onChange="{{ setValueGrowthPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Projection (yrs)</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldProjectionYears }}</label>
           <input type="number" value="{{ years }}" onChange="{{ setYears }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
       </div>
 
       <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Marginal tax rate — auto-calculated from taxable income below (approximate, 2026 §32a EStG tariff)</div>
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">{{ t.marginalRateAutoNote }}</div>
         <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:8px;">
           <div>
-            <label style="display:block; font-size:10px; color:#6b7280;">Taxable income, zvE (€/yr)</label>
+            <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldTaxableIncome }}</label>
             <input type="number" value="{{ taxableIncome }}" onChange="{{ setTaxableIncome }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
           </div>
           <div>
-            <label style="display:block; font-size:10px; color:#6b7280;">Filing</label>
+            <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldFiling }}</label>
             <select value="{{ filingStatus }}" onChange="{{ setFilingStatus }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
-              <option value="single">Single</option>
-              <option value="married">Married, splitting</option>
+              <option value="single">{{ t.filingSingle }}</option>
+              <option value="married">{{ t.filingMarried }}</option>
             </select>
           </div>
           <div>
-            <label style="display:block; font-size:10px; color:#6b7280;">Church tax</label>
+            <label style="display:block; font-size:10px; color:#6b7280;">{{ t.fieldChurchTax }}</label>
             <select value="{{ churchTaxPct }}" onChange="{{ setChurchTaxPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
-              <option value="0">None</option>
-              <option value="8">8% (BY/BW)</option>
-              <option value="9">9% (other states)</option>
+              <option value="0">{{ t.churchTaxNone }}</option>
+              <option value="8">{{ t.churchTax8 }}</option>
+              <option value="9">{{ t.churchTax9 }}</option>
             </select>
           </div>
         </div>
-        <div style="font-size:11px; color:#a7acb8; margin-top:8px;">Marginal rate in use: <b style="color:#f4f6f8;">{{ marginalTaxPctFmt }}</b> · average rate: <b style="color:#f4f6f8;">{{ taxEstAvg }}</b> · ≈ {{ taxEstMonthly }}/mo total tax (incl. Solidaritätszuschlag{{ taxEstChurchSuffix }}).</div>
-        <div style="font-size:10px; color:#6b7280; margin-top:4px;">Includes the 5.5% Solidaritätszuschlag above the 2026 exemption (€20,350 single / €40,700 joint), tapered through its Gleitzone. "Married, splitting" uses your combined taxable income (zvE) for the final annual assessment. Payroll tax classes (e.g. III/V) only change monthly withholding during the year — they don't change this joint liability, so enter your combined household zvE here regardless of class.</div>
+        <div style="font-size:11px; color:#a7acb8; margin-top:8px;">{{ t.marginalRateInUse }} <b style="color:#f4f6f8;">{{ marginalTaxPctFmt }}</b> · {{ t.averageRate }} <b style="color:#f4f6f8;">{{ taxEstAvg }}</b> · ≈ {{ taxEstMonthly }}{{ t.perMoTotalTax }}{{ taxEstChurchSuffix }}).</div>
+        <div style="font-size:10px; color:#6b7280; margin-top:4px;">{{ t.soliNote }}</div>
       </div>
 
       <div onClick="{{ toggleMarginalRateOverride }}" style="cursor:pointer; font-size:11px; color:#7dd3a8; margin-top:14px; padding-top:12px; border-top:1px solid #232833; display:flex; align-items:center; gap:4px;">
-        <span>{{ marginalRateOverrideArrow }}</span> Advanced: override marginal tax rate manually
+        <span>{{ marginalRateOverrideArrow }}</span> {{ t.advancedMarginalOverride }}
       </div>
       <sc-if value="{{ showMarginalRateOverride }}" hint-placeholder-val="{{ false }}">
         <div style="margin-top:8px;">
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Marginal tax rate (%) — 2026 top rate 42% from €69,878 taxable income</label>
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldMarginalTaxPct }}</label>
           <input type="number" step="1" value="{{ marginalTaxPct }}" onChange="{{ setMarginalTaxPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
       </sc-if>
 
       <div style="font-size:10px; color:#6b7280; line-height:1.5; margin-top:10px;">
-        2026 reference values: mortgage rates for a 10-year fixed loan run ~3.6–4.1% effective; the income-tax top rate (42%) applies above €69,878 of taxable income, rising to 45% above €277,826. Transfer tax follows the selected federal state. Rent-control caps (Mietpreisbremse) are regional and not modelled — check local Mietspiegel rules when rents exceed 10% above reference rent in a designated area.
+        {{ t.referenceValuesNote }}
       </div>
     </div>
 
     <div style="flex:1 1 100%; width:100%; background:#161923; border:1px solid {{ verdictColor }}; border-radius:14px; padding:18px 22px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
-      <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap;">Verdict</div>
+      <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; white-space:nowrap;">{{ t.verdictLabel }}</div>
       <div style="font-size:22px; font-weight:800; color:{{ verdictColor }}; white-space:nowrap;">{{ verdict }}</div>
       <div style="height:32px; width:1px; background:#232833;"></div>
       <ul style="margin:0; padding-left:18px; font-size:12px; color:#a7acb8; line-height:1.5; flex:1;">
@@ -580,27 +586,27 @@
 
     <div style="flex:1 1 100%; width:100%; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
       <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">Gross rental yield</div>
+        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileGrossYield }}</div>
         <div style="font-size:26px; font-weight:700; color:{{ grossYieldColor }};">{{ grossYieldFmt }}</div>
-        <div style="font-size:11px; color:#6b7280; margin-top:2px;">factor {{ factorFmt }}</div>
-        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">Annual cold rent ÷ price. Quick, rough comparison between properties — ignores costs and financing. 4–5%+ is typically considered healthy in Germany.</div>
+        <div style="font-size:11px; color:#6b7280; margin-top:2px;">{{ t.factorLabel }} {{ factorFmt }}</div>
+        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileGrossYieldDesc }}</div>
       </div>
       <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">Net rental yield</div>
+        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileNetYield }}</div>
         <div style="font-size:26px; font-weight:700; color:{{ netYieldColor }};">{{ netYieldFmt }}</div>
-        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">Same as gross, but after operating costs, on your total investment (price + all costs). The more realistic yield number — use this one to compare deals.</div>
+        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileNetYieldDesc }}</div>
       </div>
       <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">Cashflow after tax / mo</div>
+        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileCfAfterTax }}</div>
         <div style="font-size:26px; font-weight:700; color:{{ cfAfterTaxColor }};">{{ cfAfterTaxFmt }}</div>
-        <div style="font-size:11px; color:#6b7280; margin-top:2px;">operating: {{ cfOperationalFmt }}</div>
-        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">What's left in your pocket each month once the mortgage, running costs and tax effect are paid. Negative is common early on (you're trading cashflow now for equity + depreciation tax benefit); just be sure you can cover the gap.</div>
+        <div style="font-size:11px; color:#6b7280; margin-top:2px;">{{ t.operatingLabel }} {{ cfOperationalFmt }}</div>
+        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileCfAfterTaxDesc }}</div>
       </div>
       <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">Cash-on-cash return / yr</div>
+        <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileCashOnCash }}</div>
         <div style="font-size:26px; font-weight:700; color:#f4f6f8;">{{ equityReturnFmt }}</div>
-        <div style="font-size:11px; color:#6b7280; margin-top:2px;">excl. appreciation: {{ equityReturnNoGrowthFmt }}</div>
-        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">Total wealth gained this year (equity paydown + cashflow + appreciation) ÷ your own cash in the deal. The number that matters most for "is this worth tying up my money" — compare it to what your cash could earn elsewhere.</div>
+        <div style="font-size:11px; color:#6b7280; margin-top:2px;">{{ t.exclAppreciation }} {{ equityReturnNoGrowthFmt }}</div>
+        <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileCashOnCashDesc }}</div>
       </div>
     </div>
 
@@ -608,10 +614,10 @@
 
     <div style="flex:1 1 100%; width:100%; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px 18px 8px;">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
-        <div style="font-size:13px; font-weight:700; color:#7dd3a8; text-transform:uppercase; letter-spacing:.06em;">{{ years }}-year projection</div>
+        <div style="font-size:13px; font-weight:700; color:#7dd3a8; text-transform:uppercase; letter-spacing:.06em;">{{ years }}{{ t.yearProjectionSuffix }}</div>
         <div style="display:flex; gap:18px; font-size:11px; color:#8b909c;">
-          <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#7dd3a8; margin-right:5px;"></span>Property value</span>
-          <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#e8b73f; margin-right:5px;"></span>Cumulative cashflow (incl. equity)</span>
+          <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#7dd3a8; margin-right:5px;"></span>{{ t.legendPropertyValue }}</span>
+          <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#e8b73f; margin-right:5px;"></span>{{ t.legendCumulativeCf }}</span>
         </div>
       </div>
       <div style="width:100%; overflow:hidden;">
@@ -622,27 +628,27 @@
         </svg>
       </div>
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-top:6px; padding-bottom:14px;">
-        <div style="font-size:12px; color:#a7acb8;">First positive cashflow after tax: <b style="color:#f4f6f8;">{{ breakEvenCfYear }}</b></div>
-        <div style="font-size:12px; color:#a7acb8;">Cumulative cashflow turns positive: <b style="color:#f4f6f8;">{{ breakEvenCumYear }}</b></div>
-        <div style="font-size:12px; color:#a7acb8;">Main loan repaid: <b style="color:#f4f6f8;">{{ payoffYear }}</b></div>
+        <div style="font-size:12px; color:#a7acb8;">{{ t.firstPositiveCf }} <b style="color:#f4f6f8;">{{ breakEvenCfYear }}</b></div>
+        <div style="font-size:12px; color:#a7acb8;">{{ t.cumCfTurnsPositive }} <b style="color:#f4f6f8;">{{ breakEvenCumYear }}</b></div>
+        <div style="font-size:12px; color:#a7acb8;">{{ t.mainLoanRepaid }} <b style="color:#f4f6f8;">{{ payoffYear }}</b></div>
       </div>
     </div>
 
     <div style="flex:1 1 100%; width:100%; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px; overflow-x:auto;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Year-by-year detail</div>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.yearByYearTitle }}</div>
       <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
         <thead>
           <tr style="color:#8b909c; text-align:right;">
-            <th style="text-align:left; padding:6px 10px; position:sticky; left:0; background:#161923;">Year</th>
-            <th style="padding:6px 10px;">Cold rent/mo</th>
-            <th style="padding:6px 10px;">Warm rent/mo</th>
-            <th style="padding:6px 10px;">Debt service/mo</th>
-            <th style="padding:6px 10px;">Cashflow op. (pre-tax)/mo</th>
-            <th style="padding:6px 10px;">Tax/mo</th>
-            <th style="padding:6px 10px;">Cashflow after tax/mo</th>
-            <th style="padding:6px 10px;">Cumulative CF</th>
-            <th style="padding:6px 10px;">Property value</th>
-            <th style="padding:6px 10px;">Loan balance</th>
+            <th style="text-align:left; padding:6px 10px; position:sticky; left:0; background:#161923;">{{ t.colYear }}</th>
+            <th style="padding:6px 10px;">{{ t.colColdRent }}</th>
+            <th style="padding:6px 10px;">{{ t.colWarmRent }}</th>
+            <th style="padding:6px 10px;">{{ t.colDebtService }}</th>
+            <th style="padding:6px 10px;">{{ t.colCfOp }}</th>
+            <th style="padding:6px 10px;">{{ t.colTax }}</th>
+            <th style="padding:6px 10px;">{{ t.colCfAfterTax }}</th>
+            <th style="padding:6px 10px;">{{ t.colCumCf }}</th>
+            <th style="padding:6px 10px;">{{ t.colPropertyValue }}</th>
+            <th style="padding:6px 10px;">{{ t.colLoanBalance }}</th>
           </tr>
         </thead>
         <tbody>
@@ -669,10 +675,10 @@
 
   <sc-if value="{{ isScenarios }}" hint-placeholder-val="{{ false }}">
   <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
-    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Scenario comparison</div>
+    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.scenarioComparisonTitle }}</div>
     <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
-      <input type="text" placeholder="Scenario name (optional)" value="{{ scenarioName }}" onChange="{{ setScenarioName }}" style="flex:1; min-width:200px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
-      <button onClick="{{ saveScenario }}" style="background:#7dd3a8; border:none; color:#08120c; font-weight:700; border-radius:8px; padding:8px 18px; font-size:13px; cursor:pointer; white-space:nowrap;">Save current inputs as scenario</button>
+      <input type="text" placeholder="{{ t.scenarioNamePlaceholder }}" value="{{ scenarioName }}" onChange="{{ setScenarioName }}" style="flex:1; min-width:200px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+      <button onClick="{{ saveScenario }}" style="background:#7dd3a8; border:none; color:#08120c; font-weight:700; border-radius:8px; padding:8px 18px; font-size:13px; cursor:pointer; white-space:nowrap;">{{ t.saveScenarioBtn }}</button>
     </div>
     <div style="overflow-x:auto;">
     <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
@@ -682,25 +688,25 @@
           <th style="padding:6px 10px;"></th>
           <th style="padding:6px 10px;"></th>
           <th style="padding:6px 10px;"></th>
-          <th style="text-align:left; padding:6px 10px;">Scenario</th>
-          <th style="text-align:left; padding:6px 10px;">Location</th>
-          <th style="padding:6px 10px;">Purchase price</th>
-          <th style="padding:6px 10px;">Factor</th>
-          <th style="padding:6px 10px;">Equity</th>
-          <th style="padding:6px 10px;">Gross yield</th>
-          <th style="padding:6px 10px;">Net yield</th>
-          <th style="padding:6px 10px;">CF after tax/mo</th>
-          <th style="padding:6px 10px;">Cash-on-cash</th>
-          <th style="padding:6px 10px;">Break-even (CF)</th>
-          <th style="padding:6px 10px;">Rating</th>
+          <th style="text-align:left; padding:6px 10px;">{{ t.colScenario }}</th>
+          <th style="text-align:left; padding:6px 10px;">{{ t.colLocation }}</th>
+          <th style="padding:6px 10px;">{{ t.colPurchasePrice }}</th>
+          <th style="padding:6px 10px;">{{ t.colFactor }}</th>
+          <th style="padding:6px 10px;">{{ t.colEquity }}</th>
+          <th style="padding:6px 10px;">{{ t.colGrossYield }}</th>
+          <th style="padding:6px 10px;">{{ t.colNetYield }}</th>
+          <th style="padding:6px 10px;">{{ t.colCfAfterTaxMo }}</th>
+          <th style="padding:6px 10px;">{{ t.colCashOnCash }}</th>
+          <th style="padding:6px 10px;">{{ t.colBreakEvenCf }}</th>
+          <th style="padding:6px 10px;">{{ t.colRating }}</th>
         </tr>
       </thead>
       <tbody>
         <sc-for list="{{ scenarioRows }}" as="srow" hint-placeholder-count="2">
           <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
-            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
-            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.duplicate }}" style="cursor:pointer; color:#8b909c; font-size:13px;" title="Duplicate scenario">⧉</span></td>
+            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">{{ t.loadBtn }}</span></td>
+            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.duplicate }}" style="cursor:pointer; color:#8b909c; font-size:13px;" title="{{ t.duplicateScenarioTitle }}">⧉</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.toggleFavorite }}" style="cursor:pointer; color:{{ srow.favoriteColor }}; font-size:14px;">{{ srow.favoriteIcon }}</span></td>
             <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ srow.name }}</td>
             <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ srow.location }}</td>
@@ -719,35 +725,35 @@
     </table>
     </div>
     <sc-if value="{{ noScenarios }}" hint-placeholder-val="{{ false }}">
-      <div style="font-size:12px; color:#6b7280; padding:16px 0;">No saved scenarios yet — adjust the inputs on the Overview tab, then come back here and save a snapshot to compare it against alternatives (e.g. different price, financing, or rent-growth assumptions).</div>
+      <div style="font-size:12px; color:#6b7280; padding:16px 0;">{{ t.noScenariosText }}</div>
     </sc-if>
 
     <sc-if value="{{ hasFavorites }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833; font-size:13px; font-weight:700; color:#e8b73f; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">★ Favourites</div>
+      <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833; font-size:13px; font-weight:700; color:#e8b73f; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">★ {{ t.favouritesTitle }}</div>
       <div style="overflow-x:auto;">
       <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
         <thead>
           <tr style="color:#8b909c; text-align:right;">
             <th style="padding:6px 10px;"></th>
             <th style="padding:6px 10px;"></th>
-            <th style="text-align:left; padding:6px 10px;">Scenario</th>
-            <th style="text-align:left; padding:6px 10px;">Location</th>
-            <th style="padding:6px 10px;">Purchase price</th>
-            <th style="padding:6px 10px;">Factor</th>
-            <th style="padding:6px 10px;">Equity</th>
-            <th style="padding:6px 10px;">Gross yield</th>
-            <th style="padding:6px 10px;">Net yield</th>
-            <th style="padding:6px 10px;">CF after tax/mo</th>
-            <th style="padding:6px 10px;">Cash-on-cash</th>
-            <th style="padding:6px 10px;">Break-even (CF)</th>
-            <th style="padding:6px 10px;">Rating</th>
+            <th style="text-align:left; padding:6px 10px;">{{ t.colScenario }}</th>
+            <th style="text-align:left; padding:6px 10px;">{{ t.colLocation }}</th>
+            <th style="padding:6px 10px;">{{ t.colPurchasePrice }}</th>
+            <th style="padding:6px 10px;">{{ t.colFactor }}</th>
+            <th style="padding:6px 10px;">{{ t.colEquity }}</th>
+            <th style="padding:6px 10px;">{{ t.colGrossYield }}</th>
+            <th style="padding:6px 10px;">{{ t.colNetYield }}</th>
+            <th style="padding:6px 10px;">{{ t.colCfAfterTaxMo }}</th>
+            <th style="padding:6px 10px;">{{ t.colCashOnCash }}</th>
+            <th style="padding:6px 10px;">{{ t.colBreakEvenCf }}</th>
+            <th style="padding:6px 10px;">{{ t.colRating }}</th>
           </tr>
         </thead>
         <tbody>
           <sc-for list="{{ favoriteRows }}" as="frow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.toggleFavorite }}" style="cursor:pointer; color:#e8b73f; font-size:13px;" title="Remove from favourites">★</span></td>
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.toggleFavorite }}" style="cursor:pointer; color:#e8b73f; font-size:13px;" title="{{ t.removeFromFavouritesTitle }}">★</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">{{ t.loadBtn }}</span></td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ frow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ frow.location }}</td>
               <td style="padding:6px 10px;">{{ frow.price }}</td>
@@ -768,18 +774,18 @@
 
     <sc-if value="{{ hasRanked }}" hint-placeholder-val="{{ false }}">
       <div style="margin-top:24px; padding-top:18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #232833; margin-bottom:10px;">
-        <div style="font-size:13px; font-weight:700; color:#7dd3a8; text-transform:uppercase; letter-spacing:.06em;">Ranked</div>
+        <div style="font-size:13px; font-weight:700; color:#7dd3a8; text-transform:uppercase; letter-spacing:.06em;">{{ t.rankedTitle }}</div>
         <div style="display:flex; align-items:center; gap:6px;">
-          <label style="font-size:11px; color:#8b909c;">Sort by</label>
+          <label style="font-size:11px; color:#8b909c;">{{ t.sortByLabel }}</label>
           <select value="{{ scenarioSortBy }}" onChange="{{ setScenarioSortBy }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
-            <option value="netYield">Net yield</option>
-            <option value="grossYield">Gross yield</option>
-            <option value="equityReturn">Cash-on-cash return</option>
-            <option value="cfAfterTax">Cashflow after tax</option>
+            <option value="netYield">{{ t.colNetYield }}</option>
+            <option value="grossYield">{{ t.colGrossYield }}</option>
+            <option value="equityReturn">{{ t.sortCashOnCash }}</option>
+            <option value="cfAfterTax">{{ t.sortCfAfterTax }}</option>
           </select>
           <select value="{{ scenarioSortDir }}" onChange="{{ setScenarioSortDir }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
-            <option value="desc">Descending (best first)</option>
-            <option value="asc">Ascending (worst first)</option>
+            <option value="desc">{{ t.sortDesc }}</option>
+            <option value="asc">{{ t.sortAsc }}</option>
           </select>
         </div>
       </div>
@@ -789,15 +795,15 @@
           <sc-for list="{{ rankedRows }}" as="rrow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">{{ t.loadBtn }}</span></td>
               <td style="text-align:left; padding:6px 10px; color:#6b7280; width:24px;">{{ rrow.rank }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ rrow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ rrow.location }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">factor {{ rrow.factor }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">net yield {{ rrow.netYield }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">gross {{ rrow.grossYield }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">CF {{ rrow.cfAfterTax }}/mo</td>
-              <td style="padding:6px 10px; color:#8b909c;">CoC {{ rrow.equityReturn }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ t.factorLabel }} {{ rrow.factor }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ t.netYieldShort }} {{ rrow.netYield }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ t.grossShort }} {{ rrow.grossYield }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ t.cfShort }} {{ rrow.cfAfterTax }}/mo</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ t.cocShort }} {{ rrow.equityReturn }}</td>
               <td style="padding:6px 10px; color:{{ rrow.ratingColor }}; font-weight:700;">{{ rrow.rating }}</td>
             </tr>
           </sc-for>
@@ -807,17 +813,17 @@
     </sc-if>
 
     <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833;">
-      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">Side-by-side compare</div>
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:10px; text-transform:uppercase; letter-spacing:.06em;">{{ t.sideBySideTitle }}</div>
       <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px; align-items:center;">
         <select value="{{ compareA }}" onChange="{{ setCompareA }}" style="flex:1; min-width:160px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
-          <option value="-1">Select scenario A…</option>
+          <option value="-1">{{ t.selectScenarioA }}</option>
           <sc-for list="{{ compareOptions }}" as="opt" hint-placeholder-count="2">
             <option value="{{ opt.idx }}">{{ opt.name }}</option>
           </sc-for>
         </select>
-        <span style="color:#6b7280; font-size:12px;">vs.</span>
+        <span style="color:#6b7280; font-size:12px;">{{ t.vsLabel }}</span>
         <select value="{{ compareB }}" onChange="{{ setCompareB }}" style="flex:1; min-width:160px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
-          <option value="-1">Select scenario B…</option>
+          <option value="-1">{{ t.selectScenarioB }}</option>
           <sc-for list="{{ compareOptions }}" as="opt2" hint-placeholder-count="2">
             <option value="{{ opt2.idx }}">{{ opt2.name }}</option>
           </sc-for>
@@ -851,136 +857,136 @@
 
   <sc-if value="{{ isBank }}" hint-placeholder-val="{{ false }}">
   <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:24px; max-width:760px;">
-    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:2px; text-transform:uppercase; letter-spacing:.06em;">Bank meeting one-pager</div>
-    <div style="font-size:11px; color:#6b7280; margin-bottom:18px;">Figures a loan officer typically asks for — LTV, debt-service coverage and equity ratio, derived from the Overview inputs.</div>
+    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:2px; text-transform:uppercase; letter-spacing:.06em;">{{ t.bankOnePagerTitle }}</div>
+    <div style="font-size:11px; color:#6b7280; margin-bottom:18px;">{{ t.bankOnePagerDesc }}</div>
 
     <div style="font-size:13px; font-weight:700; color:#f4f6f8; margin-bottom:8px;">{{ address }}</div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; font-size:13px; color:#d5d8de; margin-bottom:18px;">
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">Purchase price</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankPrice }}</span></div>
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">Total investment</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankTotalInvestment }}</span></div>
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">Loan amount requested</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankLoan }}</span></div>
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">Equity contributed</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankEquity }}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.colPurchasePrice }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankPrice }}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.totalInvestment }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankTotalInvestment }}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.loanAmountRequested }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankLoan }}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.equityContributed }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ bankEquity }}</span></div>
     </div>
 
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-bottom:18px;">
       <div style="background:#0f1115; border:1px solid #232833; border-radius:10px; padding:12px;">
-        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">LTV</div>
+        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">{{ t.ltvLabel }}</div>
         <div style="font-size:20px; font-weight:700; color:{{ ltvColor }};">{{ ltvFmt }}</div>
       </div>
       <div style="background:#0f1115; border:1px solid #232833; border-radius:10px; padding:12px;">
-        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">Equity ratio</div>
+        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">{{ t.equityRatioLabel }}</div>
         <div style="font-size:20px; font-weight:700; color:#f4f6f8;">{{ equityRatioFmt }}</div>
       </div>
       <div style="background:#0f1115; border:1px solid #232833; border-radius:10px; padding:12px;">
-        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">Debt-service coverage</div>
+        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">{{ t.dscrLabel }}</div>
         <div style="font-size:20px; font-weight:700; color:{{ dscrColor }};">{{ dscrFmt }}</div>
       </div>
       <div style="background:#0f1115; border:1px solid #232833; border-radius:10px; padding:12px;">
-        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">Weighted rate</div>
+        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">{{ t.weightedRate }}</div>
         <div style="font-size:20px; font-weight:700; color:#f4f6f8;">{{ bankWeightedRate }}</div>
       </div>
     </div>
 
     <div style="font-size:12px; color:#a7acb8; line-height:1.6; margin-bottom:14px;">
-      DSCR = annual warm rent ÷ annual debt service. Above 1.2× is generally viewed as comfortable; below 1.0× means rent alone does not cover the loan payment.
+      {{ t.dscrExplanation }}
     </div>
 
     <div style="border-top:1px solid #232833; padding-top:14px;">
-      <div style="font-size:12px; font-weight:700; color:#f4f6f8; margin-bottom:8px;">Interest-rate sensitivity</div>
-      <div style="font-size:12px; color:#a7acb8;">If the rate on renewal were <b style="color:#f4f6f8;">+1.0 pp</b> higher, monthly debt service would rise by <b style="color:#f4f6f8;">{{ rateShockImpact }}</b>, moving the after-tax cashflow to <b style="color:{{ rateShockColor }};">{{ rateShockCf }}</b>/mo.</div>
+      <div style="font-size:12px; font-weight:700; color:#f4f6f8; margin-bottom:8px;">{{ t.rateSensitivityTitle }}</div>
+      <div style="font-size:12px; color:#a7acb8;">{{ t.rateSensitivityPre }} <b style="color:#f4f6f8;">{{ t.ppLabel }}</b> {{ t.rateSensitivityMid1 }} <b style="color:#f4f6f8;">{{ rateShockImpact }}</b>{{ t.rateSensitivityMid2 }} <b style="color:{{ rateShockColor }};">{{ rateShockCf }}</b>{{ t.rateSensitivityPost }}</div>
     </div>
   </div>
   </sc-if>
 
   <sc-if value="{{ isBudget }}" hint-placeholder-val="{{ false }}">
   <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:24px; max-width:640px;">
-    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:2px; text-transform:uppercase; letter-spacing:.06em;">Household budget check</div>
-    <div style="font-size:11px; color:#6b7280; margin-bottom:18px;">Does this purchase fit your monthly household budget, on top of everything else you pay for?</div>
+    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:2px; text-transform:uppercase; letter-spacing:.06em;">{{ t.budgetCheckTitle }}</div>
+    <div style="font-size:11px; color:#6b7280; margin-bottom:18px;">{{ t.budgetCheckDesc }}</div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px;">
       <div>
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Net household income (€/mo)</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldHouseholdIncome }}</label>
         <input type="number" value="{{ householdIncome }}" onChange="{{ setHouseholdIncome }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       </div>
       <div>
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Living costs incl. own housing (€/mo)</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldLivingCosts }}</label>
         <input type="number" value="{{ livingExpenses }}" onChange="{{ setLivingExpenses }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       </div>
       <div>
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Other loan/debt payments (€/mo)</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldOtherDebt }}</label>
         <input type="number" value="{{ otherDebt }}" onChange="{{ setOtherDebt }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       </div>
       <div>
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Existing savings/investing (€/mo)</label>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldExistingSavings }}</label>
         <input type="number" value="{{ savingsGoal }}" onChange="{{ setSavingsGoal }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       </div>
     </div>
 
     <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:#d5d8de; padding-top:14px; border-top:1px solid #232833;">
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">Disposable income before this property</span><span style="font-family:'IBM Plex Mono',monospace;">{{ disposableBeforeFmt }}/mo</span></div>
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">This property's cashflow impact</span><span style="font-family:'IBM Plex Mono',monospace;">{{ propertyImpactFmt }}/mo</span></div>
-      <div style="display:flex; justify-content:space-between;"><span style="color:#f4f6f8; font-weight:700;">Disposable income after this property</span><span style="font-family:'IBM Plex Mono',monospace; color:{{ budgetColor }}; font-weight:700;">{{ disposableAfterFmt }}/mo</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.disposableBefore }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ disposableBeforeFmt }}/mo</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.propertyImpact }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ propertyImpactFmt }}/mo</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#f4f6f8; font-weight:700;">{{ t.disposableAfter }}</span><span style="font-family:'IBM Plex Mono',monospace; color:{{ budgetColor }}; font-weight:700;">{{ disposableAfterFmt }}/mo</span></div>
     </div>
 
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:18px;">
       <div style="background:#0f1115; border:1px solid #232833; border-radius:10px; padding:12px;">
-        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">Debt-to-income (all debt incl. this property)</div>
+        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">{{ t.dtiLabel }}</div>
         <div style="font-size:20px; font-weight:700; color:{{ dtiColor }};">{{ dtiFmt }}</div>
-        <div style="font-size:10px; color:#6b7280; margin-top:4px;">Banks generally get uneasy above ~35–40%.</div>
+        <div style="font-size:10px; color:#6b7280; margin-top:4px;">{{ t.dtiNote }}</div>
       </div>
       <div style="background:#0f1115; border:1px solid #232833; border-radius:10px; padding:12px;">
-        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">This property's debt service</div>
+        <div style="font-size:10px; color:#8b909c; text-transform:uppercase;">{{ t.propertyDebtServiceLabel }}</div>
         <div style="font-size:20px; font-weight:700; color:#f4f6f8;">{{ propertyDebtServiceFmt }}/mo</div>
       </div>
     </div>
 
-    <div style="font-size:10px; color:#6b7280; line-height:1.5; margin-top:16px;">This is a simple affordability sanity check, not a bank's actual underwriting model — lenders apply their own stress rates and living-cost assumptions (Haushaltsrechnung), which are typically stricter than this.</div>
+    <div style="font-size:10px; color:#6b7280; line-height:1.5; margin-top:16px;">{{ t.budgetDisclaimer }}</div>
   </div>
   </sc-if>
 
   <sc-if value="{{ isNetWorth }}" hint-placeholder-val="{{ false }}">
   <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:24px; max-width:720px;">
-    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:2px; text-transform:uppercase; letter-spacing:.06em;">Net worth statement</div>
-    <div style="font-size:11px; color:#6b7280; margin-bottom:18px;">Where this property sits alongside your other assets and debts.</div>
+    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:2px; text-transform:uppercase; letter-spacing:.06em;">{{ t.netWorthTitle }}</div>
+    <div style="font-size:11px; color:#6b7280; margin-bottom:18px;">{{ t.netWorthDesc }}</div>
 
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:24px;">
       <div>
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px; text-transform:uppercase;">Other assets</div>
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px; text-transform:uppercase;">{{ t.otherAssetsTitle }}</div>
         <sc-for list="{{ assetRows }}" as="asset" hint-placeholder-count="4">
           <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:8px; margin-bottom:6px;">
-            <input type="text" placeholder="Asset" value="{{ asset.label }}" onChange="{{ asset.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
+            <input type="text" placeholder="{{ t.assetPlaceholder }}" value="{{ asset.label }}" onChange="{{ asset.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             <input type="number" placeholder="€" value="{{ asset.value }}" onChange="{{ asset.setValue }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
           </div>
         </sc-for>
         <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8; margin-top:8px; padding-top:8px; border-top:1px solid #232833;">
-          <span>Total other assets</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ otherAssetsTotalFmt }}</span>
+          <span>{{ t.totalOtherAssets }}</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ otherAssetsTotalFmt }}</span>
         </div>
       </div>
       <div>
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px; text-transform:uppercase;">Other liabilities</div>
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px; text-transform:uppercase;">{{ t.otherLiabilitiesTitle }}</div>
         <sc-for list="{{ liabilityRows }}" as="liab" hint-placeholder-count="3">
           <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:8px; margin-bottom:6px;">
-            <input type="text" placeholder="Liability" value="{{ liab.label }}" onChange="{{ liab.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
+            <input type="text" placeholder="{{ t.liabilityPlaceholder }}" value="{{ liab.label }}" onChange="{{ liab.setLabel }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             <input type="number" placeholder="€" value="{{ liab.value }}" onChange="{{ liab.setValue }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
           </div>
         </sc-for>
         <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8; margin-top:8px; padding-top:8px; border-top:1px solid #232833;">
-          <span>Total other liabilities</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ otherLiabilitiesTotalFmt }}</span>
+          <span>{{ t.totalOtherLiabilities }}</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ otherLiabilitiesTotalFmt }}</span>
         </div>
       </div>
     </div>
 
     <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:#d5d8de; padding-top:16px; margin-top:18px; border-top:1px solid #232833;">
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">Net worth without this property</span><span style="font-family:'IBM Plex Mono',monospace;">{{ netWorthWithoutPropertyFmt }}</span></div>
-      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">This property's equity today (value − loan balance)</span><span style="font-family:'IBM Plex Mono',monospace;">{{ propertyEquityValueFmt }}</span></div>
-      <div style="display:flex; justify-content:space-between;"><span style="color:#f4f6f8; font-weight:700;">Total net worth incl. this property</span><span style="font-family:'IBM Plex Mono',monospace; color:#7dd3a8; font-weight:700;">{{ netWorthFmt }}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.netWorthWithoutProperty }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ netWorthWithoutPropertyFmt }}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#8b909c;">{{ t.propertyEquityToday }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ propertyEquityValueFmt }}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span style="color:#f4f6f8; font-weight:700;">{{ t.totalNetWorth }}</span><span style="font-family:'IBM Plex Mono',monospace; color:#7dd3a8; font-weight:700;">{{ netWorthFmt }}</span></div>
     </div>
-    <div style="font-size:10px; color:#6b7280; line-height:1.5; margin-top:14px;">Property equity is a paper value based on the assumed appreciation rate on the Overview tab — it isn't cash until you sell or refinance. Update the figures here periodically as your other holdings change.</div>
+    <div style="font-size:10px; color:#6b7280; line-height:1.5; margin-top:14px;">{{ t.netWorthDisclaimer }}</div>
   </div>
   </sc-if>
 
   <div style="margin-top:24px; font-size:11px; color:#4b5058; line-height:1.6; max-width:900px;">
-    No guarantee of accuracy. This tool does not replace qualified legal, tax or financial advice. Always run your own verification and consult a tax advisor for your specific situation.
+    {{ t.footerDisclaimer }}
   </div>
 </div>
 
@@ -1006,7 +1012,312 @@ const GER_STATES = [
 ];
 
 const STORAGE_KEY = 'immocockpit:v1';
-const PERSISTED_KEYS = ['scenarios', 'householdIncome', 'livingExpenses', 'otherDebt', 'savingsGoal', 'otherAssets', 'otherLiabilities'];
+const PERSISTED_KEYS = ['scenarios', 'householdIncome', 'livingExpenses', 'otherDebt', 'savingsGoal', 'otherAssets', 'otherLiabilities', 'lang'];
+
+const TRANSLATIONS = {
+  en: {
+    appTitle: "Property Investment Cockpit",
+    headerDescPre: "Buy-to-let analysis for a single property — purchase costs, financing, cashflow, depreciation and a ",
+    headerDescPost: "-year projection. All figures in EUR.",
+    tabOverview: "Overview", tabScenarios: "Scenarios", tabBank: "Bank meeting", tabBudget: "Household budget", tabNetWorth: "Net worth",
+    tipsShow: "Show tips for first-time buyers", tipsHide: "Hide tips",
+    tipsTitle: "New to buy-to-let? Start here",
+    tipsBeforeOfferTitle: "Before you make an offer",
+    tipsBeforeOffer1: "Get a financing pre-approval (Finanzierungsbestätigung) — sellers and agents expect one.",
+    tipsBeforeOffer2: "Budget 10–15% on top of the price for purchase costs (agent, notary, transfer tax) — you'll usually need this in cash, banks rarely finance it.",
+    tipsBeforeOffer3: "Keep a cash buffer beyond the deposit: at least 3–6 months of mortgage + costs, for vacancy or repairs.",
+    tipsBeforeOffer4: "For condos (Eigentumswohnung): request the last 3 years of Hausgeldabrechnung, the Teilungserklärung, and minutes of owner meetings (Eigentümerversammlung) — this reveals hidden maintenance backlogs.",
+    tipsBeforeOffer5: "Order or review the Energieausweis (energy certificate) — affects future retrofit obligations and tenant appeal.",
+    tipsMistakesTitle: "Common first-time mistakes",
+    tipsMistakes1: "Chasing high gross yield in a weak/shrinking location — vacancy risk usually costs more than the extra yield is worth.",
+    tipsMistakes2: "Underestimating the maintenance reserve (Instandhaltungsrücklage) — old buildings need it more than the Hausgeld statement suggests.",
+    tipsMistakes3: "Ignoring the WEG's reserve fund (Rücklage) balance — a low one means a special assessment (Sonderumlage) could hit you soon after buying.",
+    tipsMistakes4: "Not stress-testing the mortgage rate — check the \"Bank meeting\" tab's rate-sensitivity line before you sign a rate lock.",
+    tipsMistakes5: "Treating projected rent growth as guaranteed — model a flat-rent scenario too (this tool defaults to flat for that reason).",
+    tipsReadingTitle: "Reading this tool",
+    tipsReading1: "Green/yellow/red KPI colors are rough guides, not pass/fail — a \"red\" cashflow can still be fine if you have income to cover it and expect rent/value growth.",
+    tipsReading2: "The 30-year projection is a scenario, not a forecast — rerun it with flat rent, higher rates and no appreciation to see your downside case.",
+    tipsReading3: "Use the Scenarios tab to save 2–3 versions of the same deal (e.g. different financing) before deciding.",
+    tipsReading4: "This tool does not replace a tax advisor, especially for the depreciation and capex-capitalization rules — those decisions have real audit consequences.",
+
+    miniVerdict: "Verdict", miniGrossYield: "Gross yield", miniNetYield: "Net yield", miniCfAfterTax: "CF after tax/mo", miniCashOnCash: "Cash-on-cash/yr",
+    cardPropertyPurchase: "Property & purchase", fieldAddress: "Address",
+    fieldPurchaseYear: "Purchase year", fieldLivingArea: "Living area (m²)", fieldPurchasePrice: "Purchase price (€)",
+    fieldPricePerSqm: "Price / m²", fieldFederalState: "Federal state", fieldTransferTax: "Transfer tax (2026)",
+    purchaseCostsPctTitle: "Purchase costs (% of price)", feeAgent: "Agent", feeNotary: "Notary", feeLandRegistry: "Land registry",
+    feeOther: "Other / Sonstige (€) — e.g. financing broker fee",
+    totalPurchaseCosts: "Total purchase costs", totalInvestment: "Total investment",
+    capexSectionTitle: "Initial capex (kitchen, repairs…) — capitalize into AfA basis, or deduct immediately",
+    capexPlaceholderLabel: "e.g. Kitchen", capitalizeLabel: "capitalize",
+    capexRuleText: "German tax rule (anschaffungsnahe Herstellungskosten): if capex within 3 years of purchase exceeds 15% of the building value, it must be capitalized rather than deducted immediately — no exceptions for routine repairs. Assumes a VAT-exempt existing-property purchase (§4 Nr. 9a UStG); a VAT-liable new-build purchase would push this threshold higher. Current capex:",
+    capexRuleVs: "vs. threshold",
+    capexOverThreshold: "Over threshold — all items above are locked to \"capitalize\".",
+    renovationSectionTitle: "Future renovation planner — bigger works down the line (roof, heating, facade…)",
+    renovationPlaceholderLabel: "e.g. New heating", renovationYearPlaceholder: "yr #", renovationYearTitle: "Years after purchase",
+    renovationHelpText: "Third column = years after purchase (e.g. 10). Each cost is spread over that one year and reduces cashflow and taxable income that year — it does not change the AfA basis. Treat this as a planning estimate, not a tax position.",
+    cardRentCosts: "Rent & costs today",
+    fieldBuildingType: "Building type", buildingTypeSingle: "Single unit (apartment/house)", buildingTypeMulti: "Multi-family building (MFH) — several units",
+    unitPlaceholder: "Unit", addUnit: "+ Add unit", totalArea: "Total area", totalColdRentBuilding: "Total cold rent (building)",
+    mfhVacancyNote: "Vacancy in an MFH is per-unit, not all-or-nothing — losing one unit out of five is a 20% rent hit for that period, not total vacancy. The vacancy reserve % below still applies to the building total as a simplification.",
+    fieldRentalModel: "Rental model", rentalModelStandard: "Standard long-term let", rentalModelFurnished: "Furnished / short-let (Sondervermietung)",
+    fieldAllInRent: "All-in rent (€/mo)", fieldVacancyTurnover: "Vacancy / turnover (%)", fieldExtraOpex: "Extra opex — cleaning/mgmt/furniture wear (% of rent)",
+    furnishedNote: "Furnished/short-let rent is usually quoted all-inclusive (utilities, cleaning, management already in the rent) but carries higher turnover and management cost, and in most areas isn't subject to Mietpreisbremse rent caps — check local rules before relying on that.",
+    fieldRentInput: "Rent input", rentInputPerSqm: "Per m² + parking/other", rentInputFlat: "Flat total cold rent (€/mo)",
+    fieldColdRentTotal: "Cold rent, total (€/mo)", fieldColdRentPerSqm: "Cold rent / m² / mo (€)", fieldParkingOther: "Parking + other (€/mo)",
+    fieldRecoverableCosts: "Recoverable costs (€/mo)", fieldNonRecoverableCosts: "Non-recoverable (€/mo)",
+    fieldOwnReserve: "Own reserve (€/m²/yr)", fieldVacancyReserve: "Vacancy reserve (%)",
+    costEstimateModeLabel: "No exact figures — estimate recoverable/non-recoverable costs from typical % of cold rent",
+    costEstimateNote: "Rule of thumb: recoverable (utility) costs ≈ 25–30% of cold rent; non-recoverable (management, WEG admin) ≈ 5–8%. When enabled, this overrides the € fields above with 28% / 7%.",
+    coldRentNet: "Cold rent (net)", warmRent: "Warm rent", operatingCostsInclReserves: "Operating costs, incl. own reserves",
+    cardFinancing: "Financing", loanLabel: "Loan", usedLabel: "used",
+    loanModeAmount: "Fixed amount (€)", loanModePct: "% of purchase price (LTV)",
+    fieldAmount: "Amount (€)", fieldRate: "Rate (%)", fieldAmort: "Amort. (%)", fieldFixedTerm: "Fixed-rate term (yrs)",
+    fieldFollowRate: "Rate after fixed term (%)", fieldExtraYear: "Special repayment, years after purchase",
+    fieldExtraAmount: "Special repayment amount (€, one-time)", amortShort: "Amort.", debtFree: "Debt-free", yrsShort: "yrs",
+    totalLoanAmount: "Total loan amount", equityRequired: "Equity required", weightedRate: "Weighted rate",
+    monthlyDebtService: "Monthly debt service", fullyDebtFreeBy: "Fully debt-free by",
+    cardDepreciation: "Depreciation (AfA)", fieldDepreciationType: "Depreciation type",
+    afaOpt3: "Standard — built/acquired 2023 or later (3%/yr)", afaOpt2: "Standard — built before 2023 (2%/yr)",
+    afaOpt5deg: "Degressive new-build, 2023–2029 window (5% of book value)",
+    afaOptDenkmal: "Listed heritage (Denkmal) — 9% for 8 yrs, then 7% for 4 yrs", afaOptCustom: "Custom rate",
+    fieldEffectiveRate: "Effective linear rate used below (%/yr)",
+    afaRuleOfThumb: "Rule of thumb: 3% is the current default for any building completed 2023+; 2% for older stock. The 5% degressive and Denkmal options run on a declining balance / staggered schedule in reality — this field approximates them as a flat linear rate for this projection. Ask a tax advisor before relying on the degressive or Denkmal path.",
+    fieldBuildingShare: "Building share of price (%) — used if no land value set",
+    buildingShareLow: "Low fittings (65%)", buildingShareNormal: "Normal (75%)", buildingShareHigh: "High-end (85%)",
+    advancedLandValue: "Advanced: land value override (Bodenrichtwert)",
+    fieldBodenrichtwert: "Bodenrichtwert (€/m²) × your plot share (m²)", computedLandValue: "= computed land value:",
+    fieldLandValueOverride: "Or override land value directly (€)",
+    bodenrichtwertNotePre: "Look up the official Bodenrichtwert (BORIS-D / your state's Gutachterausschuss portal) for the plot. If a manual override or a computed land value is set (currently",
+    bodenrichtwertNoteMid: "), it replaces the flat building-share % above (currently",
+    bodenrichtwertNotePost: "). This mirrors the BMF's approach at a simplified level — it does not apply the full multi-factor worksheet (index adjustments, outbuildings, condition discounts) the BMF PDF tool uses; for a contested valuation, use that or a valuer.",
+    afaBasis: "AfA basis", depreciationPerMonth: "Depreciation / month",
+    cardAssumptionsTax: "Assumptions & tax", fieldRentContractType: "Rent contract type",
+    rentContractAnnual: "Annual increase (market adjustment, compounding %)", rentContractFlat: "Flat — no rent increase",
+    rentContractStaffel: "Staffelmiete — fixed € step every N years", fieldRentGrowth: "Rent growth (%/yr)",
+    fieldStaffelStep: "Step (€ on cold rent)", fieldStaffelInterval: "Every N years",
+    fieldCostGrowth: "Cost growth (%/yr)", fieldValueGrowth: "Value growth (%/yr)", fieldProjectionYears: "Projection (yrs)",
+    marginalRateAutoNote: "Marginal tax rate — auto-calculated from taxable income below (approximate, 2026 §32a EStG tariff)",
+    fieldTaxableIncome: "Taxable income, zvE (€/yr)", fieldFiling: "Filing", filingSingle: "Single", filingMarried: "Married, splitting",
+    fieldChurchTax: "Church tax", churchTaxNone: "None", churchTax8: "8% (BY/BW)", churchTax9: "9% (other states)",
+    marginalRateInUse: "Marginal rate in use:", averageRate: "average rate:", perMoTotalTax: "/mo total tax (incl. Solidaritätszuschlag",
+    soliNote: "Includes the 5.5% Solidaritätszuschlag above the 2026 exemption (€20,350 single / €40,700 joint), tapered through its Gleitzone. \"Married, splitting\" uses your combined taxable income (zvE) for the final annual assessment. Payroll tax classes (e.g. III/V) only change monthly withholding during the year — they don't change this joint liability, so enter your combined household zvE here regardless of class.",
+    advancedMarginalOverride: "Advanced: override marginal tax rate manually",
+    fieldMarginalTaxPct: "Marginal tax rate (%) — 2026 top rate 42% from €69,878 taxable income",
+    referenceValuesNote: "2026 reference values: mortgage rates for a 10-year fixed loan run ~3.6–4.1% effective; the income-tax top rate (42%) applies above €69,878 of taxable income, rising to 45% above €277,826. Transfer tax follows the selected federal state. Rent-control caps (Mietpreisbremse) are regional and not modelled — check local Mietspiegel rules when rents exceed 10% above reference rent in a designated area.",
+    verdictLabel: "Verdict", plusChurchTax: " + church tax",
+    verdictReasonNetYield: "Net yield is below a comfortable range for the risk.",
+    verdictReasonCashflow: "After-tax cashflow is deeply negative relative to the debt service.",
+    verdictReasonDscr: "Rent alone does not cover the loan payment (DSCR below 1.0×).",
+    verdictReasonCashOnCash: "Cash-on-cash return is weak — your equity could likely earn more elsewhere.",
+    verdictGood: "Good buy", verdictMaybe: "Maybe — needs a closer look", verdictWeak: "Weak deal as modeled",
+    verdictReasonAllGood: "All core metrics (yield, cashflow, DSCR, cash-on-cash) sit in comfortable ranges.",
+    tileGrossYield: "Gross rental yield", factorLabel: "factor",
+    tileGrossYieldDesc: "Annual cold rent ÷ price. Quick, rough comparison between properties — ignores costs and financing. 4–5%+ is typically considered healthy in Germany.",
+    tileNetYield: "Net rental yield",
+    tileNetYieldDesc: "Same as gross, but after operating costs, on your total investment (price + all costs). The more realistic yield number — use this one to compare deals.",
+    tileCfAfterTax: "Cashflow after tax / mo", operatingLabel: "operating:",
+    tileCfAfterTaxDesc: "What's left in your pocket each month once the mortgage, running costs and tax effect are paid. Negative is common early on (you're trading cashflow now for equity + depreciation tax benefit); just be sure you can cover the gap.",
+    tileCashOnCash: "Cash-on-cash return / yr", exclAppreciation: "excl. appreciation:",
+    tileCashOnCashDesc: "Total wealth gained this year (equity paydown + cashflow + appreciation) ÷ your own cash in the deal. The number that matters most for \"is this worth tying up my money\" — compare it to what your cash could earn elsewhere.",
+    yearProjectionSuffix: "-year projection", legendPropertyValue: "Property value", legendCumulativeCf: "Cumulative cashflow (incl. equity)",
+    firstPositiveCf: "First positive cashflow after tax:", cumCfTurnsPositive: "Cumulative cashflow turns positive:", mainLoanRepaid: "Main loan repaid:",
+    yearByYearTitle: "Year-by-year detail",
+    colYear: "Year", colColdRent: "Cold rent/mo", colWarmRent: "Warm rent/mo", colDebtService: "Debt service/mo",
+    colCfOp: "Cashflow op. (pre-tax)/mo", colTax: "Tax/mo", colCfAfterTax: "Cashflow after tax/mo",
+    colCumCf: "Cumulative CF", colPropertyValue: "Property value", colLoanBalance: "Loan balance",
+    scenarioComparisonTitle: "Scenario comparison", scenarioNamePlaceholder: "Scenario name (optional)",
+    saveScenarioBtn: "Save current inputs as scenario",
+    colScenario: "Scenario", colLocation: "Location", colPurchasePrice: "Purchase price", colFactor: "Factor", colEquity: "Equity",
+    colGrossYield: "Gross yield", colNetYield: "Net yield", colCfAfterTaxMo: "CF after tax/mo", colCashOnCash: "Cash-on-cash",
+    colBreakEvenCf: "Break-even (CF)", colRating: "Rating", loadBtn: "Load", duplicateScenarioTitle: "Duplicate scenario",
+    noScenariosText: "No saved scenarios yet — adjust the inputs on the Overview tab, then come back here and save a snapshot to compare it against alternatives (e.g. different price, financing, or rent-growth assumptions).",
+    favouritesTitle: "Favourites", removeFromFavouritesTitle: "Remove from favourites",
+    rankedTitle: "Ranked", sortByLabel: "Sort by", sortCashOnCash: "Cash-on-cash return", sortCfAfterTax: "Cashflow after tax",
+    sortDesc: "Descending (best first)", sortAsc: "Ascending (worst first)",
+    netYieldShort: "net yield", grossShort: "gross", cfShort: "CF", cocShort: "CoC",
+    sideBySideTitle: "Side-by-side compare", selectScenarioA: "Select scenario A…", selectScenarioB: "Select scenario B…", vsLabel: "vs.",
+    ratingGood: "Good", ratingMaybe: "Maybe", ratingBad: "Bad",
+    compPurchasePrice: "Purchase price", compTotalInvestment: "Total investment", compEquityRequired: "Equity required",
+    compGrossYield: "Gross yield", compNetYield: "Net yield", compCfAfterTax: "Cashflow after tax/mo",
+    compCashOnCash: "Cash-on-cash return/yr", compBreakEven: "Break-even (cashflow)", compFullyDebtFree: "Fully debt-free by",
+    bankOnePagerTitle: "Bank meeting one-pager",
+    bankOnePagerDesc: "Figures a loan officer typically asks for — LTV, debt-service coverage and equity ratio, derived from the Overview inputs.",
+    loanAmountRequested: "Loan amount requested", equityContributed: "Equity contributed",
+    ltvLabel: "LTV", equityRatioLabel: "Equity ratio", dscrLabel: "Debt-service coverage",
+    dscrExplanation: "DSCR = annual warm rent ÷ annual debt service. Above 1.2× is generally viewed as comfortable; below 1.0× means rent alone does not cover the loan payment.",
+    rateSensitivityTitle: "Interest-rate sensitivity", ppLabel: "+1.0 pp",
+    rateSensitivityPre: "If the rate on renewal were", rateSensitivityMid1: "higher, monthly debt service would rise by",
+    rateSensitivityMid2: ", moving the after-tax cashflow to", rateSensitivityPost: "/mo.",
+    budgetCheckTitle: "Household budget check",
+    budgetCheckDesc: "Does this purchase fit your monthly household budget, on top of everything else you pay for?",
+    fieldHouseholdIncome: "Net household income (€/mo)", fieldLivingCosts: "Living costs incl. own housing (€/mo)",
+    fieldOtherDebt: "Other loan/debt payments (€/mo)", fieldExistingSavings: "Existing savings/investing (€/mo)",
+    disposableBefore: "Disposable income before this property", propertyImpact: "This property's cashflow impact",
+    disposableAfter: "Disposable income after this property",
+    dtiLabel: "Debt-to-income (all debt incl. this property)", dtiNote: "Banks generally get uneasy above ~35–40%.",
+    propertyDebtServiceLabel: "This property's debt service",
+    budgetDisclaimer: "This is a simple affordability sanity check, not a bank's actual underwriting model — lenders apply their own stress rates and living-cost assumptions (Haushaltsrechnung), which are typically stricter than this.",
+    netWorthTitle: "Net worth statement", netWorthDesc: "Where this property sits alongside your other assets and debts.",
+    otherAssetsTitle: "Other assets", assetPlaceholder: "Asset", totalOtherAssets: "Total other assets",
+    otherLiabilitiesTitle: "Other liabilities", liabilityPlaceholder: "Liability", totalOtherLiabilities: "Total other liabilities",
+    netWorthWithoutProperty: "Net worth without this property",
+    propertyEquityToday: "This property's equity today (value − loan balance)",
+    totalNetWorth: "Total net worth incl. this property",
+    netWorthDisclaimer: "Property equity is a paper value based on the assumed appreciation rate on the Overview tab — it isn't cash until you sell or refinance. Update the figures here periodically as your other holdings change.",
+    footerDisclaimer: "No guarantee of accuracy. This tool does not replace qualified legal, tax or financial advice. Always run your own verification and consult a tax advisor for your specific situation.",
+  },
+  de: {
+    appTitle: "Kapitalanlage-Cockpit",
+    headerDescPre: "Kapitalanlage-Analyse für eine einzelne Immobilie — Kaufnebenkosten, Finanzierung, Cashflow, Abschreibung und eine ",
+    headerDescPost: "-Jahres-Projektion. Alle Beträge in EUR.",
+    tabOverview: "Übersicht", tabScenarios: "Szenarien", tabBank: "Bankgespräch", tabBudget: "Haushaltsbudget", tabNetWorth: "Vermögen",
+    tipsShow: "Tipps für Einsteiger anzeigen", tipsHide: "Tipps ausblenden",
+    tipsTitle: "Neu bei Kapitalanlagen? Hier starten",
+    tipsBeforeOfferTitle: "Vor dem Kaufangebot",
+    tipsBeforeOffer1: "Holen Sie eine Finanzierungsbestätigung ein — Verkäufer und Makler erwarten das.",
+    tipsBeforeOffer2: "Planen Sie 10–15 % des Kaufpreises zusätzlich für Kaufnebenkosten ein (Makler, Notar, Grunderwerbsteuer) — das brauchen Sie meist als Eigenkapital, Banken finanzieren es selten mit.",
+    tipsBeforeOffer3: "Halten Sie über die Anzahlung hinaus eine Liquiditätsreserve: mindestens 3–6 Monate Rate + Nebenkosten, für Leerstand oder Reparaturen.",
+    tipsBeforeOffer4: "Bei Eigentumswohnungen: Fordern Sie die letzten 3 Jahre Hausgeldabrechnung, die Teilungserklärung und Protokolle der Eigentümerversammlung an — das zeigt versteckten Sanierungsstau.",
+    tipsBeforeOffer5: "Lassen Sie sich den Energieausweis zeigen bzw. prüfen Sie ihn — er beeinflusst künftige Sanierungspflichten und die Vermietbarkeit.",
+    tipsMistakesTitle: "Häufige Anfängerfehler",
+    tipsMistakes1: "Hohe Bruttorendite in einer schwachen/schrumpfenden Lage jagen — das Leerstandsrisiko kostet meist mehr, als die Mehrrendite wert ist.",
+    tipsMistakes2: "Die Instandhaltungsrücklage unterschätzen — ältere Gebäude brauchen mehr davon, als die Hausgeldabrechnung vermuten lässt.",
+    tipsMistakes3: "Den Rücklagenstand der WEG ignorieren — ein niedriger Stand bedeutet, dass kurz nach dem Kauf eine Sonderumlage droht.",
+    tipsMistakes4: "Den Zinssatz nicht stresstesten — prüfen Sie die Zins-Sensitivität im Tab „Bankgespräch“, bevor Sie eine Zinsbindung unterschreiben.",
+    tipsMistakes5: "Prognostiziertes Mietwachstum als garantiert behandeln — rechnen Sie auch ein Szenario mit konstanter Miete (dieses Tool ist deshalb standardmäßig auf konstant gestellt).",
+    tipsReadingTitle: "So lesen Sie dieses Tool",
+    tipsReading1: "Grün/Gelb/Rot bei den Kennzahlen sind grobe Richtwerte, kein Bestehen/Durchfallen — ein „roter“ Cashflow kann trotzdem in Ordnung sein, wenn Sie ihn aus anderem Einkommen decken können und mit Miet-/Wertsteigerung rechnen.",
+    tipsReading2: "Die 30-Jahres-Projektion ist ein Szenario, keine Prognose — rechnen Sie sie auch mit konstanter Miete, höheren Zinsen und ohne Wertsteigerung durch, um den ungünstigen Fall zu sehen.",
+    tipsReading3: "Nutzen Sie den Tab „Szenarien“, um 2–3 Varianten desselben Deals zu speichern (z. B. unterschiedliche Finanzierung), bevor Sie entscheiden.",
+    tipsReading4: "Dieses Tool ersetzt keinen Steuerberater, besonders nicht bei AfA- und Aktivierungsfragen — diese Entscheidungen haben echte steuerliche Konsequenzen.",
+
+    miniVerdict: "Ergebnis", miniGrossYield: "Bruttorendite", miniNetYield: "Nettorendite", miniCfAfterTax: "Cashflow nach Steuern/Mon.", miniCashOnCash: "Eigenkapitalrendite/Jahr",
+    cardPropertyPurchase: "Immobilie & Kauf", fieldAddress: "Adresse",
+    fieldPurchaseYear: "Kaufjahr", fieldLivingArea: "Wohnfläche (m²)", fieldPurchasePrice: "Kaufpreis (€)",
+    fieldPricePerSqm: "Preis / m²", fieldFederalState: "Bundesland", fieldTransferTax: "Grunderwerbsteuer (2026)",
+    purchaseCostsPctTitle: "Kaufnebenkosten (% des Kaufpreises)", feeAgent: "Makler", feeNotary: "Notar", feeLandRegistry: "Grundbuch",
+    feeOther: "Sonstiges (€) — z. B. Finanzierungsvermittlungsgebühr",
+    totalPurchaseCosts: "Kaufnebenkosten gesamt", totalInvestment: "Gesamtinvestition",
+    capexSectionTitle: "Anfängliche Erhaltungsaufwendungen (Küche, Reparaturen…) — in die AfA-Basis aktivieren oder sofort abziehen",
+    capexPlaceholderLabel: "z. B. Küche", capitalizeLabel: "aktivieren",
+    capexRuleText: "Steuerregel (anschaffungsnahe Herstellungskosten): Übersteigen die Erhaltungsaufwendungen innerhalb von 3 Jahren nach dem Kauf 15 % des Gebäudewerts, müssen sie aktiviert statt sofort abgezogen werden — keine Ausnahme für laufende Reparaturen. Geht von einem umsatzsteuerfreien Bestandskauf aus (§4 Nr. 9a UStG); bei einem umsatzsteuerpflichtigen Neubau läge die Schwelle höher. Aktuelle Aufwendungen:",
+    capexRuleVs: "vs. Schwelle",
+    capexOverThreshold: "Über der Schwelle — alle Positionen oben sind auf „aktivieren“ festgelegt.",
+    renovationSectionTitle: "Sanierungsplanung — größere Maßnahmen später (Dach, Heizung, Fassade…)",
+    renovationPlaceholderLabel: "z. B. neue Heizung", renovationYearPlaceholder: "Jahr #", renovationYearTitle: "Jahre nach Kauf",
+    renovationHelpText: "Dritte Spalte = Jahre nach Kauf (z. B. 10). Jede Kostenposition wird in genau diesem Jahr angesetzt und mindert Cashflow und zu versteuerndes Einkommen in diesem Jahr — sie ändert nicht die AfA-Basis. Als Planungsschätzung, nicht als Steuerposition zu verstehen.",
+    cardRentCosts: "Miete & Kosten heute",
+    fieldBuildingType: "Objektart", buildingTypeSingle: "Einzelne Einheit (Wohnung/Haus)", buildingTypeMulti: "Mehrfamilienhaus (MFH) — mehrere Einheiten",
+    unitPlaceholder: "Einheit", addUnit: "+ Einheit hinzufügen", totalArea: "Gesamtfläche", totalColdRentBuilding: "Kaltmiete gesamt (Gebäude)",
+    mfhVacancyNote: "Leerstand im MFH betrifft einzelne Einheiten, nicht alles auf einmal — der Verlust einer von fünf Einheiten bedeutet für diesen Zeitraum 20 % Mietausfall, nicht Totalausfall. Die Leerstandsreserve unten wird vereinfachend trotzdem auf die Gesamtmiete des Gebäudes angewendet.",
+    fieldRentalModel: "Vermietungsmodell", rentalModelStandard: "Standard-Langzeitvermietung", rentalModelFurnished: "Möbliert / kurzfristig (Sondervermietung)",
+    fieldAllInRent: "Miete all-inclusive (€/Monat)", fieldVacancyTurnover: "Leerstand / Fluktuation (%)", fieldExtraOpex: "Zusätzliche Kosten — Reinigung/Verwaltung/Möbelverschleiß (% der Miete)",
+    furnishedNote: "Möblierte/kurzfristige Miete wird meist all-inclusive angegeben (Nebenkosten, Reinigung, Verwaltung bereits enthalten), verursacht aber höhere Fluktuations- und Verwaltungskosten und unterliegt in den meisten Gebieten nicht der Mietpreisbremse — prüfen Sie die örtlichen Regeln, bevor Sie sich darauf verlassen.",
+    fieldRentInput: "Mieteingabe", rentInputPerSqm: "Pro m² + Stellplatz/Sonstiges", rentInputFlat: "Pauschale Gesamtkaltmiete (€/Monat)",
+    fieldColdRentTotal: "Kaltmiete gesamt (€/Monat)", fieldColdRentPerSqm: "Kaltmiete / m² / Monat (€)", fieldParkingOther: "Stellplatz + Sonstiges (€/Monat)",
+    fieldRecoverableCosts: "Umlagefähige Kosten (€/Monat)", fieldNonRecoverableCosts: "Nicht umlagefähig (€/Monat)",
+    fieldOwnReserve: "Eigene Rücklage (€/m²/Jahr)", fieldVacancyReserve: "Leerstandsreserve (%)",
+    costEstimateModeLabel: "Keine genauen Zahlen — umlagefähige/nicht umlagefähige Kosten anhand typischer % der Kaltmiete schätzen",
+    costEstimateNote: "Faustregel: umlagefähige (Betriebs-)Kosten ≈ 25–30 % der Kaltmiete; nicht umlagefähige (Verwaltung, WEG) ≈ 5–8 %. Aktiviert überschreibt dies die €-Felder oben mit 28 % / 7 %.",
+    coldRentNet: "Kaltmiete (netto)", warmRent: "Warmmiete", operatingCostsInclReserves: "Betriebskosten inkl. eigener Rücklagen",
+    cardFinancing: "Finanzierung", loanLabel: "Darlehen", usedLabel: "genutzt",
+    loanModeAmount: "Fester Betrag (€)", loanModePct: "% des Kaufpreises (Beleihung)",
+    fieldAmount: "Betrag (€)", fieldRate: "Zins (%)", fieldAmort: "Tilgung (%)", fieldFixedTerm: "Zinsbindung (Jahre)",
+    fieldFollowRate: "Zins nach Zinsbindung (%)", fieldExtraYear: "Sondertilgung, Jahre nach Kauf",
+    fieldExtraAmount: "Sondertilgungsbetrag (€, einmalig)", amortShort: "Tilgung", debtFree: "Schuldenfrei", yrsShort: "Jahre",
+    totalLoanAmount: "Darlehen gesamt", equityRequired: "Benötigtes Eigenkapital", weightedRate: "Gewichteter Zinssatz",
+    monthlyDebtService: "Monatlicher Kapitaldienst", fullyDebtFreeBy: "Vollständig schuldenfrei ab",
+    cardDepreciation: "Abschreibung (AfA)", fieldDepreciationType: "Abschreibungsart",
+    afaOpt3: "Standard — Baujahr/Erwerb ab 2023 (3 %/Jahr)", afaOpt2: "Standard — Baujahr vor 2023 (2 %/Jahr)",
+    afaOpt5deg: "Degressiv Neubau, Zeitraum 2023–2029 (5 % vom Buchwert)",
+    afaOptDenkmal: "Denkmalgeschützt — 9 % für 8 Jahre, dann 7 % für 4 Jahre", afaOptCustom: "Individueller Satz",
+    fieldEffectiveRate: "Effektiver linearer Satz, unten verwendet (%/Jahr)",
+    afaRuleOfThumb: "Faustregel: 3 % ist der aktuelle Standard für Gebäude ab Baujahr 2023; 2 % für ältere Bestände. Die 5 %-Degressiv- und Denkmal-Optionen laufen in der Realität degressiv bzw. gestaffelt — dieses Feld nähert sie hier als flachen linearen Satz an. Fragen Sie einen Steuerberater, bevor Sie sich auf den degressiven oder Denkmal-Pfad verlassen.",
+    fieldBuildingShare: "Gebäudeanteil am Kaufpreis (%) — verwendet, falls kein Bodenwert gesetzt ist",
+    buildingShareLow: "Einfache Ausstattung (65 %)", buildingShareNormal: "Normal (75 %)", buildingShareHigh: "Gehoben (85 %)",
+    advancedLandValue: "Erweitert: Bodenwert überschreiben (Bodenrichtwert)",
+    fieldBodenrichtwert: "Bodenrichtwert (€/m²) × Ihr Grundstücksanteil (m²)", computedLandValue: "= berechneter Bodenwert:",
+    fieldLandValueOverride: "Oder Bodenwert direkt überschreiben (€)",
+    bodenrichtwertNotePre: "Ermitteln Sie den amtlichen Bodenrichtwert (BORIS-D bzw. das Gutachterausschuss-Portal Ihres Bundeslandes) für das Grundstück. Ist ein manueller Wert oder ein berechneter Bodenwert gesetzt (aktuell",
+    bodenrichtwertNoteMid: "), ersetzt dieser den pauschalen Gebäudeanteil oben (aktuell",
+    bodenrichtwertNotePost: "). Dies bildet den Ansatz des BMF vereinfacht ab — es wird nicht das vollständige Berechnungsschema (Indexanpassungen, Nebengebäude, Zustandsabschläge) des BMF-PDF-Tools angewendet; bei einer strittigen Bewertung nutzen Sie dieses Tool oder einen Gutachter.",
+    afaBasis: "AfA-Bemessungsgrundlage", depreciationPerMonth: "Abschreibung / Monat",
+    cardAssumptionsTax: "Annahmen & Steuer", fieldRentContractType: "Mietvertragsart",
+    rentContractAnnual: "Jährliche Steigerung (Marktanpassung, kumuliert %)", rentContractFlat: "Konstant — keine Mietsteigerung",
+    rentContractStaffel: "Staffelmiete — fester €-Schritt alle N Jahre", fieldRentGrowth: "Mietsteigerung (%/Jahr)",
+    fieldStaffelStep: "Schritt (€ auf Kaltmiete)", fieldStaffelInterval: "Alle N Jahre",
+    fieldCostGrowth: "Kostensteigerung (%/Jahr)", fieldValueGrowth: "Wertsteigerung (%/Jahr)", fieldProjectionYears: "Projektion (Jahre)",
+    marginalRateAutoNote: "Grenzsteuersatz — automatisch aus dem zu versteuernden Einkommen unten berechnet (Näherung, Tarif 2026 §32a EStG)",
+    fieldTaxableIncome: "Zu versteuerndes Einkommen, zvE (€/Jahr)", fieldFiling: "Veranlagung", filingSingle: "Einzelveranlagung", filingMarried: "Verheiratet, Splitting",
+    fieldChurchTax: "Kirchensteuer", churchTaxNone: "Keine", churchTax8: "8 % (BY/BW)", churchTax9: "9 % (andere Bundesländer)",
+    marginalRateInUse: "Verwendeter Grenzsteuersatz:", averageRate: "Durchschnittssatz:", perMoTotalTax: "/Monat Gesamtsteuer (inkl. Solidaritätszuschlag",
+    soliNote: "Enthält den 5,5 % Solidaritätszuschlag oberhalb der Freigrenze 2026 (20.350 € Einzel- / 40.700 € Zusammenveranlagung), abgeschmolzen in der Gleitzone. „Verheiratet, Splitting“ verwendet Ihr gemeinsames zu versteuerndes Einkommen (zvE) für die endgültige Jahresveranlagung. Lohnsteuerklassen (z. B. III/V) ändern nur den monatlichen Lohnsteuerabzug während des Jahres — sie ändern nicht diese gemeinsame Steuerschuld, geben Sie hier also unabhängig von der Steuerklasse Ihr gemeinsames Haushalts-zvE ein.",
+    advancedMarginalOverride: "Erweitert: Grenzsteuersatz manuell überschreiben",
+    fieldMarginalTaxPct: "Grenzsteuersatz (%) — 2026 Spitzensteuersatz 42 % ab 69.878 € zu versteuerndem Einkommen",
+    referenceValuesNote: "Referenzwerte 2026: Effektivzinsen für ein 10-jähriges Festdarlehen liegen bei ca. 3,6–4,1 %; der Einkommensteuer-Spitzensatz (42 %) gilt ab 69.878 € zu versteuerndem Einkommen und steigt auf 45 % ab 277.826 €. Die Grunderwerbsteuer richtet sich nach dem gewählten Bundesland. Die Mietpreisbremse ist regional und wird hier nicht abgebildet — prüfen Sie den örtlichen Mietspiegel, wenn die Miete mehr als 10 % über der Vergleichsmiete in einem ausgewiesenen Gebiet liegt.",
+    verdictLabel: "Ergebnis", plusChurchTax: " + Kirchensteuer",
+    verdictReasonNetYield: "Die Nettorendite liegt unter einem für das Risiko angemessenen Bereich.",
+    verdictReasonCashflow: "Der Cashflow nach Steuern ist im Verhältnis zum Kapitaldienst deutlich negativ.",
+    verdictReasonDscr: "Die Miete allein deckt die Kreditrate nicht (DSCR unter 1,0×).",
+    verdictReasonCashOnCash: "Die Eigenkapitalrendite ist schwach — Ihr Eigenkapital könnte woanders wahrscheinlich mehr erwirtschaften.",
+    verdictGood: "Guter Kauf", verdictMaybe: "Vielleicht — genauer prüfen", verdictWeak: "Schwaches Investment wie modelliert",
+    verdictReasonAllGood: "Alle Kernkennzahlen (Rendite, Cashflow, DSCR, Eigenkapitalrendite) liegen in einem komfortablen Bereich.",
+    tileGrossYield: "Bruttomietrendite", factorLabel: "Faktor",
+    tileGrossYieldDesc: "Jahreskaltmiete ÷ Kaufpreis. Schneller, grober Vergleich zwischen Objekten — ignoriert Kosten und Finanzierung. 4–5 %+ gelten in Deutschland meist als gesund.",
+    tileNetYield: "Nettomietrendite",
+    tileNetYieldDesc: "Wie Brutto, aber nach Betriebskosten, bezogen auf Ihre Gesamtinvestition (Kaufpreis + alle Kosten). Die realistischere Renditekennzahl — zum Vergleich von Deals diese verwenden.",
+    tileCfAfterTax: "Cashflow nach Steuern / Monat", operatingLabel: "operativ:",
+    tileCfAfterTaxDesc: "Was jeden Monat übrig bleibt, nachdem Kreditrate, laufende Kosten und Steuereffekt bezahlt sind. Negativ ist am Anfang üblich (Sie tauschen Cashflow jetzt gegen Tilgung + AfA-Steuervorteil) — stellen Sie nur sicher, dass Sie die Lücke decken können.",
+    tileCashOnCash: "Eigenkapitalrendite / Jahr", exclAppreciation: "ohne Wertsteigerung:",
+    tileCashOnCashDesc: "Gesamter Vermögenszuwachs dieses Jahr (Tilgung + Cashflow + Wertsteigerung) ÷ Ihr eigener Kapitaleinsatz im Deal. Die wichtigste Kennzahl für „lohnt sich die Kapitalbindung“ — vergleichen Sie sie damit, was Ihr Kapital anderweitig erwirtschaften könnte.",
+    yearProjectionSuffix: "-Jahres-Projektion", legendPropertyValue: "Immobilienwert", legendCumulativeCf: "Kumulierter Cashflow (inkl. Eigenkapital)",
+    firstPositiveCf: "Erster positiver Cashflow nach Steuern:", cumCfTurnsPositive: "Kumulierter Cashflow wird positiv:", mainLoanRepaid: "Hauptdarlehen getilgt:",
+    yearByYearTitle: "Jahresdetail",
+    colYear: "Jahr", colColdRent: "Kaltmiete/Mon.", colWarmRent: "Warmmiete/Mon.", colDebtService: "Kapitaldienst/Mon.",
+    colCfOp: "Cashflow operativ (vor Steuern)/Mon.", colTax: "Steuer/Mon.", colCfAfterTax: "Cashflow nach Steuern/Mon.",
+    colCumCf: "Kumulierter CF", colPropertyValue: "Immobilienwert", colLoanBalance: "Darlehensstand",
+    scenarioComparisonTitle: "Szenarienvergleich", scenarioNamePlaceholder: "Szenarioname (optional)",
+    saveScenarioBtn: "Aktuelle Eingaben als Szenario speichern",
+    colScenario: "Szenario", colLocation: "Lage", colPurchasePrice: "Kaufpreis", colFactor: "Faktor", colEquity: "Eigenkapital",
+    colGrossYield: "Bruttorendite", colNetYield: "Nettorendite", colCfAfterTaxMo: "CF nach Steuern/Mon.", colCashOnCash: "Eigenkapitalrendite",
+    colBreakEvenCf: "Break-even (CF)", colRating: "Bewertung", loadBtn: "Laden", duplicateScenarioTitle: "Szenario duplizieren",
+    noScenariosText: "Noch keine gespeicherten Szenarien — passen Sie die Eingaben im Tab „Übersicht“ an und speichern Sie hier einen Schnappschuss, um ihn mit Alternativen zu vergleichen (z. B. anderer Preis, Finanzierung oder Mietsteigerung).",
+    favouritesTitle: "Favoriten", removeFromFavouritesTitle: "Aus Favoriten entfernen",
+    rankedTitle: "Rangliste", sortByLabel: "Sortieren nach", sortCashOnCash: "Eigenkapitalrendite", sortCfAfterTax: "Cashflow nach Steuern",
+    sortDesc: "Absteigend (beste zuerst)", sortAsc: "Aufsteigend (schwächste zuerst)",
+    netYieldShort: "Nettorendite", grossShort: "brutto", cfShort: "CF", cocShort: "EK-Rendite",
+    sideBySideTitle: "Direktvergleich", selectScenarioA: "Szenario A auswählen…", selectScenarioB: "Szenario B auswählen…", vsLabel: "vs.",
+    ratingGood: "Gut", ratingMaybe: "Vielleicht", ratingBad: "Schwach",
+    compPurchasePrice: "Kaufpreis", compTotalInvestment: "Gesamtinvestition", compEquityRequired: "Benötigtes Eigenkapital",
+    compGrossYield: "Bruttorendite", compNetYield: "Nettorendite", compCfAfterTax: "Cashflow nach Steuern/Mon.",
+    compCashOnCash: "Eigenkapitalrendite/Jahr", compBreakEven: "Break-even (Cashflow)", compFullyDebtFree: "Vollständig schuldenfrei ab",
+    bankOnePagerTitle: "Bankgespräch – Übersichtsblatt",
+    bankOnePagerDesc: "Kennzahlen, die ein Kreditsachbearbeiter üblicherweise verlangt — Beleihungsauslauf, Kapitaldienstdeckung und Eigenkapitalquote, abgeleitet aus den Eingaben im Tab „Übersicht“.",
+    loanAmountRequested: "Beantragter Darlehensbetrag", equityContributed: "Eingebrachtes Eigenkapital",
+    ltvLabel: "Beleihungsauslauf (LTV)", equityRatioLabel: "Eigenkapitalquote", dscrLabel: "Kapitaldienstdeckung (DSCR)",
+    dscrExplanation: "DSCR = Jahres-Warmmiete ÷ jährlicher Kapitaldienst. Über 1,2× gilt allgemein als komfortabel; unter 1,0× bedeutet, dass die Miete allein die Kreditrate nicht deckt.",
+    rateSensitivityTitle: "Zinssensitivität", ppLabel: "+1,0 %-Pkt.",
+    rateSensitivityPre: "Läge der Zins bei Anschlussfinanzierung um", rateSensitivityMid1: "höher, würde der monatliche Kapitaldienst um",
+    rateSensitivityMid2: "steigen und der Cashflow nach Steuern auf", rateSensitivityPost: "/Mon. sinken.",
+    budgetCheckTitle: "Haushaltsbudget-Check",
+    budgetCheckDesc: "Passt dieser Kauf in Ihr monatliches Haushaltsbudget, zusätzlich zu allem, was Sie sonst bezahlen?",
+    fieldHouseholdIncome: "Netto-Haushaltseinkommen (€/Monat)", fieldLivingCosts: "Lebenshaltungskosten inkl. eigene Wohnkosten (€/Monat)",
+    fieldOtherDebt: "Andere Kredit-/Schuldenraten (€/Monat)", fieldExistingSavings: "Bestehende Sparraten/Investitionen (€/Monat)",
+    disposableBefore: "Verfügbares Einkommen vor dieser Immobilie", propertyImpact: "Cashflow-Auswirkung dieser Immobilie",
+    disposableAfter: "Verfügbares Einkommen nach dieser Immobilie",
+    dtiLabel: "Schuldendienstquote (alle Schulden inkl. dieser Immobilie)", dtiNote: "Banken werden oberhalb von ca. 35–40 % in der Regel vorsichtig.",
+    propertyDebtServiceLabel: "Kapitaldienst dieser Immobilie",
+    budgetDisclaimer: "Dies ist ein einfacher Belastbarkeits-Check, kein tatsächliches Bank-Kreditprüfungsmodell — Kreditgeber wenden eigene Stresssätze und Lebenshaltungskosten-Annahmen (Haushaltsrechnung) an, die meist strenger sind als hier.",
+    netWorthTitle: "Vermögensübersicht", netWorthDesc: "Wo diese Immobilie neben Ihrem übrigen Vermögen und Ihren Schulden steht.",
+    otherAssetsTitle: "Weiteres Vermögen", assetPlaceholder: "Vermögenswert", totalOtherAssets: "Weiteres Vermögen gesamt",
+    otherLiabilitiesTitle: "Weitere Verbindlichkeiten", liabilityPlaceholder: "Verbindlichkeit", totalOtherLiabilities: "Weitere Verbindlichkeiten gesamt",
+    netWorthWithoutProperty: "Vermögen ohne diese Immobilie",
+    propertyEquityToday: "Eigenkapital dieser Immobilie heute (Wert − Darlehensstand)",
+    totalNetWorth: "Gesamtvermögen inkl. dieser Immobilie",
+    netWorthDisclaimer: "Das Eigenkapital der Immobilie ist ein Buchwert auf Basis der angenommenen Wertsteigerungsrate im Tab „Übersicht“ — es ist erst bei Verkauf oder Umschuldung tatsächlich verfügbares Kapital. Aktualisieren Sie die Werte hier regelmäßig, wenn sich Ihr übriges Vermögen ändert.",
+    footerDisclaimer: "Keine Gewähr für die Richtigkeit. Dieses Tool ersetzt keine qualifizierte Rechts-, Steuer- oder Finanzberatung. Führen Sie stets eine eigene Prüfung durch und konsultieren Sie für Ihre konkrete Situation einen Steuerberater.",
+  },
+};
 
 function loadPersisted() {
   try {
@@ -1216,6 +1527,7 @@ class Component extends DCLogic {
 
     showTips: false,
     showLandValueDetail: false,
+    lang: 'en',
     showMarginalRateOverride: false,
     activeTab: 'overview',
     scenarios: [],
@@ -1247,6 +1559,7 @@ class Component extends DCLogic {
 
   setTab(tab) { this.setState({ activeTab: tab }); }
   toggleTips() { this.setState(s => ({ showTips: !s.showTips })); }
+  setLang(lang) { this.setState({ lang }); }
   toggleLandValueDetail() { this.setState(s => ({ showLandValueDetail: !s.showLandValueDetail })); }
 
   // Strips the fields that aren't "deal" inputs (saved-scenario bookkeeping, UI sort prefs) so
@@ -1517,6 +1830,7 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     if (this.lastLoadedSnapshot == null) this.lastLoadedSnapshot = this.snapshotForCompare(s);
+    const T = TRANSLATIONS[s.lang] || TRANSLATIONS.en;
     const e = this.computeEngine();
     const tabColor = (t) => t === s.activeTab ? '#7dd3a8' : '#8b909c';
     const tabBorder = (t) => t === s.activeTab ? '#7dd3a8' : 'transparent';
@@ -1534,14 +1848,14 @@ class Component extends DCLogic {
     const scoreOf = (val, green, yellow) => val >= green ? 2 : val >= yellow ? 1 : 0;
     const verdictScore = scoreOf(e.netYield, th.netG, th.netY) + scoreOf(e.cfAfterTax, th.cfG, th.cfY) + scoreOf(e.equityReturn, 0.08, 0.03) + scoreOf(dscrForVerdict, 1.2, 1.0);
     let verdict, verdictColor, verdictReasons = [];
-    if (e.netYield < th.netY) verdictReasons.push('Net yield is below a comfortable range for the risk.');
-    if (e.cfAfterTax < th.cfY) verdictReasons.push('After-tax cashflow is deeply negative relative to the debt service.');
-    if (dscrForVerdict < 1.0) verdictReasons.push('Rent alone does not cover the loan payment (DSCR below 1.0×).');
-    if (e.equityReturn < 0.03) verdictReasons.push('Cash-on-cash return is weak — your equity could likely earn more elsewhere.');
-    if (verdictScore >= 6) { verdict = 'Good buy'; verdictColor = '#7dd3a8'; }
-    else if (verdictScore >= 3) { verdict = 'Maybe — needs a closer look'; verdictColor = '#e8b73f'; }
-    else { verdict = 'Weak deal as modeled'; verdictColor = '#e2685f'; }
-    if (verdictReasons.length === 0) verdictReasons.push('All core metrics (yield, cashflow, DSCR, cash-on-cash) sit in comfortable ranges.');
+    if (e.netYield < th.netY) verdictReasons.push(T.verdictReasonNetYield);
+    if (e.cfAfterTax < th.cfY) verdictReasons.push(T.verdictReasonCashflow);
+    if (dscrForVerdict < 1.0) verdictReasons.push(T.verdictReasonDscr);
+    if (e.equityReturn < 0.03) verdictReasons.push(T.verdictReasonCashOnCash);
+    if (verdictScore >= 6) { verdict = T.verdictGood; verdictColor = '#7dd3a8'; }
+    else if (verdictScore >= 3) { verdict = T.verdictMaybe; verdictColor = '#e8b73f'; }
+    else { verdict = T.verdictWeak; verdictColor = '#e2685f'; }
+    if (verdictReasons.length === 0) verdictReasons.push(T.verdictReasonAllGood);
 
     const totalOtherAssets = (s.otherAssets || []).reduce((a, x) => a + (x.value || 0), 0);
     const totalOtherLiabilities = (s.otherLiabilities || []).reduce((a, x) => a + (x.value || 0), 0);
@@ -1601,7 +1915,7 @@ class Component extends DCLogic {
       setFollowRate: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], followRate: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
     }));
 
-    const ratingOf = (netYield) => netYield >= 0.04 ? 'Good' : netYield >= 0.03 ? 'Maybe' : 'Bad';
+    const ratingOf = (netYield) => netYield >= 0.04 ? T.ratingGood : netYield >= 0.03 ? T.ratingMaybe : T.ratingBad;
     const ratingColorOf = (netYield) => netYield >= 0.04 ? '#7dd3a8' : netYield >= 0.03 ? '#e8b73f' : '#e2685f';
 
     const scenarioRows = s.scenarios.map((sc, i) => {
@@ -1666,15 +1980,15 @@ class Component extends DCLogic {
       const eA = this.computeEngine(compA.data), eB = this.computeEngine(compB.data);
       const mk = (label, va, vb) => ({ label, a: va, b: vb });
       compareRows = [
-        mk('Purchase price', eur(compA.data.purchasePrice), eur(compB.data.purchasePrice)),
-        mk('Total investment', eur(eA.totalInvestment), eur(eB.totalInvestment)),
-        mk('Equity required', eur(eA.equity), eur(eB.equity)),
-        mk('Gross yield', pct(eA.grossYield, 2), pct(eB.grossYield, 2)),
-        mk('Net yield', pct(eA.netYield, 2), pct(eB.netYield, 2)),
-        mk('Cashflow after tax/mo', eur2(eA.cfAfterTax), eur2(eB.cfAfterTax)),
-        mk('Cash-on-cash return/yr', pct(eA.equityReturn, 1), pct(eB.equityReturn, 1)),
-        mk('Break-even (cashflow)', eA.breakEvenCfYear ?? '—', eB.breakEvenCfYear ?? '—'),
-        mk('Fully debt-free by', eA.payoffYear ?? '—', eB.payoffYear ?? '—'),
+        mk(T.compPurchasePrice, eur(compA.data.purchasePrice), eur(compB.data.purchasePrice)),
+        mk(T.compTotalInvestment, eur(eA.totalInvestment), eur(eB.totalInvestment)),
+        mk(T.compEquityRequired, eur(eA.equity), eur(eB.equity)),
+        mk(T.compGrossYield, pct(eA.grossYield, 2), pct(eB.grossYield, 2)),
+        mk(T.compNetYield, pct(eA.netYield, 2), pct(eB.netYield, 2)),
+        mk(T.compCfAfterTax, eur2(eA.cfAfterTax), eur2(eB.cfAfterTax)),
+        mk(T.compCashOnCash, pct(eA.equityReturn, 1), pct(eB.equityReturn, 1)),
+        mk(T.compBreakEven, eA.breakEvenCfYear ?? '—', eB.breakEvenCfYear ?? '—'),
+        mk(T.compFullyDebtFree, eA.payoffYear ?? '—', eB.payoffYear ?? '—'),
       ];
     }
     const colorFor = (val, green, yellow) => val >= green ? '#7dd3a8' : val >= yellow ? '#e8b73f' : '#e2685f';
@@ -1687,6 +2001,10 @@ class Component extends DCLogic {
 
     return {
       ...s,
+      t: T,
+      setLangEn: () => this.setLang('en'), setLangDe: () => this.setLang('de'),
+      langEnBg: s.lang === 'en' ? '#7dd3a8' : 'transparent', langEnColor: s.lang === 'en' ? '#08120c' : '#8b909c',
+      langDeBg: s.lang === 'de' ? '#7dd3a8' : 'transparent', langDeColor: s.lang === 'de' ? '#08120c' : '#8b909c',
       setAddress: this.setField('address'), setPurchaseYear: this.setField('purchaseYear'),
       setArea: this.setField('area'), setPurchasePrice: this.setField('purchasePrice'),
       setState: this.setField('state'), setBrokerPct: this.setField('brokerPct'),
@@ -1731,7 +2049,7 @@ class Component extends DCLogic {
       isFlatRent: s.rentInputMode === 'flat', isLoan1Pct: s.loan1Mode === 'pct',
       investmentRows, loanRowsFull, renovationRows, capexForcedCapitalize: e.capexForcedCapitalize,
       verdict, verdictColor, verdictReasons,
-      toggleTips: this.toggleTips.bind(this), tipsToggleLabel: s.showTips ? 'Hide tips' : 'Show tips for first-time buyers',
+      toggleTips: this.toggleTips.bind(this), tipsToggleLabel: s.showTips ? T.tipsHide : T.tipsShow,
 
       setHouseholdIncome: this.setField('householdIncome'), setLivingExpenses: this.setField('livingExpenses'),
       setOtherDebt: this.setField('otherDebt'), setSavingsGoal: this.setField('savingsGoal'),
@@ -1756,7 +2074,7 @@ class Component extends DCLogic {
       capexOverThreshold: e.investmentsTotal > e.capexThreshold15,
       effectiveBuildingSharePctFmt: e.effectiveBuildingSharePct.toFixed(0) + '%',
       taxEstMarginal: taxEst.marginal.toFixed(1) + '%', taxEstAvg: taxEst.avgRate.toFixed(1) + '%',
-      taxEstMonthly: eur2(taxEst.monthlyTax), taxEstChurchSuffix: s.churchTaxPct > 0 ? ' + church tax' : '',
+      taxEstMonthly: eur2(taxEst.monthlyTax), taxEstChurchSuffix: s.churchTaxPct > 0 ? T.plusChurchTax : '',
       setRentContractType: this.setField('rentContractType'), setStaffelStepAmount: this.setField('staffelStepAmount'),
       setStaffelIntervalYears: this.setField('staffelIntervalYears'),
       setRentGrowthPct: this.setField('rentGrowthPct'), setCostGrowthPct: this.setField('costGrowthPct'),
