@@ -384,6 +384,7 @@
               <button onClick="{{ setLtv100 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">100% LTV</button>
             </div>
           </sc-if>
+          <sc-if value="{{ !loan.collapsed }}" hint-placeholder-val="{{ true }}">
           <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; opacity:{{ loan.fieldsOpacity }}; pointer-events:{{ loan.fieldsPointerEvents }};">
             <div>
               <label style="display:block; font-size:10px; color:#6b7280;">Amount (€)</label>
@@ -423,6 +424,7 @@
             <button onClick="{{ loan.setAmort4 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">4%</button>
           </div>
           <div style="font-size:10px; color:#6b7280; margin-top:6px; opacity:{{ loan.fieldsOpacity }};">Debt-free: {{ loan.payoff.termYears }} yrs ({{ loan.payoff.payoffYear }})</div>
+          </sc-if>
         </div>
       </sc-for>
       <div style="margin-top:8px; display:flex; flex-direction:column; gap:4px; font-size:12px; color:#a7acb8;">
@@ -1551,7 +1553,7 @@ class Component extends DCLogic {
       extraYear: l.extraYear, extraAmount: l.extraAmount,
       setExtraYear: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], extraYear: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
       setExtraAmount: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], extraAmount: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
-      isFirst: i === 0, isExtra: i > 0,
+      isFirst: i === 0, isExtra: i > 0, collapsed: i > 0 && !l.enabled,
       fieldsDisabled: i > 0 && !l.enabled,
       fieldsOpacity: (i > 0 && !l.enabled) ? 0.35 : 1,
       fieldsPointerEvents: (i > 0 && !l.enabled) ? 'none' : 'auto',
