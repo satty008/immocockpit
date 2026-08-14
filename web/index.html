@@ -391,6 +391,14 @@
               <input type="number" value="{{ loan.extraAmount }}" onChange="{{ loan.setExtraAmount }}" style="width:100%; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
             </div>
           </div>
+          <div style="display:flex; gap:4px; margin-top:8px; opacity:{{ loan.fieldsOpacity }}; pointer-events:{{ loan.fieldsPointerEvents }};">
+            <span style="font-size:10px; color:#6b7280; align-self:center; margin-right:2px;">Tilgung:</span>
+            <button onClick="{{ loan.setAmort1_5 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">1.5%</button>
+            <button onClick="{{ loan.setAmort2 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">2%</button>
+            <button onClick="{{ loan.setAmort3 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">3%</button>
+            <button onClick="{{ loan.setAmort3_5 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">3.5%</button>
+            <button onClick="{{ loan.setAmort4 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:5px 2px; font-size:10px; cursor:pointer;">4%</button>
+          </div>
           <div style="font-size:10px; color:#6b7280; margin-top:6px; opacity:{{ loan.fieldsOpacity }};">Debt-free: {{ loan.payoff.termYears }} yrs ({{ loan.payoff.payoffYear }})</div>
         </div>
       </sc-for>
@@ -636,6 +644,7 @@
           <th style="padding:6px 10px;"></th>
           <th style="padding:6px 10px;"></th>
           <th style="padding:6px 10px;"></th>
+          <th style="padding:6px 10px;"></th>
           <th style="text-align:left; padding:6px 10px;">Scenario</th>
           <th style="text-align:left; padding:6px 10px;">Location</th>
           <th style="padding:6px 10px;">Purchase price</th>
@@ -654,6 +663,7 @@
           <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
+            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.duplicate }}" style="cursor:pointer; color:#8b909c; font-size:13px;" title="Duplicate scenario">⧉</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.toggleFavorite }}" style="cursor:pointer; color:{{ srow.favoriteColor }}; font-size:14px;">{{ srow.favoriteIcon }}</span></td>
             <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ srow.name }}</td>
             <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ srow.location }}</td>
@@ -1078,6 +1088,7 @@ class Component extends DCLogic {
       const url = new URL(window.location.href);
       url.search = '';
       window.history.replaceState(null, '', url.toString());
+      this.lastLoadedSnapshot = this.snapshotForCompare(this.state);
     });
   }
   state = {
@@ -1198,14 +1209,37 @@ class Component extends DCLogic {
   setTab(tab) { this.setState({ activeTab: tab }); }
   toggleTips() { this.setState(s => ({ showTips: !s.showTips })); }
 
+  // Strips the fields that aren't "deal" inputs (saved-scenario bookkeeping, UI sort prefs) so
+  // two states can be compared to detect unsaved edits before Load overwrites them.
+  snapshotForCompare(state) {
+    const clone = JSON.parse(JSON.stringify(state));
+    delete clone.scenarios; delete clone.activeTab; delete clone.scenarioName; delete clone.compareA; delete clone.compareB;
+    delete clone.scenarioSortBy; delete clone.scenarioSortDir;
+    return JSON.stringify(clone);
+  }
+
   saveScenario() {
     const name = (this.state.scenarioName || `Scenario ${this.state.scenarios.length + 1}`).trim();
     const snapshot = JSON.parse(JSON.stringify(this.state));
     delete snapshot.scenarios; delete snapshot.activeTab; delete snapshot.scenarioName; delete snapshot.compareA; delete snapshot.compareB;
     this.setState(st => ({ scenarios: [...st.scenarios, { name, data: snapshot, favorite: false }], scenarioName: '' }));
+    this.lastLoadedSnapshot = this.snapshotForCompare(this.state);
   }
 
-  deleteScenario(idx) { this.setState(st => ({ scenarios: st.scenarios.filter((_, i) => i !== idx) })); }
+  deleteScenario(idx) {
+    const name = this.state.scenarios[idx]?.name || 'this scenario';
+    if (!window.confirm(`Delete "${name}"? This cannot be undone.`)) return;
+    this.setState(st => ({ scenarios: st.scenarios.filter((_, i) => i !== idx) }));
+  }
+
+  duplicateScenario(idx) {
+    this.setState(st => {
+      const src = st.scenarios[idx];
+      if (!src) return null;
+      const copy = { ...JSON.parse(JSON.stringify(src)), name: `${src.name} (copy)`, favorite: false };
+      return { scenarios: [...st.scenarios, copy] };
+    });
+  }
 
   toggleFavorite(idx) {
     this.setState(st => {
@@ -1216,11 +1250,17 @@ class Component extends DCLogic {
   }
 
   loadScenario(idx) {
+    const snap = this.state.scenarios[idx];
+    if (!snap) return;
+    if (this.lastLoadedSnapshot != null && this.snapshotForCompare(this.state) !== this.lastLoadedSnapshot) {
+      if (!window.confirm(`Loading "${snap.name}" will discard your unsaved changes to the current inputs. Continue?`)) return;
+    }
     this.setState(st => {
-      const snap = st.scenarios[idx];
-      if (!snap) return null;
-      return { ...JSON.parse(JSON.stringify(snap.data)), scenarios: st.scenarios, activeTab: 'overview' };
+      const s2 = st.scenarios[idx];
+      if (!s2) return null;
+      return { ...JSON.parse(JSON.stringify(s2.data)), scenarios: st.scenarios, activeTab: 'overview' };
     });
+    this.lastLoadedSnapshot = this.snapshotForCompare(snap.data);
   }
 
   setCompareA(idx) { this.setState({ compareA: idx }); }
@@ -1422,6 +1462,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const s = this.state;
+    if (this.lastLoadedSnapshot == null) this.lastLoadedSnapshot = this.snapshotForCompare(s);
     const e = this.computeEngine();
     const tabColor = (t) => t === s.activeTab ? '#7dd3a8' : '#8b909c';
     const tabBorder = (t) => t === s.activeTab ? '#7dd3a8' : 'transparent';
@@ -1497,6 +1538,11 @@ class Component extends DCLogic {
       setAmount: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], amount: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
       setRate: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], rate: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
       setAmortization: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], amortization: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
+      setAmort1_5: () => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], amortization: 1.5 }; return { loans: loans2 }; }),
+      setAmort2: () => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], amortization: 2 }; return { loans: loans2 }; }),
+      setAmort3: () => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], amortization: 3 }; return { loans: loans2 }; }),
+      setAmort3_5: () => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], amortization: 3.5 }; return { loans: loans2 }; }),
+      setAmort4: () => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], amortization: 4 }; return { loans: loans2 }; }),
       setFixedYears: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], fixedYears: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
       setFollowRate: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], followRate: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
     }));
@@ -1518,6 +1564,7 @@ class Component extends DCLogic {
         toggleFavorite: () => this.toggleFavorite(i),
         remove: () => this.deleteScenario(i),
         load: () => this.loadScenario(i),
+        duplicate: () => this.duplicateScenario(i),
       };
     });
 
