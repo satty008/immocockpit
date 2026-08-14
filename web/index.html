@@ -1340,11 +1340,15 @@ class Component extends DCLogic {
 
     const annualColdRent = coldRent * 12;
     const grossYield = annualColdRent / price;
-    const netYield = (annualColdRent - (totalOperatingCosts - ownReserveMonthly - vacancyReserveMonthly) * 12) / totalInvestment;
+    // warmRent - totalOperatingCosts cancels the recoverable-cost pass-through (tenant pays it via
+    // Nebenkosten, so it must not also be deducted from cold rent) - do not subtract it separately.
+    const netYield = (warmRent * 12 - totalOperatingCosts * 12) / totalInvestment;
     const factor = price / annualColdRent;
-    const wealthGrowthY1 = years[0] ? (years[0].value - (price + purchaseCosts)) + (loans.reduce((a,l)=>a+l.amortization/100*l.amount,0)) : 0;
+    const principalPaidY1 = loans.reduce((a, l) => a + l.amortization / 100 * l.amount, 0);
+    const appreciationY1 = years.length > 1 ? years[1].value - years[0].value : 0;
+    const wealthGrowthY1 = appreciationY1 + principalPaidY1;
     const equityReturn = equity > 0 ? wealthGrowthY1 / equity : 0;
-    const equityReturnNoGrowth = equity > 0 ? (wealthGrowthY1 - (years[0] ? years[0].value - (price+purchaseCosts) : 0)) / equity : 0;
+    const equityReturnNoGrowth = equity > 0 ? principalPaidY1 / equity : 0;
 
     return {
       transferTaxPct, purchaseCosts, totalInvestment, coldRent, warmRent, totalOperatingCosts, unitsTotalArea, unitsColdRent,
