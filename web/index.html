@@ -629,6 +629,8 @@
       <thead>
         <tr style="color:#8b909c; text-align:right;">
           <th style="padding:6px 10px;"></th>
+          <th style="padding:6px 10px;"></th>
+          <th style="padding:6px 10px;"></th>
           <th style="text-align:left; padding:6px 10px;">Scenario</th>
           <th style="text-align:left; padding:6px 10px;">Location</th>
           <th style="padding:6px 10px;">Purchase price</th>
@@ -639,13 +641,14 @@
           <th style="padding:6px 10px;">CF after tax/mo</th>
           <th style="padding:6px 10px;">Cash-on-cash</th>
           <th style="padding:6px 10px;">Break-even (CF)</th>
-          <th style="padding:6px 10px;"></th>
-          <th style="padding:6px 10px;"></th>
+          <th style="padding:6px 10px;">Rating</th>
         </tr>
       </thead>
       <tbody>
         <sc-for list="{{ scenarioRows }}" as="srow" hint-placeholder-count="2">
           <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
+            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
+            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.toggleFavorite }}" style="cursor:pointer; color:{{ srow.favoriteColor }}; font-size:14px;">{{ srow.favoriteIcon }}</span></td>
             <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ srow.name }}</td>
             <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ srow.location }}</td>
@@ -657,8 +660,7 @@
             <td style="padding:6px 10px;">{{ srow.cfAfterTax }}</td>
             <td style="padding:6px 10px;">{{ srow.equityReturn }}</td>
             <td style="padding:6px 10px;">{{ srow.breakEven }}</td>
-            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
-            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
+            <td style="padding:6px 10px; color:{{ srow.ratingColor }}; font-weight:700;">{{ srow.rating }}</td>
           </tr>
         </sc-for>
       </tbody>
@@ -674,6 +676,8 @@
       <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
         <thead>
           <tr style="color:#8b909c; text-align:right;">
+            <th style="padding:6px 10px;"></th>
+            <th style="padding:6px 10px;"></th>
             <th style="text-align:left; padding:6px 10px;">Scenario</th>
             <th style="text-align:left; padding:6px 10px;">Location</th>
             <th style="padding:6px 10px;">Purchase price</th>
@@ -684,13 +688,14 @@
             <th style="padding:6px 10px;">CF after tax/mo</th>
             <th style="padding:6px 10px;">Cash-on-cash</th>
             <th style="padding:6px 10px;">Break-even (CF)</th>
-            <th style="padding:6px 10px;"></th>
-            <th style="padding:6px 10px;"></th>
+            <th style="padding:6px 10px;">Rating</th>
           </tr>
         </thead>
         <tbody>
           <sc-for list="{{ favoriteRows }}" as="frow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.toggleFavorite }}" style="cursor:pointer; color:#e8b73f; font-size:13px;" title="Remove from favourites">★</span></td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ frow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ frow.location }}</td>
               <td style="padding:6px 10px;">{{ frow.price }}</td>
@@ -701,8 +706,7 @@
               <td style="padding:6px 10px;">{{ frow.cfAfterTax }}</td>
               <td style="padding:6px 10px;">{{ frow.equityReturn }}</td>
               <td style="padding:6px 10px;">{{ frow.breakEven }}</td>
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.toggleFavorite }}" style="cursor:pointer; color:#e8b73f; font-size:13px;" title="Remove from favourites">★</span></td>
+              <td style="padding:6px 10px; color:{{ frow.ratingColor }}; font-weight:700;">{{ frow.rating }}</td>
             </tr>
           </sc-for>
         </tbody>
@@ -732,6 +736,8 @@
         <tbody>
           <sc-for list="{{ rankedRows }}" as="rrow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
               <td style="text-align:left; padding:6px 10px; color:#6b7280; width:24px;">{{ rrow.rank }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ rrow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ rrow.location }}</td>
@@ -741,7 +747,6 @@
               <td style="padding:6px 10px; color:#8b909c;">CF {{ rrow.cfAfterTax }}/mo</td>
               <td style="padding:6px 10px; color:#8b909c;">CoC {{ rrow.equityReturn }}</td>
               <td style="padding:6px 10px; color:{{ rrow.ratingColor }}; font-weight:700;">{{ rrow.rating }}</td>
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
             </tr>
           </sc-for>
         </tbody>
@@ -1481,6 +1486,9 @@ class Component extends DCLogic {
       setFollowRate: (ev) => this.setState(st => { const loans2 = [...st.loans]; loans2[i] = { ...loans2[i], followRate: parseFloat(ev.target.value) || 0 }; return { loans: loans2 }; }),
     }));
 
+    const ratingOf = (netYield) => netYield >= 0.04 ? 'Good' : netYield >= 0.03 ? 'Maybe' : 'Bad';
+    const ratingColorOf = (netYield) => netYield >= 0.04 ? '#7dd3a8' : netYield >= 0.03 ? '#e8b73f' : '#e2685f';
+
     const scenarioRows = s.scenarios.map((sc, i) => {
       const es = this.computeEngine(sc.data);
       return {
@@ -1488,6 +1496,7 @@ class Component extends DCLogic {
         grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
         cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
         breakEven: es.breakEvenCfYear ?? '—',
+        rating: ratingOf(es.netYield), ratingColor: ratingColorOf(es.netYield),
         favorite: !!sc.favorite,
         favoriteIcon: sc.favorite ? '★' : '☆',
         favoriteColor: sc.favorite ? '#e8b73f' : '#6b7280',
@@ -1507,6 +1516,7 @@ class Component extends DCLogic {
           grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
           cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
           breakEven: es.breakEvenCfYear ?? '—',
+          rating: ratingOf(es.netYield), ratingColor: ratingColorOf(es.netYield),
           toggleFavorite: () => this.toggleFavorite(i),
           remove: () => this.deleteScenario(i),
           load: () => this.loadScenario(i),
@@ -1519,15 +1529,14 @@ class Component extends DCLogic {
     const rankedRows = s.scenarios
       .map((sc, i) => {
         const es = this.computeEngine(sc.data);
-        const rating = es.netYield >= 0.04 ? 'Good' : es.netYield >= 0.03 ? 'Maybe' : 'Bad';
-        const ratingColor = es.netYield >= 0.04 ? '#7dd3a8' : es.netYield >= 0.03 ? '#e8b73f' : '#e2685f';
         return {
           name: sc.name, location: sc.data.address || '—', factor: es.factor.toFixed(1) + '×',
           netYield: pct(es.netYield, 2), grossYield: pct(es.grossYield, 2),
           cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
-          rating, ratingColor,
+          rating: ratingOf(es.netYield), ratingColor: ratingColorOf(es.netYield),
           netYieldVal: es.netYield, grossYieldVal: es.grossYield, equityReturnVal: es.equityReturn, cfAfterTaxVal: es.cfAfterTax,
           remove: () => this.deleteScenario(i),
+          load: () => this.loadScenario(i),
         };
       })
       .sort((a, b) => sortDir * (a[activeSortKey + 'Val'] - b[activeSortKey + 'Val']))
