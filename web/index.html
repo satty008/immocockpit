@@ -131,7 +131,30 @@
   </sc-if>
 
   <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
-  <div style="display:flex; flex-wrap:wrap; gap:16px;">
+  <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:16px;">
+
+    <div style="flex:1 1 100%; width:100%; display:flex; flex-wrap:wrap; gap:10px;">
+      <div style="flex:1 1 140px; min-width:120px; background:#161923; border:1px solid {{ verdictColor }}; border-radius:10px; padding:10px 12px;">
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Verdict</div>
+        <div style="font-size:14px; font-weight:800; color:{{ verdictColor }}; white-space:nowrap;">{{ verdict }}</div>
+      </div>
+      <div style="flex:1 1 110px; min-width:100px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Gross yield</div>
+        <div style="font-size:16px; font-weight:700; color:{{ grossYieldColor }};">{{ grossYieldFmt }}</div>
+      </div>
+      <div style="flex:1 1 110px; min-width:100px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Net yield</div>
+        <div style="font-size:16px; font-weight:700; color:{{ netYieldColor }};">{{ netYieldFmt }}</div>
+      </div>
+      <div style="flex:1 1 130px; min-width:110px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">CF after tax/mo</div>
+        <div style="font-size:16px; font-weight:700; color:{{ cfAfterTaxColor }};">{{ cfAfterTaxFmt }}</div>
+      </div>
+      <div style="flex:1 1 130px; min-width:110px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
+        <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Cash-on-cash/yr</div>
+        <div style="font-size:16px; font-weight:700; color:#f4f6f8;">{{ equityReturnFmt }}</div>
+      </div>
+    </div>
 
     <div style="flex:1 1 360px; min-width:300px; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
       <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Property &amp; purchase</div>
