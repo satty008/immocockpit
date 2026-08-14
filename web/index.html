@@ -687,17 +687,17 @@
           <th style="padding:6px 10px;"></th>
           <th style="padding:6px 10px;"></th>
           <th style="padding:6px 10px;">{{ t.colRating }}</th>
-          <th style="padding:6px 10px;">{{ t.colCashOnCash }}</th>
+          <th onClick="{{ setSortGrossYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colGrossYield }} {{ sortArrowGrossYield }}</th>
+          <th onClick="{{ setSortNetYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colNetYield }} {{ sortArrowNetYield }}</th>
+          <th onClick="{{ setSortCoC }}" style="padding:6px 10px; cursor:pointer;">{{ t.colCashOnCash }} {{ sortArrowCoC }}</th>
           <th style="padding:6px 10px;"></th>
           <th style="padding:6px 10px;"></th>
-          <th style="text-align:left; padding:6px 10px;">{{ t.colScenario }}</th>
-          <th style="text-align:left; padding:6px 10px;">{{ t.colLocation }}</th>
+          <th onClick="{{ setSortName }}" style="text-align:left; padding:6px 10px; cursor:pointer;">{{ t.colScenario }} {{ sortArrowName }}</th>
+          <th onClick="{{ setSortLocation }}" style="text-align:left; padding:6px 10px; cursor:pointer;">{{ t.colLocation }} {{ sortArrowLocation }}</th>
           <th style="padding:6px 10px;">{{ t.colPurchasePrice }}</th>
           <th style="padding:6px 10px;">{{ t.colFactor }}</th>
           <th style="padding:6px 10px;">{{ t.colEquity }}</th>
-          <th style="padding:6px 10px;">{{ t.colGrossYield }}</th>
-          <th style="padding:6px 10px;">{{ t.colNetYield }}</th>
-          <th style="padding:6px 10px;">{{ t.colCfAfterTaxMo }}</th>
+          <th onClick="{{ setSortCfAfterTax }}" style="padding:6px 10px; cursor:pointer;">{{ t.colCfAfterTaxMo }} {{ sortArrowCfAfterTax }}</th>
           <th style="padding:6px 10px;">{{ t.colBreakEvenCf }}</th>
         </tr>
       </thead>
@@ -707,6 +707,8 @@
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">{{ t.loadBtn }}</span></td>
             <td style="padding:6px 10px; color:{{ srow.ratingColor }}; font-weight:700;">{{ srow.rating }}</td>
+            <td style="padding:6px 10px;">{{ srow.grossYield }}</td>
+            <td style="padding:6px 10px;">{{ srow.netYield }}</td>
             <td style="padding:6px 10px;">{{ srow.equityReturn }}</td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.duplicate }}" style="cursor:pointer; color:#8b909c; font-size:13px;" title="{{ t.duplicateScenarioTitle }}">⧉</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.toggleFavorite }}" style="cursor:pointer; color:{{ srow.favoriteColor }}; font-size:14px;">{{ srow.favoriteIcon }}</span></td>
@@ -715,8 +717,6 @@
             <td style="padding:6px 10px;">{{ srow.price }}</td>
             <td style="padding:6px 10px;">{{ srow.factor }}</td>
             <td style="padding:6px 10px;">{{ srow.equity }}</td>
-            <td style="padding:6px 10px;">{{ srow.grossYield }}</td>
-            <td style="padding:6px 10px;">{{ srow.netYield }}</td>
             <td style="padding:6px 10px;">{{ srow.cfAfterTax }}</td>
             <td style="padding:6px 10px;">{{ srow.breakEven }}</td>
           </tr>
@@ -737,15 +737,15 @@
             <th style="padding:6px 10px;"></th>
             <th style="padding:6px 10px;"></th>
             <th style="padding:6px 10px;">{{ t.colRating }}</th>
-            <th style="padding:6px 10px;">{{ t.colCashOnCash }}</th>
-            <th style="text-align:left; padding:6px 10px;">{{ t.colScenario }}</th>
-            <th style="text-align:left; padding:6px 10px;">{{ t.colLocation }}</th>
+            <th onClick="{{ setSortGrossYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colGrossYield }} {{ sortArrowGrossYield }}</th>
+            <th onClick="{{ setSortNetYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colNetYield }} {{ sortArrowNetYield }}</th>
+            <th onClick="{{ setSortCoC }}" style="padding:6px 10px; cursor:pointer;">{{ t.colCashOnCash }} {{ sortArrowCoC }}</th>
+            <th onClick="{{ setSortName }}" style="text-align:left; padding:6px 10px; cursor:pointer;">{{ t.colScenario }} {{ sortArrowName }}</th>
+            <th onClick="{{ setSortLocation }}" style="text-align:left; padding:6px 10px; cursor:pointer;">{{ t.colLocation }} {{ sortArrowLocation }}</th>
             <th style="padding:6px 10px;">{{ t.colPurchasePrice }}</th>
             <th style="padding:6px 10px;">{{ t.colFactor }}</th>
             <th style="padding:6px 10px;">{{ t.colEquity }}</th>
-            <th style="padding:6px 10px;">{{ t.colGrossYield }}</th>
-            <th style="padding:6px 10px;">{{ t.colNetYield }}</th>
-            <th style="padding:6px 10px;">{{ t.colCfAfterTaxMo }}</th>
+            <th onClick="{{ setSortCfAfterTax }}" style="padding:6px 10px; cursor:pointer;">{{ t.colCfAfterTaxMo }} {{ sortArrowCfAfterTax }}</th>
             <th style="padding:6px 10px;">{{ t.colBreakEvenCf }}</th>
           </tr>
         </thead>
@@ -755,14 +755,14 @@
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.toggleFavorite }}" style="cursor:pointer; color:#e8b73f; font-size:13px;" title="{{ t.removeFromFavouritesTitle }}">★</span></td>
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">{{ t.loadBtn }}</span></td>
               <td style="padding:6px 10px; color:{{ frow.ratingColor }}; font-weight:700;">{{ frow.rating }}</td>
+              <td style="padding:6px 10px;">{{ frow.grossYield }}</td>
+              <td style="padding:6px 10px;">{{ frow.netYield }}</td>
               <td style="padding:6px 10px;">{{ frow.equityReturn }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ frow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ frow.location }}</td>
               <td style="padding:6px 10px;">{{ frow.price }}</td>
               <td style="padding:6px 10px;">{{ frow.factor }}</td>
               <td style="padding:6px 10px;">{{ frow.equity }}</td>
-              <td style="padding:6px 10px;">{{ frow.grossYield }}</td>
-              <td style="padding:6px 10px;">{{ frow.netYield }}</td>
               <td style="padding:6px 10px;">{{ frow.cfAfterTax }}</td>
               <td style="padding:6px 10px;">{{ frow.breakEven }}</td>
             </tr>
@@ -783,13 +783,13 @@
             <th style="padding:6px 10px;"></th>
             <th style="padding:6px 10px;"></th>
             <th style="padding:6px 10px;">{{ t.colRating }}</th>
+            <th onClick="{{ setSortGrossYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colGrossYield }} {{ sortArrowGrossYield }}</th>
+            <th onClick="{{ setSortNetYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colNetYield }} {{ sortArrowNetYield }}</th>
             <th onClick="{{ setSortCoC }}" style="padding:6px 10px; cursor:pointer;">{{ t.sortCashOnCash }} {{ sortArrowCoC }}</th>
             <th style="padding:6px 10px;"></th>
-            <th style="text-align:left; padding:6px 10px;">{{ t.colScenario }}</th>
-            <th style="text-align:left; padding:6px 10px;">{{ t.colLocation }}</th>
+            <th onClick="{{ setSortName }}" style="text-align:left; padding:6px 10px; cursor:pointer;">{{ t.colScenario }} {{ sortArrowName }}</th>
+            <th onClick="{{ setSortLocation }}" style="text-align:left; padding:6px 10px; cursor:pointer;">{{ t.colLocation }} {{ sortArrowLocation }}</th>
             <th style="padding:6px 10px;">{{ t.colFactor }}</th>
-            <th onClick="{{ setSortNetYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colNetYield }} {{ sortArrowNetYield }}</th>
-            <th onClick="{{ setSortGrossYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colGrossYield }} {{ sortArrowGrossYield }}</th>
             <th onClick="{{ setSortCfAfterTax }}" style="padding:6px 10px; cursor:pointer;">{{ t.sortCfAfterTax }} {{ sortArrowCfAfterTax }}</th>
           </tr>
         </thead>
@@ -799,13 +799,13 @@
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">{{ t.loadBtn }}</span></td>
               <td style="padding:6px 10px; color:{{ rrow.ratingColor }}; font-weight:700;">{{ rrow.rating }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.grossYield }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.netYield }}</td>
               <td style="padding:6px 10px; color:#8b909c;">{{ rrow.equityReturn }}</td>
               <td style="text-align:left; padding:6px 10px; color:#6b7280; width:24px;">{{ rrow.rank }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ rrow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ rrow.location }}</td>
               <td style="padding:6px 10px; color:#8b909c;">{{ rrow.factor }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.netYield }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.grossYield }}</td>
               <td style="padding:6px 10px; color:#8b909c;">{{ rrow.cfAfterTax }}</td>
             </tr>
           </sc-for>
@@ -1603,9 +1603,10 @@ class Component extends DCLogic {
   }
 
   setScenarioSort(key) {
+    const defaultDir = (key === 'name' || key === 'location') ? 'asc' : 'desc';
     this.setState(st => st.scenarioSortBy === key
       ? { scenarioSortDir: st.scenarioSortDir === 'asc' ? 'desc' : 'asc' }
-      : { scenarioSortBy: key, scenarioSortDir: 'desc' });
+      : { scenarioSortBy: key, scenarioSortDir: defaultDir });
   }
 
   loadScenario(idx) {
@@ -1924,59 +1925,62 @@ class Component extends DCLogic {
     const ratingOf = (netYield) => netYield >= 0.04 ? T.ratingGood : netYield >= 0.03 ? T.ratingMaybe : T.ratingBad;
     const ratingColorOf = (netYield) => netYield >= 0.04 ? '#7dd3a8' : netYield >= 0.03 ? '#e8b73f' : '#e2685f';
 
-    const scenarioRows = s.scenarios.map((sc, i) => {
+    const enrichedScenarios = s.scenarios.map((sc, i) => {
       const es = this.computeEngine(sc.data);
       return {
-        name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), factor: es.factor.toFixed(1) + '×', equity: eur(es.equity),
+        i, sc,
+        name: sc.name, location: sc.data.address || '—',
+        price: eur(sc.data.purchasePrice), factor: es.factor.toFixed(1) + '×', equity: eur(es.equity),
         grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
         cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
         breakEven: es.breakEvenCfYear ?? '—',
         rating: ratingOf(es.netYield), ratingColor: ratingColorOf(es.netYield),
-        favorite: !!sc.favorite,
-        favoriteIcon: sc.favorite ? '★' : '☆',
-        favoriteColor: sc.favorite ? '#e8b73f' : '#6b7280',
-        toggleFavorite: () => this.toggleFavorite(i),
-        remove: () => this.deleteScenario(i),
-        load: () => this.loadScenario(i),
-        duplicate: () => this.duplicateScenario(i),
+        nameVal: (sc.name || '').toLowerCase(), locationVal: (sc.data.address || '').toLowerCase(),
+        netYieldVal: es.netYield, grossYieldVal: es.grossYield, equityReturnVal: es.equityReturn, cfAfterTaxVal: es.cfAfterTax,
       };
     });
-
-    const favoriteRows = s.scenarios
-      .map((sc, i) => ({ sc, i }))
-      .filter(({ sc }) => sc.favorite)
-      .map(({ sc, i }) => {
-        const es = this.computeEngine(sc.data);
-        return {
-          name: sc.name, location: sc.data.address || '—', price: eur(sc.data.purchasePrice), factor: es.factor.toFixed(1) + '×', equity: eur(es.equity),
-          grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
-          cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
-          breakEven: es.breakEvenCfYear ?? '—',
-          rating: ratingOf(es.netYield), ratingColor: ratingColorOf(es.netYield),
-          toggleFavorite: () => this.toggleFavorite(i),
-          remove: () => this.deleteScenario(i),
-          load: () => this.loadScenario(i),
-        };
-      });
 
     const activeSortKey = s.scenarioSortBy || 'netYield';
     const sortDir = s.scenarioSortDir === 'asc' ? 1 : -1;
     const sortArrowFor = (key) => key !== activeSortKey ? '' : (s.scenarioSortDir === 'asc' ? '▲' : '▼');
-    const rankedRows = s.scenarios
-      .map((sc, i) => {
-        const es = this.computeEngine(sc.data);
-        return {
-          name: sc.name, location: sc.data.address || '—', factor: es.factor.toFixed(1) + '×',
-          netYield: pct(es.netYield, 2), grossYield: pct(es.grossYield, 2),
-          cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
-          rating: ratingOf(es.netYield), ratingColor: ratingColorOf(es.netYield),
-          netYieldVal: es.netYield, grossYieldVal: es.grossYield, equityReturnVal: es.equityReturn, cfAfterTaxVal: es.cfAfterTax,
-          remove: () => this.deleteScenario(i),
-          load: () => this.loadScenario(i),
-        };
-      })
-      .sort((a, b) => sortDir * (a[activeSortKey + 'Val'] - b[activeSortKey + 'Val']))
-      .map((r, i) => ({ ...r, rank: i + 1 }));
+    const sortedScenarios = [...enrichedScenarios].sort((a, b) => {
+      const av = a[activeSortKey + 'Val'], bv = b[activeSortKey + 'Val'];
+      return typeof av === 'string' ? sortDir * av.localeCompare(bv) : sortDir * (av - bv);
+    });
+
+    const scenarioRows = sortedScenarios.map((r) => {
+      const { sc, ...rest } = r;
+      return {
+        ...rest,
+        favorite: !!sc.favorite,
+        favoriteIcon: sc.favorite ? '★' : '☆',
+        favoriteColor: sc.favorite ? '#e8b73f' : '#6b7280',
+        toggleFavorite: () => this.toggleFavorite(r.i),
+        remove: () => this.deleteScenario(r.i),
+        load: () => this.loadScenario(r.i),
+        duplicate: () => this.duplicateScenario(r.i),
+      };
+    });
+
+    const favoriteRows = sortedScenarios.filter(r => r.sc.favorite).map((r) => {
+      const { sc, ...rest } = r;
+      return {
+        ...rest,
+        toggleFavorite: () => this.toggleFavorite(r.i),
+        remove: () => this.deleteScenario(r.i),
+        load: () => this.loadScenario(r.i),
+      };
+    });
+
+    const rankedRows = sortedScenarios.map((r, idx) => {
+      const { sc, ...rest } = r;
+      return {
+        ...rest,
+        rank: idx + 1,
+        remove: () => this.deleteScenario(r.i),
+        load: () => this.loadScenario(r.i),
+      };
+    });
 
     const compareOptions = s.scenarios.map((sc, i) => ({ idx: i, name: sc.name }));
     const compA = s.scenarios[s.compareA];
@@ -2120,8 +2124,10 @@ class Component extends DCLogic {
       setScenarioName: this.setField('scenarioName'), saveScenario: this.saveScenario.bind(this),
       setSortNetYield: () => this.setScenarioSort('netYield'), setSortGrossYield: () => this.setScenarioSort('grossYield'),
       setSortCfAfterTax: () => this.setScenarioSort('cfAfterTax'), setSortCoC: () => this.setScenarioSort('equityReturn'),
+      setSortName: () => this.setScenarioSort('name'), setSortLocation: () => this.setScenarioSort('location'),
       sortArrowNetYield: sortArrowFor('netYield'), sortArrowGrossYield: sortArrowFor('grossYield'),
       sortArrowCfAfterTax: sortArrowFor('cfAfterTax'), sortArrowCoC: sortArrowFor('equityReturn'),
+      sortArrowName: sortArrowFor('name'), sortArrowLocation: sortArrowFor('location'),
       scenarioRows, noScenarios: s.scenarios.length === 0,
       compareOptions, compareA: s.compareA, compareB: s.compareB,
       setCompareA: (ev) => this.setCompareA(parseInt(ev.target.value)),
