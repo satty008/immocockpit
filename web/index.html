@@ -206,7 +206,7 @@
           </div>
         </sc-for>
         <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:6px;">
-          German tax rule (anschaffungsnahe Herstellungskosten): if capex within 3 years of purchase exceeds 15% of the building value (incl. VAT), it must be capitalized rather than deducted immediately — no exceptions for routine repairs. Current capex: {{ investmentsTotalFmt }} vs. threshold {{ capexThresholdFmt }}.
+          German tax rule (anschaffungsnahe Herstellungskosten): if capex within 3 years of purchase exceeds 15% of the building value, it must be capitalized rather than deducted immediately — no exceptions for routine repairs. Assumes a VAT-exempt existing-property purchase (§4 Nr. 9a UStG); a VAT-liable new-build purchase would push this threshold higher. Current capex: {{ investmentsTotalFmt }} vs. threshold {{ capexThresholdFmt }}.
           <sc-if value="{{ capexForcedCapitalize }}" hint-placeholder-val="{{ false }}">
             <span style="color:#e8b73f;"> Over threshold — all items above are locked to "capitalize".</span>
           </sc-if>
@@ -1232,7 +1232,10 @@ class Component extends DCLogic {
     const investments = s.investments || [];
     const investmentsTotal = investments.reduce((a, i) => a + (i.cost || 0), 0);
     const totalInvestment = price + purchaseCosts + investmentsTotal;
-    const capexThreshold15 = 0.15 * ((s.buildingSharePct || 75) / 100) * (price + purchaseCosts) * 1.19;
+    // Most buy-to-let purchases are existing/used properties, which are VAT-exempt under
+    // §4 Nr. 9a UStG - so the 15% threshold applies to the building value as-is, with no VAT
+    // markup. A VAT-liable new-build purchase would need this threshold raised manually.
+    const capexThreshold15 = 0.15 * ((s.buildingSharePct || 75) / 100) * (price + purchaseCosts);
     const capexForcedCapitalize = investmentsTotal > capexThreshold15;
     const investmentsCapitalized = investments.reduce((a, i) => a + ((capexForcedCapitalize || i.capitalize) ? (i.cost || 0) : 0), 0);
 
@@ -1316,7 +1319,10 @@ class Component extends DCLogic {
       });
 
       const cfOperational = warmRentY - opCostsTotal - interestY / 12 - principalY / 12;
-      const taxableCf = warmRentY - opCostsExclReserves - interestY / 12 - afaMonthly;
+      // Vacancy is real rent you don't collect, so it reduces taxable income too - unlike the
+      // own-repair reserve, which is a self-directed savings buffer, not spent, and so not
+      // deductible until an actual repair cost is incurred.
+      const taxableCf = warmRentY - opCostsExclReserves - vacancyY - interestY / 12 - afaMonthly;
       const tax = (s.marginalTaxPct / 100) * taxableCf;
       const cfAfterTax = cfOperational - tax;
 
