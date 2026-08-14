@@ -355,6 +355,11 @@
                 <input type="number" value="{{ loan1Pct }}" onChange="{{ setLoan1Pct }}" style="width:70px; background:#161923; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:11px;" />
               </sc-if>
             </div>
+            <div style="display:flex; gap:6px; margin-bottom:8px;">
+              <button onClick="{{ setLtv80 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">80% LTV</button>
+              <button onClick="{{ setLtv90 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">90% LTV</button>
+              <button onClick="{{ setLtv100 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">100% LTV</button>
+            </div>
           </sc-if>
           <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; opacity:{{ loan.fieldsOpacity }}; pointer-events:{{ loan.fieldsPointerEvents }};">
             <div>
@@ -647,8 +652,8 @@
       <tbody>
         <sc-for list="{{ scenarioRows }}" as="srow" hint-placeholder-count="2">
           <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
-            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
+            <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
             <td style="padding:6px 10px; text-align:left;"><span onClick="{{ srow.toggleFavorite }}" style="cursor:pointer; color:{{ srow.favoriteColor }}; font-size:14px;">{{ srow.favoriteIcon }}</span></td>
             <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ srow.name }}</td>
             <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ srow.location }}</td>
@@ -694,8 +699,8 @@
         <tbody>
           <sc-for list="{{ favoriteRows }}" as="frow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.toggleFavorite }}" style="cursor:pointer; color:#e8b73f; font-size:13px;" title="Remove from favourites">★</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ frow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ frow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ frow.location }}</td>
               <td style="padding:6px 10px;">{{ frow.price }}</td>
@@ -736,8 +741,8 @@
         <tbody>
           <sc-for list="{{ rankedRows }}" as="rrow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
-              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
+              <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">Load</span></td>
               <td style="text-align:left; padding:6px 10px; color:#6b7280; width:24px;">{{ rrow.rank }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ rrow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ rrow.location }}</td>
@@ -1615,6 +1620,9 @@ class Component extends DCLogic {
       setRentInputMode: this.setField('rentInputMode'), setRentFlatAmount: this.setField('rentFlatAmount'),
       setCostEstimateMode: (ev) => this.setState({ costEstimateMode: ev.target.checked }),
       setLoan1Mode: this.setField('loan1Mode'), setLoan1Pct: this.setField('loan1Pct'),
+      setLtv80: () => this.setState({ loan1Mode: 'pct', loan1Pct: 80 }),
+      setLtv90: () => this.setState({ loan1Mode: 'pct', loan1Pct: 90 }),
+      setLtv100: () => this.setState({ loan1Mode: 'pct', loan1Pct: 100 }),
       setTaxableIncome: this.setField('taxableIncome'), setFilingStatus: this.setField('filingStatus'), setChurchTaxPct: this.setField('churchTaxPct'),
       applyEstimatedRate: this.applyEstimatedRate.bind(this),
       isFlatRent: s.rentInputMode === 'flat', isLoan1Pct: s.loan1Mode === 'pct',
