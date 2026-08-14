@@ -773,38 +773,40 @@
     </sc-if>
 
     <sc-if value="{{ hasRanked }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:24px; padding-top:18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #232833; margin-bottom:10px;">
+      <div style="margin-top:24px; padding-top:18px; border-top:1px solid #232833; margin-bottom:10px;">
         <div style="font-size:13px; font-weight:700; color:#7dd3a8; text-transform:uppercase; letter-spacing:.06em;">{{ t.rankedTitle }}</div>
-        <div style="display:flex; align-items:center; gap:6px;">
-          <label style="font-size:11px; color:#8b909c;">{{ t.sortByLabel }}</label>
-          <select value="{{ scenarioSortBy }}" onChange="{{ setScenarioSortBy }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
-            <option value="netYield">{{ t.colNetYield }}</option>
-            <option value="grossYield">{{ t.colGrossYield }}</option>
-            <option value="equityReturn">{{ t.sortCashOnCash }}</option>
-            <option value="cfAfterTax">{{ t.sortCfAfterTax }}</option>
-          </select>
-          <select value="{{ scenarioSortDir }}" onChange="{{ setScenarioSortDir }}" style="background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;">
-            <option value="desc">{{ t.sortDesc }}</option>
-            <option value="asc">{{ t.sortAsc }}</option>
-          </select>
-        </div>
       </div>
       <div style="overflow-x:auto;">
       <table style="border-collapse:collapse; width:100%; font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">
+        <thead>
+          <tr style="color:#8b909c; text-align:right;">
+            <th style="padding:6px 10px;"></th>
+            <th style="padding:6px 10px;"></th>
+            <th style="padding:6px 10px;">{{ t.colRating }}</th>
+            <th onClick="{{ setSortCoC }}" style="padding:6px 10px; cursor:pointer;">{{ t.sortCashOnCash }} {{ sortArrowCoC }}</th>
+            <th style="padding:6px 10px;"></th>
+            <th style="text-align:left; padding:6px 10px;">{{ t.colScenario }}</th>
+            <th style="text-align:left; padding:6px 10px;">{{ t.colLocation }}</th>
+            <th style="padding:6px 10px;">{{ t.colFactor }}</th>
+            <th onClick="{{ setSortNetYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colNetYield }} {{ sortArrowNetYield }}</th>
+            <th onClick="{{ setSortGrossYield }}" style="padding:6px 10px; cursor:pointer;">{{ t.colGrossYield }} {{ sortArrowGrossYield }}</th>
+            <th onClick="{{ setSortCfAfterTax }}" style="padding:6px 10px; cursor:pointer;">{{ t.sortCfAfterTax }} {{ sortArrowCfAfterTax }}</th>
+          </tr>
+        </thead>
         <tbody>
           <sc-for list="{{ rankedRows }}" as="rrow" hint-placeholder-count="2">
             <tr style="border-top:1px solid #232833; text-align:right; color:#d5d8de;">
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.remove }}" style="cursor:pointer; color:#e2685f;">✕</span></td>
               <td style="padding:6px 10px; text-align:left;"><span onClick="{{ rrow.load }}" style="cursor:pointer; color:#7dd3a8; font-size:11px; text-decoration:underline;">{{ t.loadBtn }}</span></td>
               <td style="padding:6px 10px; color:{{ rrow.ratingColor }}; font-weight:700;">{{ rrow.rating }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">{{ t.cocShort }} {{ rrow.equityReturn }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.equityReturn }}</td>
               <td style="text-align:left; padding:6px 10px; color:#6b7280; width:24px;">{{ rrow.rank }}</td>
               <td style="text-align:left; padding:6px 10px; color:#f4f6f8; font-weight:600;">{{ rrow.name }}</td>
               <td style="text-align:left; padding:6px 10px; color:#8b909c;">{{ rrow.location }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">{{ t.factorLabel }} {{ rrow.factor }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">{{ t.netYieldShort }} {{ rrow.netYield }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">{{ t.grossShort }} {{ rrow.grossYield }}</td>
-              <td style="padding:6px 10px; color:#8b909c;">{{ t.cfShort }} {{ rrow.cfAfterTax }}/mo</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.factor }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.netYield }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.grossYield }}</td>
+              <td style="padding:6px 10px; color:#8b909c;">{{ rrow.cfAfterTax }}</td>
             </tr>
           </sc-for>
         </tbody>
@@ -1132,8 +1134,7 @@ const TRANSLATIONS = {
     colBreakEvenCf: "Break-even (CF)", colRating: "Rating", loadBtn: "Load", duplicateScenarioTitle: "Duplicate scenario",
     noScenariosText: "No saved scenarios yet — adjust the inputs on the Overview tab, then come back here and save a snapshot to compare it against alternatives (e.g. different price, financing, or rent-growth assumptions).",
     favouritesTitle: "Favourites", removeFromFavouritesTitle: "Remove from favourites",
-    rankedTitle: "Ranked", sortByLabel: "Sort by", sortCashOnCash: "Cash-on-cash return", sortCfAfterTax: "Cashflow after tax",
-    sortDesc: "Descending (best first)", sortAsc: "Ascending (worst first)",
+    rankedTitle: "Ranked", sortCashOnCash: "Cash-on-cash", sortCfAfterTax: "CF after tax/mo",
     netYieldShort: "net yield", grossShort: "gross", cfShort: "CF", cocShort: "CoC",
     sideBySideTitle: "Side-by-side compare", selectScenarioA: "Select scenario A…", selectScenarioB: "Select scenario B…", vsLabel: "vs.",
     ratingGood: "Good", ratingMaybe: "Maybe", ratingBad: "Bad",
@@ -1283,8 +1284,7 @@ const TRANSLATIONS = {
     colBreakEvenCf: "Break-even (CF)", colRating: "Bewertung", loadBtn: "Laden", duplicateScenarioTitle: "Szenario duplizieren",
     noScenariosText: "Noch keine gespeicherten Szenarien — passen Sie die Eingaben im Tab „Übersicht“ an und speichern Sie hier einen Schnappschuss, um ihn mit Alternativen zu vergleichen (z. B. anderer Preis, Finanzierung oder Mietsteigerung).",
     favouritesTitle: "Favoriten", removeFromFavouritesTitle: "Aus Favoriten entfernen",
-    rankedTitle: "Rangliste", sortByLabel: "Sortieren nach", sortCashOnCash: "Eigenkapitalrendite", sortCfAfterTax: "Cashflow nach Steuern",
-    sortDesc: "Absteigend (beste zuerst)", sortAsc: "Aufsteigend (schwächste zuerst)",
+    rankedTitle: "Rangliste", sortCashOnCash: "Eigenkapitalrendite", sortCfAfterTax: "CF nach Steuern/Mon.",
     netYieldShort: "Nettorendite", grossShort: "brutto", cfShort: "CF", cocShort: "EK-Rendite",
     sideBySideTitle: "Direktvergleich", selectScenarioA: "Szenario A auswählen…", selectScenarioB: "Szenario B auswählen…", vsLabel: "vs.",
     ratingGood: "Gut", ratingMaybe: "Vielleicht", ratingBad: "Schwach",
@@ -1600,6 +1600,12 @@ class Component extends DCLogic {
       scenarios[idx] = { ...scenarios[idx], favorite: !scenarios[idx].favorite };
       return { scenarios };
     });
+  }
+
+  setScenarioSort(key) {
+    this.setState(st => st.scenarioSortBy === key
+      ? { scenarioSortDir: st.scenarioSortDir === 'asc' ? 'desc' : 'asc' }
+      : { scenarioSortBy: key, scenarioSortDir: 'desc' });
   }
 
   loadScenario(idx) {
@@ -1953,9 +1959,9 @@ class Component extends DCLogic {
         };
       });
 
-    const sortKeyMap = { netYield: 'netYield', grossYield: 'grossYield', equityReturn: 'equityReturn', cfAfterTax: 'cfAfterTax' };
-    const activeSortKey = sortKeyMap[s.scenarioSortBy] || 'netYield';
+    const activeSortKey = s.scenarioSortBy || 'netYield';
     const sortDir = s.scenarioSortDir === 'asc' ? 1 : -1;
+    const sortArrowFor = (key) => key !== activeSortKey ? '' : (s.scenarioSortDir === 'asc' ? '▲' : '▼');
     const rankedRows = s.scenarios
       .map((sc, i) => {
         const es = this.computeEngine(sc.data);
@@ -2112,8 +2118,10 @@ class Component extends DCLogic {
       tabNetWorthColor: tabColor('networth'), tabNetWorthBorder: tabBorder('networth'),
 
       setScenarioName: this.setField('scenarioName'), saveScenario: this.saveScenario.bind(this),
-      setScenarioSortBy: this.setField('scenarioSortBy'),
-      setScenarioSortDir: this.setField('scenarioSortDir'),
+      setSortNetYield: () => this.setScenarioSort('netYield'), setSortGrossYield: () => this.setScenarioSort('grossYield'),
+      setSortCfAfterTax: () => this.setScenarioSort('cfAfterTax'), setSortCoC: () => this.setScenarioSort('equityReturn'),
+      sortArrowNetYield: sortArrowFor('netYield'), sortArrowGrossYield: sortArrowFor('grossYield'),
+      sortArrowCfAfterTax: sortArrowFor('cfAfterTax'), sortArrowCoC: sortArrowFor('equityReturn'),
       scenarioRows, noScenarios: s.scenarios.length === 0,
       compareOptions, compareA: s.compareA, compareB: s.compareB,
       setCompareA: (ev) => this.setCompareA(parseInt(ev.target.value)),
