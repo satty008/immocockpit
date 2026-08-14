@@ -136,7 +136,7 @@
     <div style="flex:1 1 100%; width:100%; display:flex; flex-wrap:wrap; gap:10px;">
       <div style="flex:1 1 140px; min-width:120px; background:#161923; border:1px solid {{ verdictColor }}; border-radius:10px; padding:10px 12px;">
         <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Verdict</div>
-        <div style="font-size:14px; font-weight:800; color:{{ verdictColor }}; white-space:nowrap;">{{ verdict }}</div>
+        <div style="font-size:14px; font-weight:800; color:{{ verdictColor }}; line-height:1.25;">{{ verdict }}</div>
       </div>
       <div style="flex:1 1 110px; min-width:100px; background:#161923; border:1px solid #262b38; border-radius:10px; padding:10px 12px;">
         <div style="font-size:9px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px;">Gross yield</div>
@@ -438,22 +438,6 @@
 
     <div style="flex:1 1 280px; min-width:260px; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
       <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">Depreciation (AfA)</div>
-      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Bodenrichtwert (€/m²) × your plot share (m²)</label>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:6px;">
-        <input type="number" placeholder="€/m²" value="{{ bodenrichtwert }}" onChange="{{ setBodenrichtwert }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
-        <input type="number" placeholder="m²" value="{{ plotArea }}" onChange="{{ setPlotArea }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
-      </div>
-      <div style="font-size:11px; color:#a7acb8; margin-bottom:8px;">= computed land value: <b style="color:#f4f6f8;">{{ bodenwertComputedFmt }}</b></div>
-      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Or override land value directly (€)</label>
-      <input type="number" value="{{ landValue }}" onChange="{{ setLandValue }}" style="width:100%; margin-bottom:6px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
-      <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-bottom:10px;">Look up the official Bodenrichtwert (BORIS-D / your state's Gutachterausschuss portal) for the plot. If a manual override or a computed land value is set (currently {{ effectiveLandValueFmt }}), it replaces the flat building-share % below (currently {{ effectiveBuildingSharePctFmt }}). This mirrors the BMF's approach at a simplified level — it does not apply the full multi-factor worksheet (index adjustments, outbuildings, condition discounts) the BMF PDF tool uses; for a contested valuation, use that or a valuer.</div>
-      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Building share of price (%) — used if no land value set</label>
-      <div style="display:flex; gap:6px; margin-bottom:6px;">
-        <button onClick="{{ setBuildingShareLow }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">Low fittings (65%)</button>
-        <button onClick="{{ setBuildingShareNormal }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">Normal (75%)</button>
-        <button onClick="{{ setBuildingShareHigh }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">High-end (85%)</button>
-      </div>
-      <input type="number" step="1" value="{{ buildingSharePct }}" onChange="{{ setBuildingSharePct }}" style="width:100%; margin-bottom:10px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Depreciation type</label>
       <select value="{{ afaPreset }}" onChange="{{ setAfaPreset }}" style="width:100%; margin-bottom:8px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;">
         <option value="3">Standard — built/acquired 2023 or later (3%/yr)</option>
@@ -467,6 +451,29 @@
       <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-bottom:10px;">
         Rule of thumb: 3% is the current default for any building completed 2023+; 2% for older stock. The 5% degressive and Denkmal options run on a declining balance / staggered schedule in reality — this field approximates them as a flat linear rate for this projection. Ask a tax advisor before relying on the degressive or Denkmal path.
       </div>
+      <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Building share of price (%) — used if no land value set</label>
+      <div style="display:flex; gap:6px; margin-bottom:6px;">
+        <button onClick="{{ setBuildingShareLow }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">Low fittings (65%)</button>
+        <button onClick="{{ setBuildingShareNormal }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">Normal (75%)</button>
+        <button onClick="{{ setBuildingShareHigh }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">High-end (85%)</button>
+      </div>
+      <input type="number" step="1" value="{{ buildingSharePct }}" onChange="{{ setBuildingSharePct }}" style="width:100%; margin-bottom:10px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+
+      <div onClick="{{ toggleLandValueDetail }}" style="cursor:pointer; font-size:11px; color:#7dd3a8; margin-bottom:8px; display:flex; align-items:center; gap:4px;">
+        <span>{{ landValueDetailArrow }}</span> Advanced: land value override (Bodenrichtwert)
+      </div>
+      <sc-if value="{{ showLandValueDetail }}" hint-placeholder-val="{{ false }}">
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Bodenrichtwert (€/m²) × your plot share (m²)</label>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:6px;">
+          <input type="number" placeholder="€/m²" value="{{ bodenrichtwert }}" onChange="{{ setBodenrichtwert }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+          <input type="number" placeholder="m²" value="{{ plotArea }}" onChange="{{ setPlotArea }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+        </div>
+        <div style="font-size:11px; color:#a7acb8; margin-bottom:8px;">= computed land value: <b style="color:#f4f6f8;">{{ bodenwertComputedFmt }}</b></div>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Or override land value directly (€)</label>
+        <input type="number" value="{{ landValue }}" onChange="{{ setLandValue }}" style="width:100%; margin-bottom:6px; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-bottom:10px;">Look up the official Bodenrichtwert (BORIS-D / your state's Gutachterausschuss portal) for the plot. If a manual override or a computed land value is set (currently {{ effectiveLandValueFmt }}), it replaces the flat building-share % above (currently {{ effectiveBuildingSharePctFmt }}). This mirrors the BMF's approach at a simplified level — it does not apply the full multi-factor worksheet (index adjustments, outbuildings, condition discounts) the BMF PDF tool uses; for a contested valuation, use that or a valuer.</div>
+      </sc-if>
+
       <div style="display:flex; justify-content:space-between; font-size:12px; color:#a7acb8; padding-top:8px; border-top:1px solid #232833;">
         <span>AfA basis</span><span style="font-family:'IBM Plex Mono',monospace;">{{ afaBasisFmt }}</span>
       </div>
@@ -512,10 +519,6 @@
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Value growth (%/yr)</label>
           <input type="number" step="0.1" value="{{ valueGrowthPct }}" onChange="{{ setValueGrowthPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
-        <div style="grid-column: span 2;">
-          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Marginal tax rate (%) — 2026 top rate 42% from €69,878 taxable income</label>
-          <input type="number" step="1" value="{{ marginalTaxPct }}" onChange="{{ setMarginalTaxPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
-        </div>
         <div>
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Projection (yrs)</label>
           <input type="number" value="{{ years }}" onChange="{{ setYears }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
@@ -523,7 +526,7 @@
       </div>
 
       <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Not sure of your marginal rate? Estimate from taxable income (approximate, 2026 §32a EStG tariff)</div>
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Marginal tax rate — estimate from taxable income (approximate, 2026 §32a EStG tariff)</div>
         <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr auto; gap:8px; align-items:end;">
           <div>
             <label style="display:block; font-size:10px; color:#6b7280;">Taxable income, zvE (€/yr)</label>
@@ -548,6 +551,11 @@
         </div>
         <div style="font-size:11px; color:#a7acb8; margin-top:8px;">Estimated marginal rate: <b style="color:#f4f6f8;">{{ taxEstMarginal }}</b> · average rate: <b style="color:#f4f6f8;">{{ taxEstAvg }}</b> · ≈ {{ taxEstMonthly }}/mo total tax (incl. Solidaritätszuschlag{{ taxEstChurchSuffix }}).</div>
         <div style="font-size:10px; color:#6b7280; margin-top:4px;">Includes the 5.5% Solidaritätszuschlag above the 2026 exemption (€20,350 single / €40,700 joint), tapered through its Gleitzone. "Married, splitting" uses your combined taxable income (zvE) for the final annual assessment. Payroll tax classes (e.g. III/V) only change monthly withholding during the year — they don't change this joint liability, so enter your combined household zvE here regardless of class.</div>
+      </div>
+
+      <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Marginal tax rate (%) — 2026 top rate 42% from €69,878 taxable income</label>
+        <input type="number" step="1" value="{{ marginalTaxPct }}" onChange="{{ setMarginalTaxPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
       </div>
 
       <div style="font-size:10px; color:#6b7280; line-height:1.5; margin-top:10px;">
@@ -1203,6 +1211,7 @@ class Component extends DCLogic {
     ],
 
     showTips: false,
+    showLandValueDetail: false,
     activeTab: 'overview',
     scenarios: [],
     scenarioName: '',
@@ -1233,6 +1242,7 @@ class Component extends DCLogic {
 
   setTab(tab) { this.setState({ activeTab: tab }); }
   toggleTips() { this.setState(s => ({ showTips: !s.showTips })); }
+  toggleLandValueDetail() { this.setState(s => ({ showLandValueDetail: !s.showLandValueDetail })); }
 
   // Strips the fields that aren't "deal" inputs (saved-scenario bookkeeping, UI sort prefs) so
   // two states can be compared to detect unsaved edits before Load overwrites them.
@@ -1674,6 +1684,7 @@ class Component extends DCLogic {
       setLandValue: this.setField('landValue'),
       setBodenrichtwert: this.setField('bodenrichtwert'), setPlotArea: this.setField('plotArea'),
       bodenwertComputedFmt: eur(e.bodenwertComputed), effectiveLandValueFmt: eur(e.effectiveLandValue),
+      toggleLandValueDetail: this.toggleLandValueDetail.bind(this), landValueDetailArrow: s.showLandValueDetail ? '▾' : '▸',
       setRentMode: this.setField('rentMode'), setFurnishedRent: this.setField('furnishedRent'),
       setFurnishedOpexPct: this.setField('furnishedOpexPct'), setFurnishedVacancyPct: this.setField('furnishedVacancyPct'),
       isFurnished: s.rentMode === 'furnished', isStandard: s.rentMode !== 'furnished',
