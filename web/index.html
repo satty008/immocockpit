@@ -526,8 +526,8 @@
       </div>
 
       <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
-        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Marginal tax rate — estimate from taxable income (approximate, 2026 §32a EStG tariff)</div>
-        <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr auto; gap:8px; align-items:end;">
+        <div style="font-size:11px; color:#8b909c; margin-bottom:8px;">Marginal tax rate — auto-calculated from taxable income below (approximate, 2026 §32a EStG tariff)</div>
+        <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:8px;">
           <div>
             <label style="display:block; font-size:10px; color:#6b7280;">Taxable income, zvE (€/yr)</label>
             <input type="number" value="{{ taxableIncome }}" onChange="{{ setTaxableIncome }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:6px; padding:6px 8px; font-size:12px;" />
@@ -547,16 +547,20 @@
               <option value="9">9% (other states)</option>
             </select>
           </div>
-          <button onClick="{{ applyEstimatedRate }}" style="background:#7dd3a8; border:none; color:#08120c; font-weight:700; border-radius:6px; padding:7px 12px; font-size:11px; cursor:pointer; white-space:nowrap;">Use this rate</button>
         </div>
-        <div style="font-size:11px; color:#a7acb8; margin-top:8px;">Estimated marginal rate: <b style="color:#f4f6f8;">{{ taxEstMarginal }}</b> · average rate: <b style="color:#f4f6f8;">{{ taxEstAvg }}</b> · ≈ {{ taxEstMonthly }}/mo total tax (incl. Solidaritätszuschlag{{ taxEstChurchSuffix }}).</div>
+        <div style="font-size:11px; color:#a7acb8; margin-top:8px;">Marginal rate in use: <b style="color:#f4f6f8;">{{ marginalTaxPctFmt }}</b> · average rate: <b style="color:#f4f6f8;">{{ taxEstAvg }}</b> · ≈ {{ taxEstMonthly }}/mo total tax (incl. Solidaritätszuschlag{{ taxEstChurchSuffix }}).</div>
         <div style="font-size:10px; color:#6b7280; margin-top:4px;">Includes the 5.5% Solidaritätszuschlag above the 2026 exemption (€20,350 single / €40,700 joint), tapered through its Gleitzone. "Married, splitting" uses your combined taxable income (zvE) for the final annual assessment. Payroll tax classes (e.g. III/V) only change monthly withholding during the year — they don't change this joint liability, so enter your combined household zvE here regardless of class.</div>
       </div>
 
-      <div style="margin-top:14px; padding-top:12px; border-top:1px solid #232833;">
-        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Marginal tax rate (%) — 2026 top rate 42% from €69,878 taxable income</label>
-        <input type="number" step="1" value="{{ marginalTaxPct }}" onChange="{{ setMarginalTaxPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+      <div onClick="{{ toggleMarginalRateOverride }}" style="cursor:pointer; font-size:11px; color:#7dd3a8; margin-top:14px; padding-top:12px; border-top:1px solid #232833; display:flex; align-items:center; gap:4px;">
+        <span>{{ marginalRateOverrideArrow }}</span> Advanced: override marginal tax rate manually
       </div>
+      <sc-if value="{{ showMarginalRateOverride }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:8px;">
+          <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">Marginal tax rate (%) — 2026 top rate 42% from €69,878 taxable income</label>
+          <input type="number" step="1" value="{{ marginalTaxPct }}" onChange="{{ setMarginalTaxPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+        </div>
+      </sc-if>
 
       <div style="font-size:10px; color:#6b7280; line-height:1.5; margin-top:10px;">
         2026 reference values: mortgage rates for a 10-year fixed loan run ~3.6–4.1% effective; the income-tax top rate (42%) applies above €69,878 of taxable income, rising to 45% above €277,826. Transfer tax follows the selected federal state. Rent-control caps (Mietpreisbremse) are regional and not modelled — check local Mietspiegel rules when rents exceed 10% above reference rent in a designated area.
@@ -1186,7 +1190,7 @@ class Component extends DCLogic {
     rentGrowthPct: 2.5,
     costGrowthPct: 2,
     valueGrowthPct: 2,
-    marginalTaxPct: 42,
+    marginalTaxPct: 35.1,
     years: 30,
 
     taxableIncome: 100000,
@@ -1212,6 +1216,7 @@ class Component extends DCLogic {
 
     showTips: false,
     showLandValueDetail: false,
+    showMarginalRateOverride: false,
     activeTab: 'overview',
     scenarios: [],
     scenarioName: '',
@@ -1477,10 +1482,24 @@ class Component extends DCLogic {
     return { marginal, avgRate, monthlyTax: totalTax / 12, incomeTax, soli, churchTax };
   }
 
-  applyEstimatedRate() {
-    const est = this.estimateTax();
-    this.setState({ marginalTaxPct: Math.round(est.marginal * 10) / 10 });
+  setTaxableIncome(ev) {
+    const taxableIncome = parseFloat(ev.target.value) || 0;
+    this.setState(st => {
+      const basis = st.filingStatus === 'married' ? taxableIncome / 2 : taxableIncome;
+      return { taxableIncome, marginalTaxPct: Math.round(this.marginalRateAt(basis) * 10) / 10 };
+    });
   }
+
+  setFilingStatus(ev) {
+    const filingStatus = ev.target.value;
+    this.setState(st => {
+      const zve = st.taxableIncome || 0;
+      const basis = filingStatus === 'married' ? zve / 2 : zve;
+      return { filingStatus, marginalTaxPct: Math.round(this.marginalRateAt(basis) * 10) / 10 };
+    });
+  }
+
+  toggleMarginalRateOverride() { this.setState(s => ({ showMarginalRateOverride: !s.showMarginalRateOverride })); }
 
   buildChartPoints(years) {
     const w = 1040, h = 220, pad = 30;
@@ -1706,8 +1725,9 @@ class Component extends DCLogic {
       setLtv80: () => this.setState({ loan1Mode: 'pct', loan1Pct: 80 }),
       setLtv90: () => this.setState({ loan1Mode: 'pct', loan1Pct: 90 }),
       setLtv100: () => this.setState({ loan1Mode: 'pct', loan1Pct: 100 }),
-      setTaxableIncome: this.setField('taxableIncome'), setFilingStatus: this.setField('filingStatus'), setChurchTaxPct: this.setField('churchTaxPct'),
-      applyEstimatedRate: this.applyEstimatedRate.bind(this),
+      setTaxableIncome: this.setTaxableIncome.bind(this), setFilingStatus: this.setFilingStatus.bind(this), setChurchTaxPct: this.setField('churchTaxPct'),
+      toggleMarginalRateOverride: this.toggleMarginalRateOverride.bind(this), marginalRateOverrideArrow: s.showMarginalRateOverride ? '▾' : '▸',
+      marginalTaxPctFmt: s.marginalTaxPct.toFixed(1) + '%',
       isFlatRent: s.rentInputMode === 'flat', isLoan1Pct: s.loan1Mode === 'pct',
       investmentRows, loanRowsFull, renovationRows, capexForcedCapitalize: e.capexForcedCapitalize,
       verdict, verdictColor, verdictReasons,
