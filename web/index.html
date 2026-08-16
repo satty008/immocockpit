@@ -322,6 +322,7 @@
           <input type="number" value="{{ rentFlatAmount }}" onChange="{{ setRentFlatAmount }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
       </sc-if>
+      <sc-if value="{{ !isFlatRent }}" hint-placeholder-val="{{ true }}">
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
         <div>
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldColdRentPerSqm }}</label>
@@ -331,13 +332,16 @@
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldParkingOther }}</label>
           <input type="number" value="{{ otherRent }}" onChange="{{ setOtherRent }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
+      </div>
+      </sc-if>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
         <div>
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldRecoverableCosts }}</label>
-          <input type="number" value="{{ recoverableCosts }}" onChange="{{ setRecoverableCosts }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+          <input type="number" disabled="{{ costEstimateMode }}" value="{{ recoverableCostsEffective }}" onChange="{{ setRecoverableCosts }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldNonRecoverableCosts }}</label>
-          <input type="number" value="{{ nonRecoverableCosts }}" onChange="{{ setNonRecoverableCosts }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+          <input type="number" disabled="{{ costEstimateMode }}" value="{{ nonRecoverableCostsEffective }}" onChange="{{ setNonRecoverableCosts }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
         </div>
         <div>
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldOwnReserve }}</label>
@@ -1473,7 +1477,7 @@ class Component extends DCLogic {
     rentFlatAmount: 341,
     rentPerSqm: 11,
     otherRent: 45,
-    costEstimateMode: false,
+    costEstimateMode: true,
     recoverableCosts: 120,
     nonRecoverableCosts: 100,
     ownReservePerSqm: 10,
@@ -1763,6 +1767,7 @@ class Component extends DCLogic {
 
     return {
       transferTaxPct, purchaseCosts, totalInvestment, coldRent, warmRent, totalOperatingCosts, unitsTotalArea, unitsColdRent,
+      estRecoverable, estNonRecoverable,
       totalLoan, equity, weightedRate, monthlyDebtService, afaBasis, afaMonthly,
       effectiveBuildingSharePct, capexThreshold15, investmentsTotal, investmentsCapitalized, loan1Amount, capexForcedCapitalize, bodenwertComputed, effectiveLandValue,
       years, grossYield, netYield, factor,
@@ -2021,6 +2026,8 @@ class Component extends DCLogic {
       setNotaryPct: this.setField('notaryPct'), setLandRegistryPct: this.setField('landRegistryPct'),
       setRentPerSqm: this.setField('rentPerSqm'), setOtherRent: this.setField('otherRent'),
       setRecoverableCosts: this.setField('recoverableCosts'), setNonRecoverableCosts: this.setField('nonRecoverableCosts'),
+      recoverableCostsEffective: s.costEstimateMode ? Math.round(e.estRecoverable) : s.recoverableCosts,
+      nonRecoverableCostsEffective: s.costEstimateMode ? Math.round(e.estNonRecoverable) : s.nonRecoverableCosts,
       setOwnReservePerSqm: this.setField('ownReservePerSqm'), setVacancyPct: this.setField('vacancyPct'),
       setBuildingSharePct: this.setField('buildingSharePct'), setAfaRate: this.setField('afaRate'),
       setBuildingShareLow: () => this.setState({ buildingSharePct: 65 }),
