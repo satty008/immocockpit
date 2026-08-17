@@ -1764,9 +1764,10 @@ class Component extends DCLogic {
     const factor = price / annualColdRent;
     const principalPaidY1 = loans.reduce((a, l) => a + l.amortization / 100 * l.amount, 0);
     const appreciationY1 = years.length > 1 ? years[1].value - years[0].value : 0;
-    const wealthGrowthY1 = appreciationY1 + principalPaidY1;
+    const cfAfterTaxY1 = (years[0]?.cfAfterTax ?? 0) * 12;
+    const wealthGrowthY1 = appreciationY1 + principalPaidY1 + cfAfterTaxY1;
     const equityReturn = equity > 0 ? wealthGrowthY1 / equity : 0;
-    const equityReturnNoGrowth = equity > 0 ? principalPaidY1 / equity : 0;
+    const equityReturnNoGrowth = equity > 0 ? (principalPaidY1 + cfAfterTaxY1) / equity : 0;
 
     return {
       transferTaxPct, purchaseCosts, totalInvestment, coldRent, warmRent, totalOperatingCosts, unitsTotalArea, unitsColdRent,
