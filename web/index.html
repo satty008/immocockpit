@@ -637,6 +637,7 @@
         <div>
           <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileLifetimeIrr }}</div>
           <div style="font-size:22px; font-weight:700; color:#f4f6f8;">{{ lifetimeIrrFmt }}</div>
+          <div style="font-size:11px; color:#6b7280; margin-top:2px;">{{ t.at10yrUnrealized }} {{ lifetimeIrr10Fmt }}</div>
           <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileLifetimeIrrDesc }}</div>
         </div>
       </div>
@@ -1215,6 +1216,7 @@ const TRANSLATIONS = {
     tileLifetimeNetWorthDesc: "Property value minus any remaining loan balance at the end of your projection horizon, marked to market — unrealized, since you never sold, so no selling costs or capital-gains tax applied.",
     tileLifetimeIrr: "Lifetime IRR (never sell)",
     tileLifetimeIrrDesc: "Same IRR method as the Exit tab, but held to the end of your projection horizon with the paper net worth above standing in for a sale. The \"good buy\" number if you plan to hold indefinitely rather than sell.",
+    at10yrUnrealized: "at year 10 (unrealized):",
     yearProjectionSuffix: "-year projection", legendPropertyValue: "Property value", legendCumulativeCf: "Cumulative cashflow (incl. equity)",
     firstPositiveCf: "First positive cashflow after tax:", cumCfTurnsPositive: "Cumulative cashflow turns positive:", mainLoanRepaid: "Main loan repaid:",
     yearByYearTitle: "Year-by-year detail",
@@ -1380,6 +1382,7 @@ const TRANSLATIONS = {
     tileLifetimeNetWorthDesc: "Immobilienwert abzüglich einer eventuell verbleibenden Restschuld am Ende Ihres Projektionszeitraums, zum Marktwert bewertet — nicht realisiert, da kein Verkauf stattfindet, also ohne Verkaufskosten oder Spekulationssteuer.",
     tileLifetimeIrr: "Lebenslange Rendite (nie verkaufen)",
     tileLifetimeIrrDesc: "Gleiche IRR-Methode wie im Tab „Verkauf“, aber gehalten bis zum Ende Ihres Projektionszeitraums, wobei das oben stehende Papiervermögen einen Verkauf ersetzt. Die Kennzahl für „lohnt sich der Kauf“, wenn Sie unbefristet halten statt verkaufen wollen.",
+    at10yrUnrealized: "in Jahr 10 (nicht realisiert):",
     yearProjectionSuffix: "-Jahres-Projektion", legendPropertyValue: "Immobilienwert", legendCumulativeCf: "Kumulierter Cashflow (inkl. Eigenkapital)",
     firstPositiveCf: "Erster positiver Cashflow nach Steuern:", cumCfTurnsPositive: "Kumulierter Cashflow wird positiv:", mainLoanRepaid: "Hauptdarlehen getilgt:",
     yearByYearTitle: "Jahresdetail",
@@ -1912,6 +1915,17 @@ class Component extends DCLogic {
     const lifetimeIrr = annualIrr(lifetimeIrrCashflows);
     const lifetimeEndYear = years[N - 1].year + 1;
 
+    // Same never-sell method, but checkpointed at year 10 - distinct from the Exit tab's
+    // 10yr default, which assumes a real sale (and its selling costs) at that point.
+    const horizon10 = Math.min(10, N);
+    const valueAt10 = horizon10 < years.length ? years[horizon10].value : value;
+    const netWorthAt10 = valueAt10 - years[horizon10 - 1].loanBalance;
+    const lifetimeIrr10Cashflows = [-equity];
+    for (let y = 0; y < horizon10; y++) {
+      lifetimeIrr10Cashflows.push(years[y].cfAfterTax * 12 + (y === horizon10 - 1 ? netWorthAt10 : 0));
+    }
+    const lifetimeIrr10 = annualIrr(lifetimeIrr10Cashflows);
+
     const annualColdRent = coldRent * 12;
     const grossYield = annualColdRent / price;
     // warmRent - totalOperatingCosts cancels the recoverable-cost pass-through (tenant pays it via
@@ -1935,7 +1949,7 @@ class Component extends DCLogic {
       equityReturn, equityReturnNoGrowth,
       breakEvenCfYear, breakEvenCumYear, payoffYear, perLoanPayoff,
       sellYear, valueAtSale, loanBalanceAtSale, sellingCosts, netSaleProceeds, cashContributedToSale, exitProfitMultiple, exitIrr, saleTaxFree,
-      postPayoffCfAfterTax, lifetimeNetWorth, lifetimeIrr, lifetimeEndYear,
+      postPayoffCfAfterTax, lifetimeNetWorth, lifetimeIrr, lifetimeEndYear, lifetimeIrr10,
     };
   }
 
@@ -2281,6 +2295,7 @@ class Component extends DCLogic {
       postPayoffCfFmt: e.postPayoffCfAfterTax === null ? '—' : eur2(e.postPayoffCfAfterTax),
       lifetimeNetWorthFmt: eur(e.lifetimeNetWorth), lifetimeEndYear: e.lifetimeEndYear,
       lifetimeIrrFmt: e.lifetimeIrr === null ? '—' : pct(e.lifetimeIrr, 1),
+      lifetimeIrr10Fmt: e.lifetimeIrr10 === null ? '—' : pct(e.lifetimeIrr10, 1),
       totalLoanFmt: eur(e.totalLoan), equityFmt: eur(e.equity),
       weightedRateFmt: pct(e.weightedRate, 2), debtServiceFmt: eur(e.monthlyDebtService),
       afaBasisFmt: eur(e.afaBasis), afaMonthlyFmt: eur2(e.afaMonthly),
