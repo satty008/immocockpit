@@ -444,6 +444,11 @@
       <div style="margin-top:8px; display:flex; flex-direction:column; gap:4px; font-size:12px; color:#a7acb8;">
         <div style="display:flex; justify-content:space-between;"><span>{{ t.totalLoanAmount }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ totalLoanFmt }}</span></div>
         <div style="display:flex; justify-content:space-between;"><span>{{ t.equityRequired }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ equityFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between; padding-left:12px; font-size:11px; color:#6b7280;"><span>{{ t.equityDownPayment }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ downPaymentFmt }}</span></div>
+        <div style="display:flex; justify-content:space-between; padding-left:12px; font-size:11px; color:#6b7280;"><span>{{ t.equityPurchaseCosts }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ purchaseCostsFmt }}</span></div>
+        <sc-if value="{{ hasCapexInEquity }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; justify-content:space-between; padding-left:12px; font-size:11px; color:#6b7280;"><span>{{ t.equityCapex }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ investmentsTotalFmt }}</span></div>
+        </sc-if>
         <div style="display:flex; justify-content:space-between;"><span>{{ t.weightedRate }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ weightedRateFmt }}</span></div>
         <div style="display:flex; justify-content:space-between;"><span>{{ t.monthlyDebtService }}</span><span style="font-family:'IBM Plex Mono',monospace;">{{ debtServiceFmt }}</span></div>
         <div style="display:flex; justify-content:space-between;"><span>{{ t.fullyDebtFreeBy }}</span><span style="font-family:'IBM Plex Mono',monospace; color:#f4f6f8;">{{ payoffYear }}</span></div>
@@ -1164,6 +1169,7 @@ const TRANSLATIONS = {
     fieldFollowRate: "Rate after fixed term (%)", fieldExtraYear: "Special repayment, years after purchase",
     fieldExtraAmount: "Special repayment amount (€, one-time)", amortShort: "Amort.", debtFree: "Debt-free", yrsShort: "yrs",
     totalLoanAmount: "Total loan amount", equityRequired: "Equity required", weightedRate: "Weighted rate",
+    equityDownPayment: "Down payment (price − loan)", equityPurchaseCosts: "Purchase costs", equityCapex: "Initial capex",
     monthlyDebtService: "Monthly debt service", fullyDebtFreeBy: "Fully debt-free by",
     cardDepreciation: "Depreciation (AfA)", fieldDepreciationType: "Depreciation type",
     afaOpt3: "Standard — built/acquired 2023 or later (3%/yr)", afaOpt2: "Standard — built before 2023 (2%/yr)",
@@ -1330,6 +1336,7 @@ const TRANSLATIONS = {
     fieldFollowRate: "Zins nach Zinsbindung (%)", fieldExtraYear: "Sondertilgung, Jahre nach Kauf",
     fieldExtraAmount: "Sondertilgungsbetrag (€, einmalig)", amortShort: "Tilgung", debtFree: "Schuldenfrei", yrsShort: "Jahre",
     totalLoanAmount: "Darlehen gesamt", equityRequired: "Benötigtes Eigenkapital", weightedRate: "Gewichteter Zinssatz",
+    equityDownPayment: "Anzahlung (Preis − Darlehen)", equityPurchaseCosts: "Kaufnebenkosten", equityCapex: "Anfangsinvestitionen",
     monthlyDebtService: "Monatlicher Kapitaldienst", fullyDebtFreeBy: "Vollständig schuldenfrei ab",
     cardDepreciation: "Abschreibung (AfA)", fieldDepreciationType: "Abschreibungsart",
     afaOpt3: "Standard — Baujahr/Erwerb ab 2023 (3 %/Jahr)", afaOpt2: "Standard — Baujahr vor 2023 (2 %/Jahr)",
@@ -1577,7 +1584,7 @@ class Component extends DCLogic {
     address: '11 Sample Street, 12345 Sample City',
     purchaseYear: 2026,
     area: 65,
-    purchasePrice: 165000,
+    purchasePrice: 175000,
     state: 'BW',
     brokerPct: 3.57,
     notaryPct: 1.5,
@@ -1606,7 +1613,7 @@ class Component extends DCLogic {
     rentInputMode: 'perSqm',
     rentFlatAmount: 341,
     rentPerSqm: 11,
-    otherRent: 45,
+    otherRent: 0,
     costEstimateMode: true,
     recoverableCosts: 120,
     nonRecoverableCosts: 100,
@@ -1618,7 +1625,7 @@ class Component extends DCLogic {
     loan1Mode: 'pct',
     loan1Pct: 100,
     loans: [
-      { amount: 44000, rate: 4.15, amortization: 2.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
+      { amount: 44000, rate: 4.6, amortization: 2.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
       { amount: 5000, rate: 3.8, amortization: 8.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
       { amount: 5000, rate: 4.2, amortization: 5.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
       { amount: 0, rate: 4.0, amortization: 4.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
@@ -1802,6 +1809,7 @@ class Component extends DCLogic {
     const loans = loansRaw.filter(l => l.amount > 0);
     const totalLoan = loans.reduce((a, l) => a + l.amount, 0);
     const equity = totalInvestment - totalLoan;
+    const downPayment = Math.max(0, price - totalLoan);
     const weightedRate = totalLoan > 0 ? loans.reduce((a, l) => a + l.rate * l.amount, 0) / totalLoan / 100 : 0;
     const monthlyDebtService = loans.reduce((a, l) => a + ((l.rate + l.amortization) / 100 * l.amount) / 12, 0);
 
@@ -1942,7 +1950,7 @@ class Component extends DCLogic {
     return {
       transferTaxPct, purchaseCosts, totalInvestment, coldRent, warmRent, totalOperatingCosts, unitsTotalArea, unitsColdRent,
       estRecoverable, estNonRecoverable, vacancyReserveMonthly, ownReserveMonthly,
-      totalLoan, equity, weightedRate, monthlyDebtService, afaBasis, afaMonthly,
+      totalLoan, equity, downPayment, weightedRate, monthlyDebtService, afaBasis, afaMonthly,
       effectiveBuildingSharePct, capexThreshold15, investmentsTotal, investmentsCapitalized, loan1Amount, capexForcedCapitalize, bodenwertComputed, effectiveLandValue,
       years, grossYield, netYield, factor,
       cfOperational: years[0]?.cfOp ?? 0, cfAfterTax: years[0]?.cfAfterTax ?? 0,
@@ -2297,6 +2305,7 @@ class Component extends DCLogic {
       lifetimeIrrFmt: e.lifetimeIrr === null ? '—' : pct(e.lifetimeIrr, 1),
       lifetimeIrr10Fmt: e.lifetimeIrr10 === null ? '—' : pct(e.lifetimeIrr10, 1),
       totalLoanFmt: eur(e.totalLoan), equityFmt: eur(e.equity),
+      downPaymentFmt: eur(e.downPayment), hasCapexInEquity: e.investmentsTotal > 0,
       weightedRateFmt: pct(e.weightedRate, 2), debtServiceFmt: eur(e.monthlyDebtService),
       afaBasisFmt: eur(e.afaBasis), afaMonthlyFmt: eur2(e.afaMonthly),
 
