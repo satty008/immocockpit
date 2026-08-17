@@ -93,6 +93,7 @@
 
   <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; border-bottom:1px solid #232833;">
     <div onClick="{{ goOverview }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabOverviewColor }}; border-bottom:2px solid {{ tabOverviewBorder }};">{{ t.tabOverview }}</div>
+    <div onClick="{{ goExit }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabExitColor }}; border-bottom:2px solid {{ tabExitBorder }};">{{ t.tabExit }}</div>
     <div onClick="{{ goScenarios }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabScenariosColor }}; border-bottom:2px solid {{ tabScenariosBorder }};">{{ t.tabScenarios }}</div>
     <div onClick="{{ goBank }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabBankColor }}; border-bottom:2px solid {{ tabBankBorder }};">{{ t.tabBank }}</div>
     <div onClick="{{ goBudget }}" style="cursor:pointer; padding:10px 16px; font-size:13px; font-weight:600; color:{{ tabBudgetColor }}; border-bottom:2px solid {{ tabBudgetBorder }};">{{ t.tabBudget }}</div>
@@ -680,6 +681,52 @@
   </div>
   </sc-if>
 
+  <sc-if value="{{ isExit }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px; margin-bottom:20px;">
+    <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.exitTitle }}</div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; max-width:520px;">
+      <div>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldSellYear }}</label>
+        <input type="number" step="1" min="1" value="{{ sellYear }}" onChange="{{ setSellYear }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+      </div>
+      <div>
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldSellingCosts }}</label>
+        <input type="number" step="0.1" value="{{ sellingCostsPct }}" onChange="{{ setSellingCostsPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+      </div>
+    </div>
+    <sc-if value="{{ saleTaxFreeWarning }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:11px; color:#e8b73f; margin-top:12px; line-height:1.4;">{{ t.exitTaxWarning }}</div>
+    </sc-if>
+    <sc-if value="{{ saleTaxFree }}" hint-placeholder-val="{{ true }}">
+      <div style="font-size:11px; color:#6b7280; margin-top:12px; line-height:1.4;">{{ t.exitTaxFreeNote }}</div>
+    </sc-if>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:20px;">
+    <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
+      <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileResaleValue }}</div>
+      <div style="font-size:26px; font-weight:700; color:#f4f6f8;">{{ valueAtSaleFmt }}</div>
+      <div style="font-size:11px; color:#6b7280; margin-top:2px;">{{ t.loanBalanceLabel }} {{ loanBalanceAtSaleFmt }}</div>
+    </div>
+    <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
+      <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileNetSaleProceeds }}</div>
+      <div style="font-size:26px; font-weight:700; color:#f4f6f8;">{{ netSaleProceedsFmt }}</div>
+      <div style="font-size:11px; color:#6b7280; margin-top:2px;">{{ t.sellingCostsLabel }} {{ sellingCostsFmt }}</div>
+    </div>
+    <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
+      <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileProfitMultiple }}</div>
+      <div style="font-size:26px; font-weight:700; color:#f4f6f8;">{{ exitProfitMultipleFmt }}</div>
+      <div style="font-size:11px; color:#6b7280; margin-top:2px;">{{ t.cashContributedLabel }} {{ cashContributedToSaleFmt }}</div>
+      <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileProfitMultipleDesc }}</div>
+    </div>
+    <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
+      <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileExitIrr }}</div>
+      <div style="font-size:26px; font-weight:700; color:#f4f6f8;">{{ exitIrrFmt }}</div>
+      <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileExitIrrDesc }}</div>
+    </div>
+  </div>
+  </sc-if>
+
   <sc-if value="{{ isScenarios }}" hint-placeholder-val="{{ false }}">
   <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
     <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.scenarioComparisonTitle }}</div>
@@ -706,6 +753,7 @@
           <th style="padding:6px 10px;">{{ t.colEquity }}</th>
           <th onClick="{{ setSortCfAfterTax }}" style="padding:6px 10px; cursor:pointer;">{{ t.colCfAfterTaxMo }} {{ sortArrowCfAfterTax }}</th>
           <th style="padding:6px 10px;">{{ t.colBreakEvenCf }}</th>
+          <th onClick="{{ setSortExitIrr }}" style="padding:6px 10px; cursor:pointer;">{{ t.colExitIrr }} {{ sortArrowExitIrr }}</th>
         </tr>
       </thead>
       <tbody>
@@ -726,6 +774,7 @@
             <td style="padding:6px 10px;">{{ srow.equity }}</td>
             <td style="padding:6px 10px;">{{ srow.cfAfterTax }}</td>
             <td style="padding:6px 10px;">{{ srow.breakEven }}</td>
+            <td style="padding:6px 10px;">{{ srow.exitIrr }}</td>
           </tr>
         </sc-for>
       </tbody>
@@ -1028,7 +1077,14 @@ const TRANSLATIONS = {
     appTitle: "Property Investment Cockpit",
     headerDescPre: "Buy-to-let analysis for a single property — purchase costs, financing, cashflow, depreciation and a ",
     headerDescPost: "-year projection. All figures in EUR.",
-    tabOverview: "Overview", tabScenarios: "Scenarios", tabBank: "Bank meeting", tabBudget: "Household budget", tabNetWorth: "Net worth",
+    tabOverview: "Overview", tabExit: "Exit", tabScenarios: "Scenarios", tabBank: "Bank meeting", tabBudget: "Household budget", tabNetWorth: "Net worth",
+    exitTitle: "Exit scenario", fieldSellYear: "Sell after (years)", fieldSellingCosts: "Selling costs (% of resale price)",
+    exitTaxFreeNote: "Germany exempts private property sales from capital-gains tax once you've held for more than 10 years (§23 EStG Spekulationsfrist) — the figures below assume that.",
+    exitTaxWarning: "Selling before the 10-year mark makes the gain taxable as ordinary income (incl. AfA recapture on depreciation already claimed) — not modeled here yet, so treat this as the tax-free upper bound, not the real number.",
+    tileResaleValue: "Resale value", loanBalanceLabel: "Loan balance:", tileNetSaleProceeds: "Net sale proceeds", sellingCostsLabel: "Selling costs:",
+    tileProfitMultiple: "Profit multiple", cashContributedLabel: "Cash contributed:",
+    tileProfitMultipleDesc: "Net sale proceeds ÷ all the cash you put in over the holding period (down payment + every month's shortfall or surplus). How many times your invested cash came back as profit.",
+    tileExitIrr: "ROI on equity, p.a.", tileExitIrrDesc: "Annualized return (IRR) across the whole holding period: your down payment, every month's cashflow, and the payout when you sell — all discounted to one yearly rate.",
     tipsShow: "Show tips for first-time buyers", tipsHide: "Hide tips",
     tipsTitle: "New to buy-to-let? Start here",
     tipsBeforeOfferTitle: "Before you make an offer",
@@ -1137,7 +1193,7 @@ const TRANSLATIONS = {
     scenarioComparisonTitle: "Scenario comparison", scenarioNamePlaceholder: "Scenario name (optional)",
     saveScenarioBtn: "Save current inputs as scenario",
     colScenario: "Scenario", colLocation: "Location", colPurchasePrice: "Purchase price", colFactor: "Factor", colEquity: "Equity",
-    colGrossYield: "Gross yield", colNetYield: "Net yield", colCfAfterTaxMo: "CF after tax/mo", colCashOnCash: "Cash-on-cash",
+    colGrossYield: "Gross yield", colNetYield: "Net yield", colCfAfterTaxMo: "CF after tax/mo", colCashOnCash: "Cash-on-cash", colExitIrr: "Exit IRR",
     colBreakEvenCf: "Break-even (CF)", colRating: "Rating", loadBtn: "Load", duplicateScenarioTitle: "Duplicate scenario",
     noScenariosText: "No saved scenarios yet — adjust the inputs on the Overview tab, then come back here and save a snapshot to compare it against alternatives (e.g. different price, financing, or rent-growth assumptions).",
     favouritesTitle: "Favourites", removeFromFavouritesTitle: "Remove from favourites",
@@ -1178,7 +1234,14 @@ const TRANSLATIONS = {
     appTitle: "Kapitalanlage-Cockpit",
     headerDescPre: "Kapitalanlage-Analyse für eine einzelne Immobilie — Kaufnebenkosten, Finanzierung, Cashflow, Abschreibung und eine ",
     headerDescPost: "-Jahres-Projektion. Alle Beträge in EUR.",
-    tabOverview: "Übersicht", tabScenarios: "Szenarien", tabBank: "Bankgespräch", tabBudget: "Haushaltsbudget", tabNetWorth: "Vermögen",
+    tabOverview: "Übersicht", tabExit: "Verkauf", tabScenarios: "Szenarien", tabBank: "Bankgespräch", tabBudget: "Haushaltsbudget", tabNetWorth: "Vermögen",
+    exitTitle: "Verkaufsszenario", fieldSellYear: "Verkauf nach (Jahre)", fieldSellingCosts: "Verkaufskosten (% des Verkaufspreises)",
+    exitTaxFreeNote: "Bei privaten Immobilienverkäufen entfällt die Spekulationssteuer nach mehr als 10 Jahren Haltedauer (§23 EStG) — die folgenden Zahlen gehen davon aus.",
+    exitTaxWarning: "Ein Verkauf vor Ablauf der 10 Jahre macht den Gewinn als Einkommen steuerpflichtig (inkl. Nachversteuerung der bereits geltend gemachten AfA) — das ist hier noch nicht abgebildet, die Zahlen zeigen also die steuerfreie Obergrenze, nicht den tatsächlichen Wert.",
+    tileResaleValue: "Verkaufswert", loanBalanceLabel: "Restschuld:", tileNetSaleProceeds: "Nettoerlös", sellingCostsLabel: "Verkaufskosten:",
+    tileProfitMultiple: "Gewinn-Multiple", cashContributedLabel: "Eingesetztes Kapital:",
+    tileProfitMultipleDesc: "Nettoerlös ÷ das gesamte über die Haltedauer eingesetzte Kapital (Anzahlung + jeder monatliche Fehlbetrag oder Überschuss). Wie oft Ihr eingesetztes Kapital als Gewinn zurückkam.",
+    tileExitIrr: "Eigenkapitalrendite p.a.", tileExitIrrDesc: "Annualisierte Rendite (IRR) über die gesamte Haltedauer: Anzahlung, jeder monatliche Cashflow und die Auszahlung beim Verkauf — alles auf einen Jahreszins abgezinst.",
     tipsShow: "Tipps für Einsteiger anzeigen", tipsHide: "Tipps ausblenden",
     tipsTitle: "Neu bei Kapitalanlagen? Hier starten",
     tipsBeforeOfferTitle: "Vor dem Kaufangebot",
@@ -1287,7 +1350,7 @@ const TRANSLATIONS = {
     scenarioComparisonTitle: "Szenarienvergleich", scenarioNamePlaceholder: "Szenarioname (optional)",
     saveScenarioBtn: "Aktuelle Eingaben als Szenario speichern",
     colScenario: "Szenario", colLocation: "Lage", colPurchasePrice: "Kaufpreis", colFactor: "Faktor", colEquity: "Eigenkapital",
-    colGrossYield: "Bruttorendite", colNetYield: "Nettorendite", colCfAfterTaxMo: "CF nach Steuern/Mon.", colCashOnCash: "Eigenkapitalrendite",
+    colGrossYield: "Bruttorendite", colNetYield: "Nettorendite", colCfAfterTaxMo: "CF nach Steuern/Mon.", colCashOnCash: "Eigenkapitalrendite", colExitIrr: "Exit-IRR",
     colBreakEvenCf: "Break-even (CF)", colRating: "Bewertung", loadBtn: "Laden", duplicateScenarioTitle: "Szenario duplizieren",
     noScenariosText: "Noch keine gespeicherten Szenarien — passen Sie die Eingaben im Tab „Übersicht“ an und speichern Sie hier einen Schnappschuss, um ihn mit Alternativen zu vergleichen (z. B. anderer Preis, Finanzierung oder Mietsteigerung).",
     favouritesTitle: "Favoriten", removeFromFavouritesTitle: "Aus Favoriten entfernen",
@@ -1348,6 +1411,19 @@ function persistState(state) {
 const eur = (n) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 const eur2 = (n) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
 const pct = (n, d) => (isFinite(n) ? n : 0).toLocaleString('en-DE', { style: 'percent', minimumFractionDigits: d ?? 1, maximumFractionDigits: d ?? 1 });
+
+// Annual IRR via bisection: cashflows[0] is t=0 (purchase), cashflows[k] is the net cashflow
+// at the end of year k (operating cashflow, plus sale proceeds in the final year).
+function annualIrr(cashflows) {
+  const npv = (r) => cashflows.reduce((sum, cf, t) => sum + cf / Math.pow(1 + r, t), 0);
+  let lo = -0.99, hi = 5;
+  if (npv(lo) * npv(hi) > 0) return null;
+  for (let i = 0; i < 100; i++) {
+    const mid = (lo + hi) / 2;
+    if (npv(mid) > 0) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
 
 class Component extends DCLogic {
   componentDidMount() {
@@ -1485,6 +1561,8 @@ class Component extends DCLogic {
     nonRecoverableCosts: 100,
     ownReservePerSqm: 10,
     vacancyPct: 3,
+    sellYear: 10,
+    sellingCostsPct: 3.57,
 
     loan1Mode: 'pct',
     loan1Pct: 100,
@@ -1756,6 +1834,23 @@ class Component extends DCLogic {
       return { amount: l.amount, payoffYear: ls?.payoffYear ?? null, termYears: ls?.payoffYear ? ls.payoffYear - s.purchaseYear : null };
     });
 
+    // Exit scenario (Phase 1: private-sale gain is only tax-free after the German 10yr
+    // Spekulationsfrist - a sale before that would owe income tax on the gain, incl. AfA
+    // recapture, which this does not yet model; saleTaxFree flags that caveat to the UI.
+    const sellYear = Math.max(1, Math.min(N, Math.round(s.sellYear || 10)));
+    const valueAtSale = sellYear < years.length ? years[sellYear].value : value;
+    const loanBalanceAtSale = years[sellYear - 1].loanBalance;
+    const sellingCosts = ((s.sellingCostsPct ?? 3.57) / 100) * valueAtSale;
+    const netSaleProceeds = valueAtSale - loanBalanceAtSale - sellingCosts;
+    const cashContributedToSale = equity - years.slice(0, sellYear).reduce((a, y) => a + y.cfAfterTax * 12, 0);
+    const exitProfitMultiple = cashContributedToSale > 0 ? netSaleProceeds / cashContributedToSale : 0;
+    const exitIrrCashflows = [-equity];
+    for (let y = 0; y < sellYear; y++) {
+      exitIrrCashflows.push(years[y].cfAfterTax * 12 + (y === sellYear - 1 ? netSaleProceeds : 0));
+    }
+    const exitIrr = annualIrr(exitIrrCashflows);
+    const saleTaxFree = sellYear >= 10;
+
     const annualColdRent = coldRent * 12;
     const grossYield = annualColdRent / price;
     // warmRent - totalOperatingCosts cancels the recoverable-cost pass-through (tenant pays it via
@@ -1778,6 +1873,7 @@ class Component extends DCLogic {
       cfOperational: years[0]?.cfOp ?? 0, cfAfterTax: years[0]?.cfAfterTax ?? 0,
       equityReturn, equityReturnNoGrowth,
       breakEvenCfYear, breakEvenCumYear, payoffYear, perLoanPayoff,
+      sellYear, valueAtSale, loanBalanceAtSale, sellingCosts, netSaleProceeds, cashContributedToSale, exitProfitMultiple, exitIrr, saleTaxFree,
     };
   }
 
@@ -1943,9 +2039,11 @@ class Component extends DCLogic {
         grossYield: pct(es.grossYield, 2), netYield: pct(es.netYield, 2),
         cfAfterTax: eur2(es.cfAfterTax), equityReturn: pct(es.equityReturn, 1),
         breakEven: es.breakEvenCfYear ?? '—',
+        exitIrr: es.exitIrr === null ? '—' : pct(es.exitIrr, 1),
         rating: ratingOf(es.netYield), ratingColor: ratingColorOf(es.netYield),
         nameVal: (sc.name || '').toLowerCase(), locationVal: (sc.data.address || '').toLowerCase(),
         netYieldVal: es.netYield, grossYieldVal: es.grossYield, equityReturnVal: es.equityReturn, cfAfterTaxVal: es.cfAfterTax,
+        exitIrrVal: es.exitIrr ?? -1,
       };
     });
 
@@ -2033,6 +2131,7 @@ class Component extends DCLogic {
       recoverableCostsEffective: s.costEstimateMode ? Math.round(e.estRecoverable) : s.recoverableCosts,
       nonRecoverableCostsEffective: s.costEstimateMode ? Math.round(e.estNonRecoverable) : s.nonRecoverableCosts,
       setOwnReservePerSqm: this.setField('ownReservePerSqm'), setVacancyPct: this.setField('vacancyPct'),
+      setSellYear: this.setField('sellYear'), setSellingCostsPct: this.setField('sellingCostsPct'),
       setBuildingSharePct: this.setField('buildingSharePct'), setAfaRate: this.setField('afaRate'),
       setBuildingShareLow: () => this.setState({ buildingSharePct: 65 }),
       setBuildingShareNormal: () => this.setState({ buildingSharePct: 75 }),
@@ -2110,6 +2209,12 @@ class Component extends DCLogic {
       coldRentFmt: eur(e.coldRent), warmRentFmt: eur(e.warmRent), totalOperatingCostsFmt: eur(-e.totalOperatingCosts),
       vacancyReserveMonthlyFmt: eur(e.vacancyReserveMonthly) + T.perMonthShort,
       ownReserveMonthlyFmt: eur(e.ownReserveMonthly) + T.perMonthShort,
+      valueAtSaleFmt: eur(e.valueAtSale), loanBalanceAtSaleFmt: eur(e.loanBalanceAtSale),
+      sellingCostsFmt: eur(e.sellingCosts), netSaleProceedsFmt: eur(e.netSaleProceeds),
+      cashContributedToSaleFmt: eur(e.cashContributedToSale),
+      exitProfitMultipleFmt: e.exitProfitMultiple.toFixed(2) + '×',
+      exitIrrFmt: e.exitIrr === null ? '—' : pct(e.exitIrr, 1),
+      saleTaxFree: e.saleTaxFree, saleTaxFreeWarning: !e.saleTaxFree,
       totalLoanFmt: eur(e.totalLoan), equityFmt: eur(e.equity),
       weightedRateFmt: pct(e.weightedRate, 2), debtServiceFmt: eur(e.monthlyDebtService),
       afaBasisFmt: eur(e.afaBasis), afaMonthlyFmt: eur2(e.afaMonthly),
@@ -2125,9 +2230,10 @@ class Component extends DCLogic {
       breakEvenCfYear: e.breakEvenCfYear ?? '—', breakEvenCumYear: e.breakEvenCumYear ?? '—', payoffYear: e.payoffYear ?? '—',
       tableRows,
 
-      isOverview: s.activeTab === 'overview', isScenarios: s.activeTab === 'scenarios', isBank: s.activeTab === 'bank', isBudget: s.activeTab === 'budget', isNetWorth: s.activeTab === 'networth', isNetWorth: s.activeTab === 'networth',
-      goOverview: () => this.setTab('overview'), goScenarios: () => this.setTab('scenarios'), goBank: () => this.setTab('bank'), goBudget: () => this.setTab('budget'), goNetWorth: () => this.setTab('networth'), goNetWorth: () => this.setTab('networth'),
+      isOverview: s.activeTab === 'overview', isExit: s.activeTab === 'exit', isScenarios: s.activeTab === 'scenarios', isBank: s.activeTab === 'bank', isBudget: s.activeTab === 'budget', isNetWorth: s.activeTab === 'networth', isNetWorth: s.activeTab === 'networth',
+      goOverview: () => this.setTab('overview'), goExit: () => this.setTab('exit'), goScenarios: () => this.setTab('scenarios'), goBank: () => this.setTab('bank'), goBudget: () => this.setTab('budget'), goNetWorth: () => this.setTab('networth'), goNetWorth: () => this.setTab('networth'),
       tabOverviewColor: tabColor('overview'), tabOverviewBorder: tabBorder('overview'),
+      tabExitColor: tabColor('exit'), tabExitBorder: tabBorder('exit'),
       tabScenariosColor: tabColor('scenarios'), tabScenariosBorder: tabBorder('scenarios'),
       tabBankColor: tabColor('bank'), tabBankBorder: tabBorder('bank'),
       tabBudgetColor: tabColor('budget'), tabBudgetBorder: tabBorder('budget'),
@@ -2137,9 +2243,11 @@ class Component extends DCLogic {
       setScenarioName: this.setField('scenarioName'), saveScenario: this.saveScenario.bind(this),
       setSortNetYield: () => this.setScenarioSort('netYield'), setSortGrossYield: () => this.setScenarioSort('grossYield'),
       setSortCfAfterTax: () => this.setScenarioSort('cfAfterTax'), setSortCoC: () => this.setScenarioSort('equityReturn'),
+      setSortExitIrr: () => this.setScenarioSort('exitIrr'),
       setSortName: () => this.setScenarioSort('name'), setSortLocation: () => this.setScenarioSort('location'),
       sortArrowNetYield: sortArrowFor('netYield'), sortArrowGrossYield: sortArrowFor('grossYield'),
       sortArrowCfAfterTax: sortArrowFor('cfAfterTax'), sortArrowCoC: sortArrowFor('equityReturn'),
+      sortArrowExitIrr: sortArrowFor('exitIrr'),
       sortArrowName: sortArrowFor('name'), sortArrowLocation: sortArrowFor('location'),
       scenarioRows, noScenarios: s.scenarios.length === 0,
       compareOptions, compareA: s.compareA, compareB: s.compareB,
