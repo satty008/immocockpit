@@ -621,6 +621,26 @@
       </div>
     </div>
 
+    <div style="flex:1 1 100%; width:100%; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px;">
+      <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:12px; text-transform:uppercase; letter-spacing:.06em;">{{ t.lifelongHoldTitle }}</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
+        <div>
+          <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tilePostPayoffCf }}</div>
+          <div style="font-size:22px; font-weight:700; color:#f4f6f8;">{{ postPayoffCfFmt }}</div>
+          <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tilePostPayoffCfDesc }}</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileLifetimeNetWorth }} ({{ lifetimeEndYear }})</div>
+          <div style="font-size:22px; font-weight:700; color:#f4f6f8;">{{ lifetimeNetWorthFmt }}</div>
+          <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileLifetimeNetWorthDesc }}</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#8b909c; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;">{{ t.tileLifetimeIrr }}</div>
+          <div style="font-size:22px; font-weight:700; color:#f4f6f8;">{{ lifetimeIrrFmt }}</div>
+          <div style="font-size:10px; color:#6b7280; margin-top:8px; line-height:1.4;">{{ t.tileLifetimeIrrDesc }}</div>
+        </div>
+      </div>
+    </div>
 
 
     <div style="flex:1 1 100%; width:100%; background:#161923; border:1px solid #262b38; border-radius:14px; padding:18px 18px 8px;">
@@ -1188,6 +1208,13 @@ const TRANSLATIONS = {
     tileCfAfterTaxDesc: "What's left in your pocket each month once the mortgage, running costs and tax effect are paid. Negative is common early on (you're trading cashflow now for equity + depreciation tax benefit); just be sure you can cover the gap.",
     tileCashOnCash: "Cash-on-cash return / yr", exclAppreciation: "excl. appreciation:",
     tileCashOnCashDesc: "Total wealth gained this year (equity paydown + cashflow + appreciation) ÷ your own cash in the deal. The number that matters most for \"is this worth tying up my money\" — compare it to what your cash could earn elsewhere.",
+    lifelongHoldTitle: "Lifelong hold (never sell)",
+    tilePostPayoffCf: "Post-payoff cashflow / mo",
+    tilePostPayoffCfDesc: "After-tax monthly cashflow once the loan is fully repaid and debt service drops to zero — the real long-run payoff of never selling. Shows — if the loan doesn't pay off within your current Projection (yrs).",
+    tileLifetimeNetWorth: "Net worth in",
+    tileLifetimeNetWorthDesc: "Property value minus any remaining loan balance at the end of your projection horizon, marked to market — unrealized, since you never sold, so no selling costs or capital-gains tax applied.",
+    tileLifetimeIrr: "Lifetime IRR (never sell)",
+    tileLifetimeIrrDesc: "Same IRR method as the Exit tab, but held to the end of your projection horizon with the paper net worth above standing in for a sale. The \"good buy\" number if you plan to hold indefinitely rather than sell.",
     yearProjectionSuffix: "-year projection", legendPropertyValue: "Property value", legendCumulativeCf: "Cumulative cashflow (incl. equity)",
     firstPositiveCf: "First positive cashflow after tax:", cumCfTurnsPositive: "Cumulative cashflow turns positive:", mainLoanRepaid: "Main loan repaid:",
     yearByYearTitle: "Year-by-year detail",
@@ -1346,6 +1373,13 @@ const TRANSLATIONS = {
     tileCfAfterTaxDesc: "Was jeden Monat übrig bleibt, nachdem Kreditrate, laufende Kosten und Steuereffekt bezahlt sind. Negativ ist am Anfang üblich (Sie tauschen Cashflow jetzt gegen Tilgung + AfA-Steuervorteil) — stellen Sie nur sicher, dass Sie die Lücke decken können.",
     tileCashOnCash: "Eigenkapitalrendite / Jahr", exclAppreciation: "ohne Wertsteigerung:",
     tileCashOnCashDesc: "Gesamter Vermögenszuwachs dieses Jahr (Tilgung + Cashflow + Wertsteigerung) ÷ Ihr eigener Kapitaleinsatz im Deal. Die wichtigste Kennzahl für „lohnt sich die Kapitalbindung“ — vergleichen Sie sie damit, was Ihr Kapital anderweitig erwirtschaften könnte.",
+    lifelongHoldTitle: "Lebenslanges Halten (nie verkaufen)",
+    tilePostPayoffCf: "Cashflow nach Tilgung / Monat",
+    tilePostPayoffCfDesc: "Cashflow nach Steuern und pro Monat, sobald das Darlehen vollständig getilgt ist und der Kapitaldienst auf null fällt — der eigentliche langfristige Gewinn des Nie-verkaufens. Zeigt —, falls das Darlehen innerhalb Ihres aktuellen Projektionszeitraums (Jahre) nicht getilgt wird.",
+    tileLifetimeNetWorth: "Vermögen in",
+    tileLifetimeNetWorthDesc: "Immobilienwert abzüglich einer eventuell verbleibenden Restschuld am Ende Ihres Projektionszeitraums, zum Marktwert bewertet — nicht realisiert, da kein Verkauf stattfindet, also ohne Verkaufskosten oder Spekulationssteuer.",
+    tileLifetimeIrr: "Lebenslange Rendite (nie verkaufen)",
+    tileLifetimeIrrDesc: "Gleiche IRR-Methode wie im Tab „Verkauf“, aber gehalten bis zum Ende Ihres Projektionszeitraums, wobei das oben stehende Papiervermögen einen Verkauf ersetzt. Die Kennzahl für „lohnt sich der Kauf“, wenn Sie unbefristet halten statt verkaufen wollen.",
     yearProjectionSuffix: "-Jahres-Projektion", legendPropertyValue: "Immobilienwert", legendCumulativeCf: "Kumulierter Cashflow (inkl. Eigenkapital)",
     firstPositiveCf: "Erster positiver Cashflow nach Steuern:", cumCfTurnsPositive: "Kumulierter Cashflow wird positiv:", mainLoanRepaid: "Hauptdarlehen getilgt:",
     yearByYearTitle: "Jahresdetail",
@@ -1865,6 +1899,19 @@ class Component extends DCLogic {
     const exitIrr = annualIrr(exitIrrCashflows);
     const saleTaxFree = sellYear >= 10;
 
+    // Lifelong hold: never sell, so no realized gain or selling costs - just mark the paper
+    // net worth to market at the end of the projection horizon as a stand-in terminal value.
+    const payoffIdx = totalLoan > 0 ? years.findIndex(y => y.loanBalance <= 0.01) : -1;
+    const postPayoffYearData = payoffIdx >= 0 ? (years[payoffIdx + 1] || years[payoffIdx]) : null;
+    const postPayoffCfAfterTax = postPayoffYearData ? postPayoffYearData.cfAfterTax : null;
+    const lifetimeNetWorth = value - years[N - 1].loanBalance;
+    const lifetimeIrrCashflows = [-equity];
+    for (let y = 0; y < N; y++) {
+      lifetimeIrrCashflows.push(years[y].cfAfterTax * 12 + (y === N - 1 ? lifetimeNetWorth : 0));
+    }
+    const lifetimeIrr = annualIrr(lifetimeIrrCashflows);
+    const lifetimeEndYear = years[N - 1].year + 1;
+
     const annualColdRent = coldRent * 12;
     const grossYield = annualColdRent / price;
     // warmRent - totalOperatingCosts cancels the recoverable-cost pass-through (tenant pays it via
@@ -1888,6 +1935,7 @@ class Component extends DCLogic {
       equityReturn, equityReturnNoGrowth,
       breakEvenCfYear, breakEvenCumYear, payoffYear, perLoanPayoff,
       sellYear, valueAtSale, loanBalanceAtSale, sellingCosts, netSaleProceeds, cashContributedToSale, exitProfitMultiple, exitIrr, saleTaxFree,
+      postPayoffCfAfterTax, lifetimeNetWorth, lifetimeIrr, lifetimeEndYear,
     };
   }
 
@@ -2229,6 +2277,10 @@ class Component extends DCLogic {
       exitProfitMultipleFmt: e.exitProfitMultiple.toFixed(2) + '×',
       exitIrrFmt: e.exitIrr === null ? '—' : pct(e.exitIrr, 1),
       saleTaxFree: e.saleTaxFree, saleTaxFreeWarning: !e.saleTaxFree,
+      hasPayoff: e.postPayoffCfAfterTax !== null,
+      postPayoffCfFmt: e.postPayoffCfAfterTax === null ? '—' : eur2(e.postPayoffCfAfterTax),
+      lifetimeNetWorthFmt: eur(e.lifetimeNetWorth), lifetimeEndYear: e.lifetimeEndYear,
+      lifetimeIrrFmt: e.lifetimeIrr === null ? '—' : pct(e.lifetimeIrr, 1),
       totalLoanFmt: eur(e.totalLoan), equityFmt: eur(e.equity),
       weightedRateFmt: pct(e.weightedRate, 2), debtServiceFmt: eur(e.monthlyDebtService),
       afaBasisFmt: eur(e.afaBasis), afaMonthlyFmt: eur2(e.afaMonthly),
