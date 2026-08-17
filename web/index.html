@@ -351,6 +351,7 @@
         <div>
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldVacancyReserve }}</label>
           <input type="number" step="0.5" value="{{ vacancyPct }}" onChange="{{ setVacancyPct }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+          <div style="font-size:10px; color:#6b7280; margin-top:4px;">≈ {{ vacancyReserveMonthlyFmt }}</div>
         </div>
       </div>
       <label style="display:flex; align-items:center; gap:6px; font-size:11px; color:#8b909c; margin-top:10px;">
@@ -1072,9 +1073,9 @@ const TRANSLATIONS = {
     fieldRentInput: "Rent input", rentInputPerSqm: "Per m² + parking/other", rentInputFlat: "Flat total cold rent (€/mo)",
     fieldColdRentTotal: "Cold rent, total (€/mo)", fieldColdRentPerSqm: "Cold rent / m² / mo (€)", fieldParkingOther: "Parking + other (€/mo)",
     fieldRecoverableCosts: "Recoverable costs (€/mo)", fieldNonRecoverableCosts: "Non-recoverable (€/mo)",
-    fieldOwnReserve: "Own reserve (€/m²/yr)", fieldVacancyReserve: "Vacancy reserve (%)",
+    fieldOwnReserve: "Own reserve (€/m²/yr)", fieldVacancyReserve: "Vacancy reserve (%)", perMonthShort: "/mo",
     costEstimateModeLabel: "No exact figures — estimate recoverable/non-recoverable costs from typical % of cold rent",
-    costEstimateNote: "Rule of thumb: recoverable (utility) costs ≈ 25–30% of cold rent; non-recoverable (management, WEG admin) ≈ 5–8%. When enabled, this overrides the € fields above with 28% / 7%.",
+    costEstimateNote: "Rule of thumb: recoverable (utility) costs ≈ 20% of cold rent; non-recoverable (management, WEG admin) ≈ 15%. When enabled, this overrides the € fields above with 20% / 15%.",
     coldRentNet: "Cold rent (net)", warmRent: "Warm rent", operatingCostsInclReserves: "Operating costs, incl. own reserves",
     cardFinancing: "Financing", loanLabel: "Loan", usedLabel: "used",
     loanModeAmount: "Fixed amount (€)", loanModePct: "% of purchase price (LTV)",
@@ -1222,9 +1223,9 @@ const TRANSLATIONS = {
     fieldRentInput: "Mieteingabe", rentInputPerSqm: "Pro m² + Stellplatz/Sonstiges", rentInputFlat: "Pauschale Gesamtkaltmiete (€/Monat)",
     fieldColdRentTotal: "Kaltmiete gesamt (€/Monat)", fieldColdRentPerSqm: "Kaltmiete / m² / Monat (€)", fieldParkingOther: "Stellplatz + Sonstiges (€/Monat)",
     fieldRecoverableCosts: "Umlagefähige Kosten (€/Monat)", fieldNonRecoverableCosts: "Nicht umlagefähig (€/Monat)",
-    fieldOwnReserve: "Eigene Rücklage (€/m²/Jahr)", fieldVacancyReserve: "Leerstandsreserve (%)",
+    fieldOwnReserve: "Eigene Rücklage (€/m²/Jahr)", fieldVacancyReserve: "Leerstandsreserve (%)", perMonthShort: "/Monat",
     costEstimateModeLabel: "Keine genauen Zahlen — umlagefähige/nicht umlagefähige Kosten anhand typischer % der Kaltmiete schätzen",
-    costEstimateNote: "Faustregel: umlagefähige (Betriebs-)Kosten ≈ 25–30 % der Kaltmiete; nicht umlagefähige (Verwaltung, WEG) ≈ 5–8 %. Aktiviert überschreibt dies die €-Felder oben mit 28 % / 7 %.",
+    costEstimateNote: "Faustregel: umlagefähige (Betriebs-)Kosten ≈ 20 % der Kaltmiete; nicht umlagefähige (Verwaltung, WEG) ≈ 15 %. Aktiviert überschreibt dies die €-Felder oben mit 20 % / 15 %.",
     coldRentNet: "Kaltmiete (netto)", warmRent: "Warmmiete", operatingCostsInclReserves: "Betriebskosten inkl. eigener Rücklagen",
     cardFinancing: "Finanzierung", loanLabel: "Darlehen", usedLabel: "genutzt",
     loanModeAmount: "Fester Betrag (€)", loanModePct: "% des Kaufpreises (Beleihung)",
@@ -1654,8 +1655,8 @@ class Component extends DCLogic {
     const unitsColdRent = (s.units || []).reduce((a, u) => a + (u.area || 0) * (u.coldRentPerSqm || 0), 0);
     const isFurnished = s.rentMode === 'furnished';
     const coldRent = isMultiUnit ? unitsColdRent : (isFurnished ? s.furnishedRent : (s.rentInputMode === 'flat' ? s.rentFlatAmount : (s.area * s.rentPerSqm + s.otherRent)));
-    const estRecoverable = isFurnished ? 0 : (s.costEstimateMode ? coldRent * 0.28 : s.recoverableCosts);
-    const estNonRecoverable = isFurnished ? coldRent * (s.furnishedOpexPct / 100) : (s.costEstimateMode ? coldRent * 0.07 : s.nonRecoverableCosts);
+    const estRecoverable = isFurnished ? 0 : (s.costEstimateMode ? coldRent * 0.20 : s.recoverableCosts);
+    const estNonRecoverable = isFurnished ? coldRent * (s.furnishedOpexPct / 100) : (s.costEstimateMode ? coldRent * 0.15 : s.nonRecoverableCosts);
     const effectiveVacancyPct = isFurnished ? s.furnishedVacancyPct : s.vacancyPct;
     const warmRent = coldRent + estRecoverable;
     const areaForReserve = isMultiUnit ? unitsTotalArea : s.area;
@@ -1768,7 +1769,7 @@ class Component extends DCLogic {
 
     return {
       transferTaxPct, purchaseCosts, totalInvestment, coldRent, warmRent, totalOperatingCosts, unitsTotalArea, unitsColdRent,
-      estRecoverable, estNonRecoverable,
+      estRecoverable, estNonRecoverable, vacancyReserveMonthly,
       totalLoan, equity, weightedRate, monthlyDebtService, afaBasis, afaMonthly,
       effectiveBuildingSharePct, capexThreshold15, investmentsTotal, investmentsCapitalized, loan1Amount, capexForcedCapitalize, bodenwertComputed, effectiveLandValue,
       years, grossYield, netYield, factor,
@@ -2105,6 +2106,7 @@ class Component extends DCLogic {
       transferTaxPctFmt: pct(e.transferTaxPct / 100, 1),
       purchaseCostsFmt: eur(e.purchaseCosts), totalInvestmentFmt: eur(e.totalInvestment),
       coldRentFmt: eur(e.coldRent), warmRentFmt: eur(e.warmRent), totalOperatingCostsFmt: eur(-e.totalOperatingCosts),
+      vacancyReserveMonthlyFmt: eur(e.vacancyReserveMonthly) + T.perMonthShort,
       totalLoanFmt: eur(e.totalLoan), equityFmt: eur(e.equity),
       weightedRateFmt: pct(e.weightedRate, 2), debtServiceFmt: eur(e.monthlyDebtService),
       afaBasisFmt: eur(e.afaBasis), afaMonthlyFmt: eur2(e.afaMonthly),
