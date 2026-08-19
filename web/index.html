@@ -1523,10 +1523,13 @@ class Component extends DCLogic {
       // loan1Mode: 'pct' keeps the primary loan scaled to *this* purchase price instead of
       // leaving loans[0].amount pinned at whatever the previous property's absolute EUR figure
       // was - without this, cashflow looks artificially healthy for anything pricier than the
-      // sample listing, since debt service barely grows. Full (100%) financing at 4.2% / 2%
-      // amortization is the worst-case screening assumption for a listing we know nothing else
-      // about; any secondary loans are disabled so the primary loan is the only financing.
-      const loans = st.loans.map((l, i) => (i === 0 ? { ...l, rate: 4.2, amortization: 2 } : { ...l, enabled: false }));
+      // sample listing, since debt service barely grows. Full (100%) financing at 4.6% / 2%
+      // amortization is the screening-default assumption for a listing we know nothing else
+      // about - kept as an explicit hardcode (not "whatever loans[0].rate happens to be right
+      // now") so a leftover rate from an unrelated scenario the user was last playing with can
+      // never leak into a fresh Fredy handoff; any secondary loans are disabled so the primary
+      // loan is the only financing.
+      const loans = st.loans.map((l, i) => (i === 0 ? { ...l, rate: 4.6, amortization: 2 } : { ...l, enabled: false }));
       // Same screening-default logic as the loan assumptions above: a household earning
       // €100k taxable income and filing jointly (married, splitting) is the baseline buyer
       // profile, and its marginal rate is derived the same way the "Use this rate" button
