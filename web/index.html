@@ -336,6 +336,11 @@
         </div>
       </div>
       </sc-if>
+      <div style="margin-top:10px;">
+        <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldTotalHausgeld }}</label>
+        <input type="number" disabled="{{ costEstimateMode }}" value="{{ totalHausgeld }}" onChange="{{ setTotalHausgeld }}" style="width:100%; background:#0f1115; border:1px solid #2a2e37; color:#e8eaee; border-radius:8px; padding:8px 10px; font-size:13px;" />
+        <div style="font-size:10px; color:#6b7280; line-height:1.4; margin-top:4px;">{{ t.totalHausgeldNote }}</div>
+      </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
         <div>
           <label style="display:block; font-size:11px; color:#8b909c; margin-bottom:4px;">{{ t.fieldRecoverableCosts }}</label>
@@ -1158,6 +1163,8 @@ const TRANSLATIONS = {
     furnishedNote: "Furnished/short-let rent is usually quoted all-inclusive (utilities, cleaning, management already in the rent) but carries higher turnover and management cost, and in most areas isn't subject to Mietpreisbremse rent caps — check local rules before relying on that.",
     fieldRentInput: "Rent input", rentInputPerSqm: "Per m² + parking/other", rentInputFlat: "Flat total cold rent (€/mo)",
     fieldColdRentTotal: "Cold rent, total (€/mo)", fieldColdRentPerSqm: "Cold rent / m² / mo (€)", fieldParkingOther: "Parking + other (€/mo)",
+    fieldTotalHausgeld: "Total Hausgeld (€/mo)",
+    totalHausgeldNote: "Optional — know the total Hausgeld but not how it splits? Enter it here and the two fields below fill in automatically using the usual 20:15 (≈57%/43%) recoverable/non-recoverable ratio. Edit either field afterward to override.",
     fieldRecoverableCosts: "Recoverable costs (€/mo)", fieldNonRecoverableCosts: "Non-recoverable (€/mo)",
     fieldOwnReserve: "Own reserve (€/m²/yr)", fieldVacancyReserve: "Vacancy reserve (%)", perMonthShort: "/mo",
     costEstimateModeLabel: "No exact figures — estimate recoverable/non-recoverable costs from typical % of cold rent",
@@ -1325,6 +1332,8 @@ const TRANSLATIONS = {
     furnishedNote: "Möblierte/kurzfristige Miete wird meist all-inclusive angegeben (Nebenkosten, Reinigung, Verwaltung bereits enthalten), verursacht aber höhere Fluktuations- und Verwaltungskosten und unterliegt in den meisten Gebieten nicht der Mietpreisbremse — prüfen Sie die örtlichen Regeln, bevor Sie sich darauf verlassen.",
     fieldRentInput: "Mieteingabe", rentInputPerSqm: "Pro m² + Stellplatz/Sonstiges", rentInputFlat: "Pauschale Gesamtkaltmiete (€/Monat)",
     fieldColdRentTotal: "Kaltmiete gesamt (€/Monat)", fieldColdRentPerSqm: "Kaltmiete / m² / Monat (€)", fieldParkingOther: "Stellplatz + Sonstiges (€/Monat)",
+    fieldTotalHausgeld: "Gesamtes Hausgeld (€/Monat)",
+    totalHausgeldNote: "Optional — kennen Sie nur das gesamte Hausgeld, nicht die Aufteilung? Hier eingeben, und die beiden Felder unten werden automatisch im üblichen Verhältnis 20:15 (≈57 %/43 %) umlagefähig/nicht umlagefähig befüllt. Beide Felder lassen sich danach weiterhin anpassen.",
     fieldRecoverableCosts: "Umlagefähige Kosten (€/Monat)", fieldNonRecoverableCosts: "Nicht umlagefähig (€/Monat)",
     fieldOwnReserve: "Eigene Rücklage (€/m²/Jahr)", fieldVacancyReserve: "Leerstandsreserve (%)", perMonthShort: "/Monat",
     costEstimateModeLabel: "Keine genauen Zahlen — umlagefähige/nicht umlagefähige Kosten anhand typischer % der Kaltmiete schätzen",
@@ -1618,6 +1627,7 @@ class Component extends DCLogic {
     rentPerSqm: 11,
     otherRent: 0,
     costEstimateMode: true,
+    totalHausgeld: 0,
     recoverableCosts: 120,
     nonRecoverableCosts: 100,
     ownReservePerSqm: 10,
@@ -2215,6 +2225,16 @@ class Component extends DCLogic {
       setNotaryPct: this.setField('notaryPct'), setLandRegistryPct: this.setField('landRegistryPct'),
       setRentPerSqm: this.setField('rentPerSqm'), setOtherRent: this.setField('otherRent'),
       setRecoverableCosts: this.setField('recoverableCosts'), setNonRecoverableCosts: this.setField('nonRecoverableCosts'),
+      // Quick-fill: knowing the total Hausgeld but not its split is the common case (the split
+      // only shows up in the Hausgeldabrechnung, which a buyer rarely has before purchase). This
+      // divides it in the same 20:15 ratio the cold-rent estimate above already uses, then leaves
+      // the two fields it just filled exactly as editable as if they'd been typed by hand - so
+      // "the split is not mentioned" is simply "left at what this computed."
+      setTotalHausgeld: (ev) => {
+        const total = numFromEvent(ev);
+        const recoverable = Math.round(total * (20 / 35));
+        this.setState({ totalHausgeld: total, recoverableCosts: recoverable, nonRecoverableCosts: total - recoverable });
+      },
       recoverableCostsEffective: s.costEstimateMode ? Math.round(e.estRecoverable) : s.recoverableCosts,
       nonRecoverableCostsEffective: s.costEstimateMode ? Math.round(e.estNonRecoverable) : s.nonRecoverableCosts,
       setOwnReservePerSqm: this.setField('ownReservePerSqm'), setVacancyPct: this.setField('vacancyPct'),
