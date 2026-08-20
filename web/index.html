@@ -950,7 +950,8 @@
   <sc-if value="{{ isBank }}" hint-placeholder-val="{{ false }}">
   <div style="background:#161923; border:1px solid #262b38; border-radius:14px; padding:24px; max-width:760px;">
     <div style="font-size:13px; font-weight:700; color:#7dd3a8; margin-bottom:2px; text-transform:uppercase; letter-spacing:.06em;">{{ t.bankOnePagerTitle }}</div>
-    <div style="font-size:11px; color:#6b7280; margin-bottom:18px;">{{ t.bankOnePagerDesc }}</div>
+    <div style="font-size:11px; color:#6b7280; margin-bottom:4px;">{{ t.bankOnePagerDesc }}</div>
+    <div style="font-size:11px; margin-bottom:18px;"><span onclick="{{ goOverview }}" style="color:#7dd3a8; cursor:pointer; text-decoration:underline;">{{ t.bankOnePagerEditLink }}</span></div>
 
     <div style="font-size:13px; font-weight:700; color:#f4f6f8; margin-bottom:8px;">{{ address }}</div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; font-size:13px; color:#d5d8de; margin-bottom:18px;">
@@ -1252,6 +1253,7 @@ const TRANSLATIONS = {
     compCashOnCash: "Cash-on-cash return/yr", compBreakEven: "Break-even (cashflow)", compFullyDebtFree: "Fully debt-free by",
     bankOnePagerTitle: "Bank meeting one-pager",
     bankOnePagerDesc: "Figures a loan officer typically asks for — LTV, debt-service coverage and equity ratio, derived from the Overview inputs.",
+    bankOnePagerEditLink: "Nothing here is editable directly — go to Overview to change LTV, rate, purchase price etc., then come back to see it reflected here.",
     loanAmountRequested: "Loan amount requested", equityContributed: "Equity contributed",
     ltvLabel: "LTV", equityRatioLabel: "Equity ratio", dscrLabel: "Debt-service coverage",
     dscrExplanation: "DSCR = annual warm rent ÷ annual debt service. Above 1.2× is generally viewed as comfortable; below 1.0× means rent alone does not cover the loan payment.",
@@ -1421,6 +1423,7 @@ const TRANSLATIONS = {
     compCashOnCash: "Eigenkapitalrendite/Jahr", compBreakEven: "Break-even (Cashflow)", compFullyDebtFree: "Vollständig schuldenfrei ab",
     bankOnePagerTitle: "Bankgespräch – Übersichtsblatt",
     bankOnePagerDesc: "Kennzahlen, die ein Kreditsachbearbeiter üblicherweise verlangt — Beleihungsauslauf, Kapitaldienstdeckung und Eigenkapitalquote, abgeleitet aus den Eingaben im Tab „Übersicht“.",
+    bankOnePagerEditLink: "Hier ist nichts direkt editierbar — wechseln Sie zu „Übersicht“, um Beleihungsauslauf, Zinssatz, Kaufpreis usw. zu ändern, und kommen Sie zurück, um es hier zu sehen.",
     loanAmountRequested: "Beantragter Darlehensbetrag", equityContributed: "Eingebrachtes Eigenkapital",
     ltvLabel: "Beleihungsauslauf (LTV)", equityRatioLabel: "Eigenkapitalquote", dscrLabel: "Kapitaldienstdeckung (DSCR)",
     dscrExplanation: "DSCR = Jahres-Warmmiete ÷ jährlicher Kapitaldienst. Über 1,2× gilt allgemein als komfortabel; unter 1,0× bedeutet, dass die Miete allein die Kreditrate nicht deckt.",
@@ -1664,8 +1667,8 @@ class Component extends DCLogic {
     filingStatus: 'married',
     churchTaxPct: 0,
 
-    householdIncome: 5500,
-    livingExpenses: 3000,
+    householdIncome: 4856.43,
+    livingExpenses: 3400,
     otherDebt: 0,
     savingsGoal: 600,
 
