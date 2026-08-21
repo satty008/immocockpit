@@ -399,6 +399,7 @@
             </div>
             <div style="display:flex; gap:6px; margin-bottom:8px;">
               <button onClick="{{ setLtv80 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">80% LTV</button>
+              <button onClick="{{ setLtv85 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">85% LTV</button>
               <button onClick="{{ setLtv90 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">90% LTV</button>
               <button onClick="{{ setLtv100 }}" style="flex:1; background:#0f1115; border:1px solid #2a2e37; color:#a7acb8; border-radius:6px; padding:6px 4px; font-size:10px; cursor:pointer;">100% LTV</button>
             </div>
@@ -1535,7 +1536,7 @@ class Component extends DCLogic {
       // loan1Mode: 'pct' keeps the primary loan scaled to *this* purchase price instead of
       // leaving loans[0].amount pinned at whatever the previous property's absolute EUR figure
       // was - without this, cashflow looks artificially healthy for anything pricier than the
-      // sample listing, since debt service barely grows. Full (100%) financing at 4.6% / 2%
+      // sample listing, since debt service barely grows. 85% financing at 4.6% / 2%
       // amortization is the screening-default assumption for a listing we know nothing else
       // about - kept as an explicit hardcode (not "whatever loans[0].rate happens to be right
       // now") so a leftover rate from an unrelated scenario the user was last playing with can
@@ -1552,7 +1553,7 @@ class Component extends DCLogic {
       const baseOverrides = {
         address, area, purchasePrice: price, state: validState,
         rentMode: 'standard', rentInputMode: 'flat',
-        loan1Mode: 'pct', loan1Pct: 100, loans,
+        loan1Mode: 'pct', loan1Pct: 85, loans,
         taxableIncome, filingStatus, marginalTaxPct,
       };
 
@@ -1639,7 +1640,7 @@ class Component extends DCLogic {
     sellingCostsPct: 3.57,
 
     loan1Mode: 'pct',
-    loan1Pct: 100,
+    loan1Pct: 85,
     loans: [
       { amount: 44000, rate: 4.6, amortization: 2.0, fixedYears: 15, followRate: 4.5, enabled: true, extraYear: 0, extraAmount: 0 },
       { amount: 5000, rate: 3.8, amortization: 8.0, fixedYears: 15, followRate: 4.5, enabled: false, extraYear: 0, extraAmount: 0 },
@@ -2271,6 +2272,7 @@ class Component extends DCLogic {
       setCostEstimateMode: (ev) => this.setState({ costEstimateMode: ev.target.checked }),
       setLoan1Mode: this.setField('loan1Mode'), setLoan1Pct: this.setField('loan1Pct'),
       setLtv80: () => this.setState({ loan1Mode: 'pct', loan1Pct: 80 }),
+      setLtv85: () => this.setState({ loan1Mode: 'pct', loan1Pct: 85 }),
       setLtv90: () => this.setState({ loan1Mode: 'pct', loan1Pct: 90 }),
       setLtv100: () => this.setState({ loan1Mode: 'pct', loan1Pct: 100 }),
       setTaxableIncome: this.setTaxableIncome.bind(this), setFilingStatus: this.setFilingStatus.bind(this), setChurchTaxPct: this.setField('churchTaxPct'),
